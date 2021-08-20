@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>dataSci</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="home.html" style = "font-size: 1.5em">Data Science Workshop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="preliminary_exercises.html">Preliminary exercises</a></li>
+      <li><a href="workshop_lessons.html">Workshop lessons</a></li>
+      <li class="active"><a href="#">Additional resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class = "container">
+  <div class = "row">
+    <div class = "col-sm-1"></div>
+    <div class="col-sm-10">
+      <h2>Additional resources</h2>
+      <br>
+      <p>It goes without saying that there are <b>a lot</b> of R resources online. Many of them are very, very good. Some are not, which can lead to confusion. In this section, I will provide a curated list of resources that I think are very useful. This list is a work in progress and should not be considered complete in any way. If you have a resource that you particularly like that is not a part of this list, please <a href="evansbr@si.edu">contact me</a></p>
+<hr>
+
+<div id = "books" class = "row">
+<h3>Books and tutorials</h3>
+<p>There are a few books and online tutorials available for free online that make great references. Paper versions of the books below are available as well.</p>
+<br>
+
+<div id = "books-rfordatascience" class = "row">
+<p><a href="http://amzn.to/2aHLAQ1"><img src="https://d33wubrfki0l68.cloudfront.net/b88ef926a004b0fce72b2526b0b5c4413666a4cb/24a30/cover.png" width="150" alt="Buy from amazon" class="cover" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>R for Data Science</b> (<a href = "https://r4ds.had.co.nz/" target = "_blank">link</a>) is a great look into the tidyverse. Written by <b>Hadley Wickham</b> (have I mentioned Hadley?) and Garrett Grolemund, it's a great place to start learning the basics of tidy coding. I would say it's the most useful reference for folks who want to use R in a modern way but don't necessarily want or need to know how the sausage is made.</p>
+</div>
+
+<br><br>
+
+<div id = "books-github" class = "row">
+<p><a href="https://github.com/"><img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" width="150" alt="Octocat" class="cover" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>GitHub Guides</b> (<a href = "https://guides.github.com/" target = "_blank">link</a>) is a set of tutorials for getting started with GithHub. If you're just starting with GitHub, I recommend reading: Understanding the GitHub flow, Hello World, and Git Handbook. Another great resource for beginning the git-learning process can be found at <a href = 'https://towardsdatascience.com/getting-started-with-git-and-github-6fcd0f2d4ac6' target = "_blank">this website</a>.</p>
+</div>
+
+<br><br>
+
+<div id = "books-advancedr" class = "row">
+<p><a href="https://amzn.to/2WoabjB"><img src="https://d33wubrfki0l68.cloudfront.net/565916198b0be51bf88b36f94b80c7ea67cafe7c/7f70b/cover.png" width="150" class="cover" alt="Buy on Amazon" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>Advanced R</b> (<a href = "https://adv-r.hadley.nz/" target = "_blank">link</a>): This book is a deep look into the nuts and bolts of R. Written by <b>Hadley Wickham</b> (yeah, that Hadley Wickham), this is an awesome resource for more advanced R users. It may not be particularly helpful early in the R learning process.</p>
+</div>
+
+<br><br>
+
+<div id = "books-rgraphics" class = "row">
+<p><a href="https://www.amazon.com/dp/1491978600"><img src="https://r-graphics.org/cover.jpg" width="150" class="cover" alt="Buy on Amazon" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>R Graphics Cookbook</b> (<a href = "https://r-graphics.org/index.html" target = "_blank">link</a>): This book by Winston Chang, a software developer at RStudio, is a great resource for learning how to plot in base R (a little bit) and ggPlot (a lot). Quickly becoming a classic, it's clearly laid out and a great reference to have on your virtual or physical bookshelf.</p>
+</div>
+
+<br><br>
+
+<div id = "books-dplyr" class = "row">
+<p><a href="https://suzan.rbind.io/categories/tutorial/"><img src="https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png" alt="dplyr hex sticker" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>dplyr tutorial</b> (<a href = "https://suzan.rbind.io/categories/tutorial/" target = "_blank">link</a>): I really think this tutorial, by Suzan Baert, is an excellent look into using dplyr. Baert is great at communicating R code in a super understandable way.</p>
+</div>
+
+<br><br>
+
+<div id = "books-geocomputation" class = "row">
+<p><a href="https://www.amazon.com/Geocomputation-R-Robin-Lovelace/dp/0367670577"><img src="https://geocompr.robinlovelace.net/images/cover.png" alt="geocomputation cover" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>R Markdown, The Definitive Guide</b> (<a href = "https://geocompr.robinlovelace.net/" target = "_blank">link</a>): This is the book that I will be using as a textbook for the Georgetown GIS class next semester. For vector data, it works heavily with the `sf` package - a package that has greatly changed the way that I code geographic data.  This book is a highly recommended read for anyone seeking to do GIS in R.</p>
+</div>
+
+<br><br>
+
+<div id = "books-purrr" class = "row">
+<p><a href="https://jennybc.github.io/purrr-tutorial/"><img src="https://d33wubrfki0l68.cloudfront.net/2d0701b616efa7435cd5a94e703baa595a4f9ed0/d41b9/css/images/hex/purrr.png" alt="purrr hex sticker" class="r4 c2" width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>Purrr tutorial</b> (<a href = "https://jennybc.github.io/purrr-tutorial/" target = "_blank">link</a>): This tutorial, written by Jenny Bryan, provides a great exploration of using purrr as well as a nice simple review of vectors, lists, and the apply family of functions. Bryan, a member of the RStudio team, is an awesome coder and communicator of R knowledge. I strongly recommend having a look at her GitHub account (<a href = "hhttps://github.com/jennybc" target = "_blank">link</a>) to see the various packages that she has available (or are in development).</p>
+</div>
+
+<br><br>
+
+
+<div id = "books-rmarkdown" class = "row">
+<p><a href="https://www.amazon.com/Markdown-Definitive-Guide-Chapman-Hall/dp/1138359335/"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="markdown cover" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>R Markdown, The Definitive Guide</b> (<a href = "https://bookdown.org/yihui/rmarkdown/" target = "_blank">link</a>): This book, written by Yihui Xie et al. is a thorough and easy-to-follow guide to using Markdown in R. Yihui Xie a software developer at R Studio and a whole lot more -- he authored and/or co-authored many of the packages that make up the core of a modern R skillset, including knitr, shiny, rmarkdown, and leaflet. You might already know the name, because he is very active on stack overflow and other online programming communities.</p>
+</div>
+
+<br><br>
+
+<div id = "books-shinytutorial" class = "row">
+<p><a href="https://shiny.rstudio.com/tutorial/"><img src="https://blog.efpsa.org/wp-content/uploads/2019/04/pic1.png" alt="shiny tutorial" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>Learn Shiny</b> (<a href = "https://mastering-shiny.org/" target = "_blank">link</a>): If you're just starting out with the Shiny package, this is the place to begin. It is a set of tutorials that provides a great applied background to the nuts and bolts of Shiny apps. These apps can be fairly simple but get very complex very quickly. More so than any other R application, I have found that advanced applications of this package require a clear understanding of how Shiny apps work.</p>
+</div>
+
+<br><br>
+
+<div id = "books-shiny" class = "row">
+<p><a href="https://www.amazon.com/Mastering-Shiny-Interactive-Reports-Dashboards/dp/1492047384"><img src="https://d33wubrfki0l68.cloudfront.net/0c97eee3d8fc820f3a8d670c08b286e8a524257b/e426c/cover.png" alt="shiny cover" class="r1 c0"  width = "150" style = "float: left; padding: 0px 20px 20px 0px;"></a><b>Mastering Shiny</b> (<a href = "https://mastering-shiny.org/" target = "_blank">link</a>): It would be embarassing if anyone knew the degree to which I was excited when I found out that Hadley Wickham is writing a book on Shiny. Available in print in the spring/summer of 2021, this book is a spectacular dive into how to create, and understand, your own Shiny websites.</p>
+</div>
+
+<br><br>
+
+</div>
+
+<div id = "cheatsheets" class = "row">
+  <hr>
+<h3>RStudio cheatsheets</h3>
+
+<p>These are super handy to have on hand. I have several of these stuck on my walls in my work office. Below are a few of the most relevant ones for this workshop. For a complete list, see <a href="https://rstudio.com/resources/cheatsheets/" target = "_blank">this link</a>. Please note that the texts and links in this section were directly swiped from the RStudio site.</p>
+
+<br><br>
+
+<!-- rstudio -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="rstudio-idecheatsheet">RStudio IDE&nbsp;Cheatsheet</h4>
+<p>The <a href="https://www.rstudio.com/products/rstudio/">RStudio IDE</a> is the most popular integrated development environment for R. Do you want to write, run, and debug your own R code? Work collaboratively on R projects with version control? Build packages or create documents and apps?&nbsp;No matter what you do with R, the RStudio IDE can help you do it faster. This cheatsheet will guide you through the most useful features of the IDE, as well as the long list of keyboard shortcuts built into the RStudio IDE. Updated January 16.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/0dc0efccfaf638de8be4ce43e2bab8a91541d3d2/c4fdc/wp-content/uploads/2018/08/rstudio-ide.png"></a>
+</div>
+</div>
+<br><br>
+
+<!-- base R  -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="baser_cheatsheet">Base R&nbsp;Cheatsheet</h4>
+<p>Vectors, Matrices, Lists, Data Frames, Functions and more in&nbsp;base R by <a href="http://mhairihmcneill.com/">Mhairi McNeill</a>. Updated March 15.</p>
+<p><a href="http://github.com/rstudio/cheatsheets/raw/master/base-r.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="http://github.com/rstudio/cheatsheets/raw/master/base-r.pdf"> <img class="d-block mx-auto cheatsheet-img mt-3 mb-4" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/4e0edeb0b12f314d6df04daa0ac37db91ba6bd56/6803a/wp-content/uploads/2015/01/base-r-1.png"></a>
+</div>
+</div>
+<br><br>
+
+<!-- advanced R  -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="advancedr_cheatsheet">Advanced R&nbsp;Cheatsheet</h4>
+<p>Environments, data Structures, Functions, Subsetting and more by Arianne Colton and Sean Chen. Updated February 16.</p>
+<p><a href="https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<img class="d-block mx-auto cheatsheet-img mt-3 mb-4" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/668a3fbd1b87e5086e95dfb679445a8333e4a4b4/73c41/wp-content/uploads/2015/01/advanced-r-1.png">
+</div>
+</div>
+<br><br>
+
+<!-- importing data -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="data-importcheatsheet">Data Import&nbsp;Cheatsheet</h4>
+<p>The Data Import cheatsheet reminds you how to read in flat files with <a href="http://readr.tidyverse.org/">http://readr.tidyverse.org/</a>, work with the results as tibbles, and reshape messy data with <a href="http://tidyr.tidyverse.org/">tidyr</a>. Use tidyr to reshape your tables into tidy data, the data format that works the most seamlessly with R and the <a href="http://tidyverse.org/">tidyverse</a>. Updated January 17.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/b7142a24f47a959b8a4b67910c67db8b41036f28/ac9a2/wp-content/uploads/2018/08/data-import.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- ggplot -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="data-visualization-cheatsheet">Data Visualization Cheatsheet</h4>
+<p>The ggplot2 package lets you make beautiful and customizable plots of your data. It implements the grammar of graphics, an easy to use system for building plots. See <a href="https://ggplot2.tidyverse.org/">ggplot2.tidyverse.org</a> for more. Updated November 16.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/21d683072b0c21cbd9b41fc0e37a587ad26b9525/cbf41/wp-content/uploads/2018/08/data-visualization-2.1.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- dplyr -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="data-transformationcheatsheet">Data Transformation&nbsp;Cheatsheet</h4>
+<p>dplyr provides a grammar for manipulating tables in R. This cheatsheet will guide you through the grammar, reminding you how to select, filter, arrange, mutate, summarise, group, and join data frames and tibbles. (<a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Previous version</a>) Updated January 17.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/db69c3d03699d395475d2ac14d64f611054fa9a4/e98f3/wp-content/uploads/2018/08/data-transformation.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- forcats -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="factors-with-forcats-cheatsheet">Factors with forcats Cheatsheet</h4>
+<p>Factors are R’s data structure for categorical data. The forcats package makes it easy to work with factors. This cheatsheet reminds you how to make factors, reorder their levels, recode their values, and more. Updated February 19.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/factors.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/factors.pdf"> </a><a href="https://github.com/rstudio/cheatsheets/raw/master/factors.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/aad70a9a47e4bdb7b3699454266f604662530e0e/5e1c5/assets/img/factors.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- strings -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="work-with-strings-cheatsheet">Work with Strings Cheatsheet</h4>
+<p>The <a href="http://stringr.tidyverse.org">stringr</a> package provides an easy to use toolkit for working with strings, i.e. character data, in R. This cheatsheet guides you through stringr’s functions for manipulating strings. The back page provides a concise reference to <em>regular expresssions</em>, a mini-language for describing, finding, and matching patterns in strings. Updated October 17.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/strings.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/strings.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/ed91b01c08afed41e2df36b805e32c2c46e48857/21514/wp-content/uploads/2018/08/strings.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- regex -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="regex-cheatsheet">Work with Strings Cheatsheet</h4>
+<p>Basics of regular expressions and pattern matching in R by Ian Kopacka. Updated September 16.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/regex.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<img class="d-block mx-auto cheatsheet-img mt-3 mb-4" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/df1ca0349befd6437cf13ecb255ca15e2db07a18/a8cb5/wp-content/uploads/2015/01/regular-expressions-1.png">
+</div>
+</div>
+
+<br><br>
+
+<!-- date and times -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="dates-and-times-cheatsheet">Dates and Times Cheatsheet</h4>
+<p><a href="http://lubridate.tidyverse.org">Lubridate</a>&nbsp;makes it easier to work with dates and times in R. This lubridate cheatsheet covers how to round dates, work with time zones, extract elements of a date or time, parse dates into R and more. The back of the cheatsheet describes lubridate’s three timespan classes: periods, durations, and intervals; and explains how to do math with date-times. Updated December 17.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/lubridate.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/bd9c9418add7e3a66a90c862bda72a07853c446c/a5643/wp-content/uploads/2018/08/lubridate.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- sf -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="sf-cheatsheet">Simple Features Cheatsheet</h4>
+<p>Tools for working with spatial vector data: points, lines, polygons, etc. Cheatsheet by Ryan Garnett. Updated October 18.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/sf.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<img class="d-block mx-auto cheatsheet-img mt-3 mb-4" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/bad9d4b4657437c66290b2a3ce76eb7aa007e0b7/fd881/assets/img/sf.png">
+</div>
+</div>
+
+<br><br>
+
+<!-- leaflet -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="leaflet-cheatsheet">Leaflet Cheatsheet</h4>
+<p>Interactive maps in R with leaflet, by Kejia Shi. Updated May 17.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/leaflet.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<img class="d-block mx-auto cheatsheet-img mt-3 mb-4" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/1267e8f809560bdbad86d15763be08302a471fb5/138a1/wp-content/uploads/2015/01/leaflet-cheatsheet-1.png">
+</div>
+</div>
+
+<br><br>
+
+
+<!-- R markdown -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="r-markdown-cheatsheet">R Markdown Cheatsheet</h4>
+<p>R Markdown is an authoring format that makes it easy to write reusable reports with R. You combine your R code with narration written in markdown (an easy-to-write plain text format) and then export the results as an html, pdf, or Word file. You can even use R Markdown to build interactive documents and slideshows. Updated February 16. (<a href="/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">Old Version</a>.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/65dffd1bdcaa0025006262164d98e8068e8b4387/c3895/wp-content/uploads/2018/08/rmarkdown-2.0.png"></a>
+</div>
+</div>
+
+<br><br>
+
+<!-- shiny -->
+
+<div class="row pt-5">
+<div class="col-md-7">
+<h3 id="shiny-cheatsheet">Shiny Cheatsheet</h3>
+<p>If you’re ready to build interactive web apps with R, say hello to Shiny. This cheatsheet provides a tour of the Shiny package and explains how to build and customize an interactive app. Be sure to follow the links on the sheet for <a href="http://shiny.rstudio.com">even more information</a>. Updated January 16.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/shiny.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/shiny.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/349cbcca50af85a9214e552296f33f14be37f768/16877/wp-content/uploads/2018/08/shiny.png"></a>
+</div>
+</div>
+</div>
+
+<br>
+
+<div id="footer" class = "row">
+  <hr>
+<img 
+  src="images/nzpLogo.png"
+  style= "display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;"/>
+</div>
+
+
+
+    </div>
+    <div class = "col-sm-1"></div>
+  </div>
+</div>
+  
+  
+
+  
+    
+
+    
+      
+      

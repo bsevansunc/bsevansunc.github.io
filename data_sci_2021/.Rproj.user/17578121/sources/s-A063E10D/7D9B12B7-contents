@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>dataSci</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+
+<nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" style = "font-size: 1.5em">Data Science Workshop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="preliminary_exercises.html">Preliminary exercises</a></li>
+      <li><a href="workshop_lessons.html">Workshop lessons</a></li>
+      <li><a href="additional_resources.html">Additional resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="page-container">
+   <div id="content-wrap">
+<div class = "row">
+  <div class = "col-sm-2"></div>
+  <div class="col-sm-8">
+    <div id = "welcome_text" class = "row">
+      <br>
+      <h3 style="text-align: left;">Introduction to Data Science and the Art of Wrangling for Ecologists</h3>
+      <hr>
+      <img style="float:right;padding-left:10px;border:none" src="images/catbirdBanded.jpg" width = "250px"/>
+      <br>
+      <p>Welcome to "Managing Ecological Data in R: Introduction to Data Science and the Art of Wrangling for Ecologists"! This website will be our home base for this workshop. R has become the universal quantitative interface for ecologists - it's free, powerful, flexible enough to do everything but write manuscripts for you, and is relatively user-friendly. Each lesson has accompanying hyperlinks that may include:</p>
+      <ul>
+        <li><b>Lesson instructions</b>: Website with written-out instructions and exercises associated with a presentation or lab activity (<i>Note: The instructions hyperlinks are the highlighted lesson titles</i>).</li>
+        <li><b>Lesson code</b>: The R code that accompanies a lesson, when applicable (<i>Note: These links will download an R file</i>).</li>
+        <li><b>Exercises</b>: Some workshop material will have accompanying assignments (<i>Note: The hyperlinks are the highlighted exercise titles</i>).</li>
+        </ul>
+        <br>
+        </div>
+        <div id = "about me" class = "row">
+          <hr>
+          <div class = "col-sm-3">
+          <img src = "images/robotBird.jpg" style = "float:left; padding-left: 0px; padding-right: 10px; padding-bottom: 10px; width: 100%; max-width = 40px">
+          </div>
+          <div class = "col-sm-9">
+          <p><b>About the Instructor</b>: Brian Evans is an avian ecologist and data scientist at the Smithsonian Migratory Bird Center. He received his Ph.D. in quantitative ecology from the University of North Carolina in 2015. Brian has been using R for over 10 years and has been teaching classes and workshops in R and data management since 2012. Follow Brian on Twitter: <a href = "https://twitter.com/bsevans_unc">@bsevans_unc</a>.</p>
+          </div>
+          </div>
+<div class = "col-sm-1"></div>
+</div>
+</div>
+ <div id="footer" class = "row">
+  <hr>
+<img 
+  src="images/nzpLogo.png"
+  style= "display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;"/>
+</div>
+  </div>
+</div>

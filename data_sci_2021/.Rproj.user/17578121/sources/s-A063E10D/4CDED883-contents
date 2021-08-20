@@ -1,0 +1,1063 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+<!DOCTYPE html>
+  
+<html lang="en">
+    
+  <head>
+    <title>dataSci</title>
+    <meta charset="utf-8" 
+          name="viewport" 
+          content="width=device-width, initial-scale=1"/>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" 
+          href="css/styles.css" 
+          type="text/css"/>
+    <link rel="icon" 
+          type="image/png" 
+          href = "https://github.com/rstudio/hex-stickers/blob/master/thumbs/pipe.png?raw=true" />
+    <style>
+      :root {
+        font-size: 140%;
+        body {
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 2.25em;
+        }
+      }
+      
+      pre {
+        font-size: .8rem;
+      }
+      
+      code {
+        font-size: inherit;
+      }
+      
+      p, li {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
+      
+      h1{
+        font-size: 1.75rem;
+      }
+      
+      h2{
+        font-size: 1.5rem;
+      }
+      
+      h3{
+        font-size: 1.25rem;
+      }
+      
+      pre {
+        padding-bottom: 1em;
+      }
+      
+      .warning {
+        background-color: #ffffff;
+      }
+      
+      .output {
+        background-color: #ffffff;
+      }
+      
+      .knitr r {
+        background-color: #ffffff;
+      }
+      
+      .rcode {
+        background-color: #ffffff;
+      }
+      
+      .source {
+        background-color: #ffffff;
+      }
+      
+      .MathJax_Display {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
+      
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      
+      html, body {
+        height: 100vh;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      main {
+        flex: 1 0 auto;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        padding-bottom: 5vh;
+      }
+      
+      header {
+        background-color: #FFFFFF;
+        margin-bottom: 1vw;
+      }
+      
+      /*.flex-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }*/
+      
+      .banner-content {
+        margin-top: 1vw;
+        margin-left: 15vw;
+        margin-right: 15vw;
+      }
+      
+    /*.content {
+        padding-bottom: 80px;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        flex-grow: 1; 
+        background-color: #FFFFFF;
+      }*/
+      
+      content {
+        flex-grow: 1;
+      }
+
+      header, main, footer {
+        flex-shrink: 0;
+      }
+      
+      footer {
+        display: flex;
+        background-color: #101820;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 7vh;
+        font-size: .75rem;
+      }
+      
+      .fa-twitter {
+        color: white;
+      }
+      
+      .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+      }
+      
+      .flex-container > div {
+        margin: 1em;
+      }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  </head>
+  
+  <body>
+  
+<!--begin.rcode eval = TRUE, include  = FALSE
+
+rm(list = ls())
+
+# Load RCurl library:
+
+library(RCurl)
+
+library(knitr) ; library(kableExtra) ; library(tidyverse)
+
+options(knitr.table.format = "html")
+end.rcode -->
+    <nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
+    <div class="container-fluid">
+    <div class="navbar-header">
+    <a class="navbar-brand" href="home.html" style = "font-size: 1.5em">Data Science Workshop</a>
+    </div>
+    <ul class="nav navbar-nav" style = "font-size: 16px">
+    <li><a href="preliminary_exercises.html">Preliminary exercises</a></li>
+    <li><a href="workshop_lessons.html">Workshop lessons</a></li>
+    <li><a href="additional_resources.html">Additional resources</a></li>
+    </ul>
+    </div>
+    </nav>
+    
+    <header>
+      <div class = "banner-content">
+          <h1>Working with Tidy data</h1>
+          <hr>
+      </div>
+    </header>
+        
+    <main>
+      <div id = "overview" class = "row">
+        <h2>Today's workshop:</h2>
+        <br>
+        <a title = "This is not a pipe">
+          <img  src = "https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg"
+                alt="Magritte painting, the treachery of images"
+                style = "float: right; padding-left: 3em; padding-bottom: 3em; width: 40%; height: auto;">
+          </img>
+        </a>
+        <ul>
+          <li><b>The pipe!</b> Nothing has changed coding in R as much as the creation of the pipe. If you don't currently use piping in your code, this lesson will get your code up to the modern era.</li>
+          <li><b>Introduction to mutate</b>: In combination with the pipe, the mutate family of functions will have you writing powerful, concise, and readable code.</li>
+          <li><b>Introduction to filtering</b>: Are the days of subsetting by index over? No. But I have to use indexing in less than 5% of all of my filtering operations. Tidyverse filters are amazing.</li>
+          <li><b>Joining tables</b>: Where tables that are kept separate due to levels of observation suddenly become useable.</li>
+        </ul>
+      <hr>
+      <h2>Set up</h2>
+        <br>
+        <p>If you haven't yet installed lubridate onto your computer, do so now:</p>
+        <br>
+<!-- begin.rcode, eval = FALSE
+install.packages('lubridate')
+end.rcode-->
+        <br>
+        <p>Load the following libraries:</p>
+        <br>
+<!--begin.rcode, eval = FALSE
+library(tidyverse)
+library(lubridate)
+end.rcode--> 
+        <br>
+        <p>Make sure that there is a folder called "data" in your working directory:</p><br>
+<!--begin.rcode, eval = FALSE
+list.files()
+end.rcode-->
+        <br>
+        <p>If you don't see the value "data" in your list:</p>
+        <br>
+<!--begin.rcode, eval = FALSE
+dir.create("data")
+end.rcode-->
+        <br>
+        <p>Using your bash window or your preferred file management system (e.g., Finder), move "messy_weather.csv" into your data folder.</p>
+      <p>Load the file into R:</p> <br>
+
+<!--begin.rcode, message = FALSE
+messy_weather <-
+  read_csv('data/messy_weather.csv')
+end.rcode-->
+      <br>
+      </div>
+      <!-- nested functions --->
+      <div id = "nested_functions" class = "row">
+        <hr>
+        <h2>Review</h2>
+        <br>
+        <h3><i>Functions</i></h3>
+        <br>
+        <p>At its most basic, anything that exists in R is an object and anything that happens is a function (<a href="http://user2014.r-project.org/files/chambers.pdf" target = "_blank">John Chambers, userR!2014</a>). For example, even the assignment operator, `<-` is a function. It <b>binds</b> names to a value or values in the current environment. Likewise, the <code>[</code> and <code>]</code> operators that we've used are also functions. These are examples of <b>primitive functions</b> ... they call C directly and contain no R code. Herein, I will be referring to functions that are written in R. You can observe the difference by printing a function using <code>`name_of_function`</code>:</p><br>
+        
+<!--begin.rcode
+`<-`
+
+`sd`
+end.rcode-->
+        <br>
+        <p>An R function has three parts (From Wickham, <a href = "https://adv-r.hadley.nz/" target = "_blank" >Advanced R</a>):</p>
+        <ul>
+        <li><b>formals</b>: A set of controls on the function</li>
+        <li><b>body</b>: The set of instructions inside the function</li>
+        <li><b>environment</b>: The location of the functions variables</li>
+        </ul>
+        <p>Let's make a simple function called <code>multiple_by_two</code>:</p><br>
+
+<!--begin.rcode
+multiply_by_two <- 
+  function(x) {
+    x*2
+  }
+end.rcode-->
+        <br>
+        <p>This function takes some value, <code>x</code>, which is defined in the <b>formals</b>, and carries out a set of instructions, <code>x*2</code>, which is defined in the <b>body</b>. We can explore this using the <code>formals</code> and <code>body</code> functions:</p><br>
+        
+<!--begin.rcode
+formals(multiply_by_two)
+
+body(multiply_by_two)
+end.rcode-->
+        <br>
+        <p>The environment of the function is actually our global working environment:</p><br>
+<!--begin.rcode
+environment(multiply_by_two)
+end.rcode-->  
+        <br>
+        <p>There's a catch though! Unless specified otherwise, only the last object in the body will be passed to the global environment. The others only exist in the environment of the functions body:</p><br>
+<!--begin.rcode
+losing_a_y <- 
+  function(x) {
+    y <- x
+    y*2
+  }
+
+losing_a_y(3)
+
+y
+end.rcode-->
+        <br> 
+        <p>So we can see that a function has its own internal environment, though it works within its parent environment (in this case the global environment). This has been the source of woes for many-an-R-user, but once you get the hang of it, it's an easily avoidable problem. It actually gives you a bit more control on what you're adding to your environment.</p>
+       <p>When debugging/QCing big functions, I sometimes use <code>return</code> to view values at various points in the <b>body</b>. Have a look at the below and give a thought to the output:</p><br>
+<!--begin.rcode
+losing_a_y <- 
+  function(x) {
+    y <- x
+    return(y)
+    y*2
+  }
+
+losing_a_y(3)
+
+y 
+end.rcode-->
+        <br>
+        
+        <p>If you really insist that your environment deserves the intermediate y, you can hard code it in there with <code><<-</code>:</p><br>
+<!--begin.rcode
+losing_a_y <- 
+  function(x) {
+    y <<- x
+    y*2
+  }
+
+losing_a_y(3)
+
+y  
+end.rcode-->
+        <br>
+        <h3><i>Nested functions</i></h3>
+        <br>
+        <p>Functions can be <b>nested</b> within the other. Nesting helps avoid assigning intermediate objects -- this reduces the number of objects that are stored in your R environment. An advantage of this is that it also reduces the number of names you have to assign to objects, and, of course, the number of names that you have to remember ("What did I call that ... ?"). We've used nested functions quite a bit throughout this workshop thus far. Let's take a moment to review nested and non-nested versions of functions.</p>
+        
+        <p>To illustrate nested and non-nested code-writing, we will conduct the following analysis:</p>
+        
+        $$Z_{1} = [1,2,3,4,5]$$
+        $$Z_{2} = 2(Z_{1})$$
+        $$Z_{3} = Z_{2}+1$$
+        
+        <p>Note that the steps in this analysis are <b>chained</b> -- each step is dependent on output from the previous step. Let's begin to evaluate these statements by first defining the values for vector my_vector:</p><br>
+<!--begin.rcode
+# Initial values:
+
+my_vector <- 
+  1:5
+end.rcode-->
+          
+        <br>
+        <p>Functions for the second and third steps of this process:</p><br>
+<!--begin.rcode
+
+multiply_by_two <- 
+  function(x) {
+    x*2
+  }
+
+add_one <- 
+  function(x) {
+    x+1
+  }
+end.rcode-->
+        
+        <br>
+        <p>To carry out this chained analysis, one non-nested option is to complete the process by assigning a new object for each step. What are the advantages and disadvantages of the below?</p><br>
+<!--begin.rcode
+
+# Non-nested, new object for each step:
+
+my_vector <- 
+  1:5
+
+my_vector2 <-
+  multiply_by_two(my_vector)
+
+add_one(my_vector2)
+end.rcode-->
+        
+        <br>
+        <p>Another non-nested option is to complete the process by overwriting the origin object for each step. What are the advantages and disadvantages of the below?</p><br>
+<!--begin.rcode
+# Non-nested, overwrite object for each step:
+
+my_vector <- 
+  1:5
+
+my_vector <- 
+  multiply_by_two(my_vector)
+
+add_one(my_vector)
+        end.rcode-->
+        
+        <br>
+        <p>We can also write the process as nested functions. What are the advantages and disadvantages of the below?</p><br>
+<!--begin.rcode
+# Nested:
+
+add_one(
+  multiply_by_two(1:5))
+end.rcode-->
+        <br>
+        <br>
+        <p>Take a moment to consider the nested and non-nested versions of the process above. Each has its strengths and weaknesses:</p>
+        <ul>
+        <li><b>Non-nested with new object</b>:
+        <ul>
+        <li>Strength: Easy to read.</li>
+        <li>Weaknesses: Takes up a lot of script space. Includes an intermediate object assignment (`my_vector`) that may be hard to remember.</li>
+        </ul>
+        </li>
+        <li><b>Non-nested with overwritten object</b>:
+        <ul>
+        <li>Strengths: Easy to read. No new names.</li>
+        <li>Weaknesses: Takes up a lot of script space. Loss of the initial value of `z` (<i>never, never, never overwrite assigned objects!</i>).</li>
+        </ul>
+        </li>
+        <li><b>Nested</b>:
+        <ul>
+        <li>Strengths: Concise. No new names.</li>
+        <li>Weaknesses: It can be difficult to read even at modest levels of complexity.</li>
+        </ul>
+        </li>
+        </ul>
+      </div>
+
+      <!--- the pipe --->
+      <div id = "pipe" class = "row">
+        <hr>
+        <h2>The pipe!</h2>
+        <br>
+        <div class = "row">
+          <a title = "Ben Bolker">
+            <img  src = "https://avatars.githubusercontent.com/u/78918?s=460&v=4"
+                  alt="Ben Bolker"
+                  style = "float: right; padding-left: 2em; padding-bottom: 2em; width: 20vw; height: auto;"></img></a>
+          <p>One of the greatest recent advancements in the world of R is the implementation of the <b>pipe operator</b>, <code>%>%</code>. A <b>pipe operator</b> allows you to set the output of one process as the input of another – thus sequences of calculations are chained together without having to define intermediate steps as R objects (Note: Piping is sometimes called chaining). Piping was first implemented in R by quantitative ecologist <b>Ben Bolker</b>, in an answer to a question on stackoverflow. Hadley Wickham introduced his version of piping to his dplyr package in 2013 while concurrently <b>Stefan Milton Bache</b> developed a more flexible version for his package magrittr (named after Magritte’s painting, The Treachery of Images). In 2014, Wickham and Bache teamed up and Bache’s pipe was incorporated into the tidyverse.</p>
+
+        <p>Piping makes scripts more readable and easier to write. Moreover, if you didn’t do a great job naming your R objects, you may have a hard time remembering what each was. The alternative, nested functions, can be problematically complicated to read. Piping avoids the necessity to assign intermediate objects and makes scripts legible by conducting analyses in sequence.</p>
+      </div>
+      <div class = "row">
+        <p>To illustrate what pipe is, let's start return to our simple math problem above.</p>
+        
+        <p>We solved this problem using the chained analysis method:</p><br>
+<!--begin.rcode, eval = FALSE
+my_vector <- 
+  1:5
+
+my_vector2 <-
+  multiply_by_two(my_vector)
+
+add_one(my_vector2)
+end.rcode-->
+        <br>
+        <p>And the nested analysis method (i.e., a function inside a function):</p><br>
+<!--begin.rcode, eval = FALSE
+add_one(
+  multiply_by_two(1:5))
+end.rcode-->
+        <br>
+        <p>The latter is more concise, and avoids unnecessary assignments, but hard to read. This is because the order of operations occurs from the inside (<code>c(1, 1, 2, 3, 5, 8)</code>) out. To avoid this, we move the data argument to the top and connect the function and the data with a pipe:</p><br>
+<!--begin.rcode
+1:5 %>% 
+  multiply_by_two() %>% 
+  add_one()
+end.rcode-->
+      <br>
+      <p>I like to think of this structure like a sentence of sorts. First you introduce the subject of the sentence (the object being modified) and then the functions, which are like verbs that modify the subject. You would read the above from top-to-bottom like this: "I created a vector of values, then multiplied each value by two and added one to the result." That's a lot more straightforward than the nested version: "I applied a function that adds one to the result of the multiplication of a set of values by two." That's barely understandable at all. It forces the reader (often you) to embark on a Q&A session with poorly written code -- "What did you do?" ... "I added one to the result" ... "Of what? ..." </p>
+
+      <p>We'll get a real sense of how the pipe works by applying it to common coding tasks. Soon, our days of confusing, illegibly nested code will be well behind us!</p>
+      <br>
+      <div class = "row">
+      <img  id="gif" 
+            src="https://media1.giphy.com/media/Ys9SXSEczO5nW/200w.webp?cid=790b7611f5ed7acc81331d95a52d2cc6898370c68c1f3422&amp;rid=200w.webp&amp;ct=g" 
+            srcset="https://media1.giphy.com/media/Ys9SXSEczO5nW/200w.webp?cid=790b7611f5ed7acc81331d95a52d2cc6898370c68c1f3422&amp;rid=200w.webp&amp;ct=g 200w,https://media1.giphy.com/media/Ys9SXSEczO5nW/giphy.webp?cid=790b7611f5ed7acc81331d95a52d2cc6898370c68c1f3422&amp;rid=giphy.webp&amp;ct=g 480w," 
+            width="30%" 
+            alt=""
+            style =   "display: block;
+                      margin-left: auto;
+                      margin-right: auto;">
+      </div>
+      <br>
+      <br>
+      <p>Before moving on, it's good practice to keep our global environment clean (we'll a more concise way to do this in the future):</p><br>
+<!--begin.rcode, message = FALSE
+# See the bindings in your global environment:
+
+objects()
+
+# Remove objects we won't use again:
+
+rm(multiply_by_two)
+
+rm(losing_a_y)
+
+rm(y)
+
+rm(my_vector)
+
+rm(add_one)
+
+rm(my_vector2)
+end.rcode-->
+      <br>
+      <hr>
+      <!--- homework review with and without pipe --->
+      <h3>Exercise: The pipe in action!</h3>
+      <br>
+      <p>Let's explore piping using the NOAA weather data from last week's problem set. The dataset contains weather records for the month of March (2010-2020) for several US climate monitoring stations. The format of the data breaks every one of the Tidy data rule:</p><br>
+<!--begin.rcode
+messy_weather
+end.rcode-->
+      <br>
+      <p>We were tasked with normalizing the data. Let's step through those steps using non-nested functions and assignment operators. We'll start with dealing with the day columns, which violates Codd's first normal and Hadley's "Each variable forms a column":</p><br>
+<!--begin.rcode
+messy_weather_long_days <- 
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31, 
+    names_to = 'day', 
+    values_to = 'value', 
+    names_prefix = 'march_')
+
+messy_weather_long_days
+end.rcode-->   
+      <br>
+      <p>If we wanted to pipe this statement, we remove the data argument (the first in all of the tidyverse functions) and pipe from the initial tibble:</p><br>
+<!--begin.rcode, eval = FALSE
+messy_weather %>% 
+  pivot_longer(
+    cols = march_1:march_31, 
+    names_to = 'day', 
+    values_to = 'value', 
+    names_prefix = 'march_')
+end.rcode-->    
+      <br>
+      <p>Next, we will deal with the year, month, and day columns, which also violate Codd's first normal and Hadley's "Each variable forms a column":</p><br>
+<!--begin.rcode
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days,
+    c('year', 'month', 'day'), 
+    col = 'date', 
+    sep = '-',
+    na.rm = TRUE)
+
+messy_weather_date_fix
+end.rcode-->   
+      <br>
+      <p>If we wanted to pipe this statement, it would look like this:</p><br>
+<!--begin.rcode, eval = FALSE
+messy_weather_long_days %>% 
+  unite(
+    c('year', 'month', 'day'), 
+    col = 'date', 
+    sep = '-',
+    na.rm = TRUE)
+end.rcode-->   
+      <br>
+      <p>Now, we can see that observations are stored in more than one row. We can address this by:</p><br>
+<!--begin.rcode
+messy_weather_wide_weather <-
+  pivot_wider(
+    messy_weather_date_fix,
+    names_from = variable, 
+    values_from = value)
+
+messy_weather_wide_weather
+end.rcode-->  
+      <br>
+      <p>If we wanted to pipe this statement, it would look like this:</p><br>
+<!--begin.rcode, eval = FALSE
+messy_weather_date_fix %>% 
+  pivot_wider(
+    names_from = variable, 
+    values_from = value)
+end.rcode-->  
+      <br>
+      <p>This shows that the temperature data is actually two variables smushed together into the same cell. We can address this by:</p><br>
+<!--begin.rcode
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather,
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':')
+
+messy_weather_temperature_fix
+end.rcode--> 
+      <br>
+      <p>If we wanted to pipe this statement, it would look like this:</p><br>
+<!--begin.rcode, eval = FALSE
+messy_weather_wide_weather %>% 
+  separate(
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':')
+end.rcode--> 
+      <br>
+      <p>Our final step in tidying is dealing with the levels of observation. We can see that some of the data were collected at the site level, while others represent the daily observations. We need to separate it into two different datasets and use the <code>distinct</code> function to remove duplicate weather station records:</p><br>
+<!--begin.rcode
+weather_stations <-
+  distinct(
+    select(
+      messy_weather_temperature_fix, 
+      station:name))
+
+observations <-
+  select(
+    messy_weather_temperature_fix, 
+    station, date:temperature_max)
+
+weather_stations
+
+observations
+end.rcode--> 
+      <br>
+      <p>If we wanted to pipe these statements, it would look like this:</p><br>
+<!--begin.rcode, eval = FALSE
+weather_stations <-
+  messy_weather_temperature_fix %>% 
+  select(station:name) %>% 
+  distinct()
+
+observations <-
+  messy_weather_temperature_fix %>% 
+  select(station, date:temperature_max)
+end.rcode--> 
+
+<br>
+<p>We can, of course, pipe the process throughout. Here is what the whole process looks like without pipes:</p><br>
+<!--begin.rcode, message = FALSE
+messy_weather <-
+  read_csv('data/messy_weather.csv')
+
+messy_weather_long_days <- 
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31, 
+    names_to = 'day', 
+    values_to = 'value', 
+    names_prefix = 'march_')
+
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days,
+    c('year', 'month', 'day'), 
+    col = 'date', 
+    sep = '-',
+    na.rm = TRUE)
+
+messy_weather_wide_weather <-
+  pivot_wider(
+    messy_weather_date_fix,
+    names_from = variable, 
+    values_from = value)
+
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather,
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':')
+
+weather_stations <-
+  distinct(
+    select(
+      messy_weather_temperature_fix, 
+      station:name))
+
+observations <-
+  select(
+    messy_weather_temperature_fix, 
+    station, date:temperature_max)
+end.rcode--> 
+
+<br>
+<p>And here's what it looks like with piping:</p><br>
+
+<!--begin.rcode, message = FALSE
+messy_weather_temperature_fix <-
+  read_csv('data/messy_weather.csv') %>% 
+  pivot_longer(
+    cols = march_1:march_31, 
+    names_to = 'day', 
+    values_to = 'value', 
+    names_prefix = 'march_') %>% 
+  unite(
+    c('year', 'month', 'day'), 
+    col = 'date', 
+    sep = '-',
+    na.rm = TRUE) %>% 
+  pivot_wider(
+    names_from = variable, 
+    values_from = value) %>% 
+  separate(
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':')
+
+weather_stations <-
+  messy_weather_temperature_fix %>% 
+  select(station:name) %>% 
+  distinct()
+
+observations <-
+  messy_weather_temperature_fix %>% 
+  select(station, date:temperature_max)
+
+end.rcode--> 
+  
+      <br>
+      <p><i>Note: I'm not showing what this would look like as nested function (it's a mess), but it might be a worthwhile exercise to try to do so</i>.</p>
+      <br>
+      <p>Let's take a moment to clean all of those intermediate steps out of our global environment:</p><br>
+<!--begin.rcode, message = FALSE
+objects()
+
+rm(messy_weather)
+
+rm(messy_weather_long_days)
+
+rm(messy_weather_date_fix)
+
+rm(messy_weather_wide_weather)
+
+rm(messy_weather_temperature_fix)
+
+objects()
+
+end.rcode--> 
+      </div>
+    </div>
+    <!--- mutate --->
+    <div id = "mutate" class = "row">
+    <hr>
+    <h2>Introduction to mutate</h2>
+    <br>
+    <p>The two tibbles that we created above may be tidy, but they aren't really well-formatted. In this section, we'll get a first look at the <code>mutate</code> function. We'll go much more in-depth into this function next week. Let's see how the data are structured:</p><br>
+<!--begin.rcode, message = FALSE
+glimpse(weather_stations)
+
+glimpse(observations)
+end.rcode-->
+    <br>
+    <p>The weather stations look reasonable, but observations are not. First, we see that the date is a character column. Because the date is nearly properly formatted (the international date convention, ISO 8601, is YYYY-MM-DD), we can use a function from the package <b>lubridate</b> to easily change this into a proper date field. With lubridate (and all packages except dplyr and tidyr), I like to specify the name of package in my function call using <code>::</code>.</p>
+ 
+<p>Let's try modifying the date column in base R, changing it from character to numeric using the <code>as_date</code> function. I'm going to make a temporary file, because I don't want to change the original file.</p><br>
+<!--begin.rcode, message = FALSE
+temp <-
+  observations
+
+temp$date <-
+  lubridate::as_date(temp$date)
+
+glimpse(temp)
+end.rcode-->  
+    <br>
+    <p>We can use the tidyverse function <code>mutate</code> to avoid all of the unnecessary writing. Mutate applies a function to each value in a column, but you need to assign the name of the variable.</p><br>
+<!--begin.rcode
+# Mutate without a pipe:
+
+mutate(
+  .data = observations,
+  date = lubridate::as_date(date)) %>% 
+  glimpse()
+
+# Mutate with a pipe
+
+observations %>% 
+  mutate(date = lubridate::as_date(date)) %>% 
+  glimpse()
+end.rcode-->    
+    <br>
+    <p>For our weather variables, each should be formatted as numeric objects. Here's one way we could do that in base R (we'll learn another in a future lesson):</p><br>
+<!--begin.rcode, message = FALSE
+temp <-
+  observations
+
+temp$precip <-
+  as.numeric(temp$precip)
+
+temp$snow <-
+  as.numeric(temp$snow)
+
+temp$temperature_min <-
+  as.numeric(temp$temperature_min)
+
+temp$temperature_max <-
+  as.numeric(temp$temperature_max)
+
+glimpse(temp)
+end.rcode-->   
+    <br>
+    <p>We can use the <code>mutate_at</code> tidyverse function to do the same thing. We specify the date we would like to mutate, the name of the variables we want to mutate using the <code>vars</code> argument, and the function we would like to apply:</p><br>
+<!--begin.rcode
+# Mutate without a pipe:
+
+mutate_at(
+  observations,
+  vars(precip:temperature_max),
+  as.numeric) %>% 
+  glimpse()
+
+# Mutate with a pipe
+
+observations %>% 
+  mutate_at(
+    vars(precip:temperature_max),
+    as.numeric) %>% 
+  glimpse()
+end.rcode-->      
+    <br>
+    <p>Of course, date is not properly formatted because we didn't assing a binding to it. We should pipe it:</p><br>
+<!--begin.rcode
+observations %>% 
+  mutate(date = lubridate::as_date(date)) %>% 
+  mutate_at(
+    vars(precip:temperature_max),
+    as.numeric) %>% 
+  glimpse()
+end.rcode-->  
+<br>
+<p>Should we assign a name to this dataset? Maybe. Replace the original dataset with this one? It's definitely not good practice to do so. With something like this, I prefer to do this as a part of the initial reading/tidying process:</p><br>
+<!--begin.rcode, message = FALSE
+messy_weather_temperature_fix <-
+  read_csv('data/messy_weather.csv') %>%
+  pivot_longer(
+    cols = march_1:march_31,
+    names_to = 'day',
+    values_to = 'value',
+    names_prefix = 'march_') %>%
+  unite(
+    c('year', 'month', 'day'),
+    col = 'date',
+    sep = '-',
+    na.rm = TRUE) %>%
+  pivot_wider(
+    names_from = variable,
+    values_from = value) %>%
+  separate(
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':') %>% 
+  mutate(date = lubridate::as_date(date)) %>% 
+  mutate_at(
+    vars(precip:temperature_max),
+    as.numeric)
+
+weather_stations <-
+  messy_weather_temperature_fix %>%
+  select(station:name) %>% 
+  distinct()
+
+observations <-
+  messy_weather_temperature_fix %>%
+  select(station, date:temperature_max)
+
+glimpse(weather_stations)
+
+glimpse(observations)
+end.rcode-->
+      <br>
+      <p>We will continue to use our weather station and observations tibbles, but our time with the other files is done. Time to clean the environment:</p><br>
+<!--begin.rcode, message = FALSE
+objects()
+
+rm(temp)
+
+rm(messy_weather_temperature_fix)
+
+objects()
+
+end.rcode-->      
+      <br>
+      <p><i>Note: We will cover data mutation much more in-depth in our next lesson!</i></p>
+       
+    </div>
+     <!--- filtering --->
+    <div id = "filtering" class = "row">
+      <hr>
+      <h2>Introduction to filtering</h2>
+      <br>
+      <p>Previously, we filtered data using the base R indexing method. For example, to subset our location data to New York weather stations, we would write the following to query the records:</p>
+<!--begin.rcode, message = FALSE
+weather_stations[weather_stations$state == 'NY',]
+end.rcode-->
+      <br>
+      <p>The tidyverse <code>filter</code> function is much easier to write (and read):</p><br>
+<!--begin.rcode, message = FALSE
+# Filter without a pipe:
+
+filter(weather_stations, state == 'NY')
+
+# Filter with a pipe:
+
+weather_stations %>% 
+  filter(state == 'NY')
+end.rcode-->
+        <br>
+        <p>The utility of <code>filter</code> really emerges when multiple fields are being queried at once. For example, let's use base R to query the stations located in New York with an elevation greater than 100 m above sea level:</p><br>
+<!--begin.rcode, message = FALSE
+weather_stations[weather_stations$state == 'NY' & weather_stations$elevation > 100,]
+end.rcode-->
+        <br>
+        <p>With <code>filter</code>, the code is much more concise:</p><br>
+<!--begin.rcode, message = FALSE
+weather_stations %>% 
+  filter(state == 'NY' & elevation > 100)
+end.rcode-->
+        <br>
+        <p>You can also separate query arguments with a <code>,</code>:</p><br>
+<!--begin.rcode, message = FALSE
+weather_stations %>% 
+  filter(
+    state == 'NY',
+    elevation > 100)
+end.rcode-->
+        <br>
+        <p>Sometimes, I only want to see one of the variables as a result of my queries. I can extract just a variable of interest using the idyverse function <code>pull</code>. For example, I might just want to see the stations that matched my query:</p><br>
+<!--begin.rcode, message = FALSE
+weather_stations %>% 
+  filter(
+    state == 'NY',
+    elevation > 100) %>% 
+  pull()
+end.rcode-->   
+        <br>
+        <p>We'll soon uncover a nicer way to do this, but sometimes I filter a table using a vector of data pulled from a different table. For example, if I wanted to filter observations to those that match my station query, I would do something like this (<i>Note: The curly brackets allow us to evaluate only the output of multiple lines of code)</i>:</p><br>
+      
+<!--begin.rcode, message = FALSE
+observations %>% 
+  filter(
+    station %in% {
+      weather_stations %>% 
+        filter(
+          state == 'NY',
+          elevation > 100) %>% 
+        pull(station)
+    })
+  
+end.rcode-->
+      
+        <br>
+        <p>We can also use functions within our query argument. For example, lubridate has a function <code>year</code> that extracts years from date objects. We can use this to filter the observations to the year 2015:</p>
+<br>
+<!--begin.rcode, message = FALSE
+observations %>% 
+  filter(lubridate::year(date) == 2015)
+end.rcode-->
+     <br>
+     <p>And, of course, can include multiple filter statements. Here I'll use lubridate's <code>day</code> (day of month) and <code>year</code> functions to query to March 15:</p><br>
+<!--begin.rcode, message = FALSE
+observations %>% 
+  filter(
+    lubridate::year(date) == 2015,
+    lubridate::day(date) == 15)
+end.rcode-->
+      <br>
+      <p><i>We will look at more advanced filtering operations in the next lesson</i>!</p>
+      <br>
+    </div>
+    <!--- joins --->
+    <div id = "joins" class = "row">
+      <hr>
+      <h2>Joining data</h2>
+      <br>
+      <p>For our last section today, we'll look at how to join data. Once our data are formatted in a tidy way (i.e., normalized), this is where we can start to make them act like a database. The most fundamental of joins is a <code>left_join</code> between tables that contain <b>primary</b> and <b>foreign</b> keys.</p>
+      <ul>
+      <li><b>Primary key</b>: Column that identifies the table row. Primary keys must be unique to the row!</li>
+      <li><b>Foreign key</b>: Column with values that correspond to a primary key in a different table.</li>
+      </ul>
+      <p>Let's use a <code>left_join</code> to bring our station information back into our observation frame. The tibble <code>weather_stations</code> contains the <b>primary key</b> <code>station</code> and the the tibble <code>observations</code> contains a foreign key with the same name. We specify the join using the <code>by</code>argument.</p><br>
+<!--begin.rcode, message = FALSE
+observations %>% 
+  left_join(
+    weather_stations, 
+    by = 'station')
+end.rcode--> 
+      <br>
+      <p>Your normally interested in a column or two of the joined dataset. For example, maybe you just wanted to know the state of the station that an observation was associated with. You would use <code>select</code> to subset the columns of the table you are joining to your table of interest:</p><br>
+<!--begin.rcode, message = FALSE
+observations %>% 
+  left_join(
+    weather_stations %>% 
+      select(station, state), 
+    by = 'station')
+end.rcode-->
+      <br>
+      <p>Joins become very powerful in combination with filtering. For example, you may want to pull only records associated with New York. You can use an <code>inner_join</code> to join matching records across tables:</p><br>
+<!--begin.rcode, message = FALSE
+observations %>% 
+  inner_join(
+    weather_stations %>% 
+      filter(state == 'NY') %>% 
+      select(station), 
+    by = 'station')
+end.rcode-->
+      
+      <br>
+      <p><b>An important aside!</b> In most instances, it's really important to ensure that your data are normalized before joining -- most especially that your <b>primary key</b> is unique. For example, consider these two tibbles:</p><br>
+<!--begin.rcode, message = FALSE
+temp1 <- 
+  tibble(
+    key = fruit[c(1,1,2)], 
+    b = 3:5)
+
+temp2 <-
+  tibble(
+    id = letters[1:3], 
+    key = fruit[c(1,2,2)])
+
+temp1
+
+temp2
+end.rcode-->
+      <br>
+      <p>Notice that the key for temp1 is not unique. What happens when we join them? Why?</p><br>
+<!--begin.rcode, message = FALSE
+temp1 %>% 
+  left_join(temp2, by = 'key')
+end.rcode-->
+    </div>
+    <br>
+    <p><i>We will continue to explore and use joins throughout the course of this workshop.</i></p>
+    <br>
+    <hr>
+    </main>
+        
+    <footer>
+        <a 
+          href="mailto:evansbr@si.edu" 
+          class="fa fa-envelope fa-2x" 
+          target="_blank" 
+          style = "padding: 1vh 2vw 1vh 15vw; width = 15vw;"></a>
+        <a 
+          href="https://twitter.com/bsevans_unc" 
+          class="fa fa-twitter fa-2x" 
+          target="_blank" 
+          style = "padding: 1vh 2vw 1vh 1vw; ; width = 15vw;"></a>
+        <img
+          src="https://americanindian.si.edu/nationtonation/img/smithsonian-logo-nav.png"
+          style = "float: right; height: 5vh; width: auto; padding-right: 15vw; margin-left: auto;"/>
+    </footer>
+    
+  </body>
+    
+</div>

@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+  
+<html lang="en">
+    
+  <head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+    <title>dataSci</title>
+    <meta charset="utf-8" 
+          name="viewport" 
+          content="width=device-width, initial-scale=1"/>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" 
+          href="css/styles.css" 
+          type="text/css"/>
+    <link rel="icon" 
+          type="image/png" 
+          href = "https://github.com/rstudio/hex-stickers/blob/master/thumbs/pipe.png?raw=true" />
+    <style>
+      :root {
+        font-size: 140%;
+        body {
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 2.25em;
+        }
+      }
+      
+      pre {
+        font-size: .8rem;
+      }
+      
+      code {
+        font-size: inherit;
+      }
+      
+      p, li {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
+      
+      h1{
+        font-size: 1.75rem;
+      }
+      
+      h2{
+        font-size: 1.5rem;
+      }
+      
+      h3{
+        font-size: 1.25rem;
+      }
+      
+      pre {
+        padding-bottom: 1em;
+      }
+      
+      .warning {
+        background-color: #ffffff;
+      }
+      
+      .output {
+        background-color: #ffffff;
+      }
+      
+      .knitr r {
+        background-color: #ffffff;
+      }
+      
+      .rcode {
+        background-color: #ffffff;
+      }
+      
+      .source {
+        background-color: #ffffff;
+      }
+      
+      .MathJax_Display {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
+      
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      
+      html, body {
+        height: 100vh;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      main {
+        flex: 1 0 auto;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        padding-bottom: 5vh;
+      }
+      
+      header {
+        background-color: #FFFFFF;
+        margin-bottom: 1vw;
+      }
+      
+      /*.flex-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }*/
+      
+      .banner-content {
+        margin-top: 1vw;
+        margin-left: 15vw;
+        margin-right: 15vw;
+      }
+      
+    /*.content {
+        padding-bottom: 80px;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        flex-grow: 1; 
+        background-color: #FFFFFF;
+      }*/
+      
+      content {
+        flex-grow: 1;
+      }
+
+      header, main, footer {
+        flex-shrink: 0;
+      }
+      
+      footer {
+        display: flex;
+        background-color: #101820;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 7vh;
+        font-size: .75rem;
+      }
+      
+      .fa-twitter {
+        color: white;
+      }
+      
+      .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+      }
+      
+      .flex-container > div {
+        margin: 1em;
+      }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  </head>
+  
+  <body>
+  
+
+    <nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
+    <div class="container-fluid">
+    <div class="navbar-header">
+    <a class="navbar-brand" href="home.html" style = "font-size: 1.5em">Data Science Workshop</a>
+    </div>
+    <ul class="nav navbar-nav" style = "font-size: 16px">
+    <li><a href="preliminary_exercises.html">Preliminary exercises</a></li>
+    <li><a href="workshop_lessons.html">Workshop lessons</a></li>
+    <li><a href="additional_resources.html">Additional resources</a></li>
+    </ul>
+    </div>
+    </nav>
+    
+    <header>
+      <div class = "banner-content">
+          <h1>Working with Tidy data</h1>
+          <hr>
+      </div>
+    </header>
+        
+    <main>
+      <div id = "overview" class = "row">
+        <h2>Today's workshop:</h2>
+        <br>
+        <a title = "This is not a pipe">
+          <img  src = "https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg"
+                alt="Magritte painting, the treachery of images"
+                style = "float: right; padding-left: 3em; padding-bottom: 3em; width: 40%; height: auto;">
+          </img>
+        </a>
+        <ul>
+          <li><b>The pipe!</b> Nothing has changed coding in R as much as the creation of the pipe. If you don't currently use piping in your code, this lesson will get your code up to the modern era.</li>
+          <li><b>Introduction to mutate</b>: In combination with the pipe, the mutate family of functions will have you writing powerful, concise, and readable code.</li>
+          <li><b>Introduction to filtering</b>: Are the days of subsetting by index over? No. But I have to use indexing in less than 5% of all of my filtering operations. Tidyverse filters are amazing.</li>
+          <li><b>Joining tables</b>: Where tables that are kept separate due to levels of observation suddenly become useable.</li>
+        </ul>
+      <hr>
+      <h2>Set up</h2>
+        <br>
+        <p>If you haven't yet installed lubridate onto your computer, do so now:</p>
+        <br>
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">install.packages</span><span class="hl std">(</span><span class="hl str">'lubridate'</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>Load the following libraries:</p>
+        <br>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
+<span class="hl kwd">library</span><span class="hl std">(lubridate)</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>Make sure that there is a folder called "data" in your working directory:</p><br>
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">list.files</span><span class="hl std">()</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>If you don't see the value "data" in your list:</p>
+        <br>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">dir.create</span><span class="hl std">(</span><span class="hl str">&quot;data&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>Using your bash window or your preferred file management system (e.g., Finder), move "messy_weather.csv" into your data folder.</p>
+      <p>Load the file into R:</p> <br>
+
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">'data/messy_weather.csv'</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+      <br>
+      </div>
+      <!-- nested functions --->
+      <div id = "nested_functions" class = "row">
+        <hr>
+        <h2>Review</h2>
+        <br>
+        <h3><i>Functions</i></h3>
+        <br>
+        <p>Anything that exists in R is an object and anything that happens is a function (<a href="http://user2014.r-project.org/files/chambers.pdf" target = "_blank">John Chambers, userR!2014</a>).
+        
+        <p>Functions can be primitive (call C directly) or written in R.</p><br>
+        
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">`&lt;-`</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## .Primitive(&quot;&lt;-&quot;)
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">`sd`</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## function (x, na.rm = FALSE) 
+## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
+##     na.rm = na.rm))
+## &lt;bytecode: 0x7fbbaeb08780&gt;
+## &lt;environment: namespace:stats&gt;
+</pre></div>
+</div></div>
+        <br>
+        <p>An R function has three parts (From Wickham, <a href = "https://adv-r.hadley.nz/" target = "_blank" >Advanced R</a>):</p>
+        <ul>
+        <li><b>formals</b>: A set of controls on the function</li>
+        <li><b>body</b>: The set of instructions inside the function</li>
+        <li><b>environment</b>: The location of the functions variables</li>
+        </ul>
+        <p>Let's make a simple function called <code>multiple_by_two</code>:</p><br>
+
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">multiply_by_two</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">) {</span>
+    <span class="hl std">x</span><span class="hl opt">*</span><span class="hl num">2</span>
+  <span class="hl std">}</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>And look at the formals, body, and environment:</p><br>
+        
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">formals</span><span class="hl std">(multiply_by_two)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## $x
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">body</span><span class="hl std">(multiply_by_two)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## {
+##     x * 2
+## }
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">environment</span><span class="hl std">(multiply_by_two)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## &lt;environment: R_GlobalEnv&gt;
+</pre></div>
+</div></div>
+        <br>
+        <p>The last object in the body will be passed to the global environment. The others only exist in the environment of the functions body:</p><br>
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">losing_a_y</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">) {</span>
+    <span class="hl std">y</span> <span class="hl kwb">&lt;-</span> <span class="hl std">x</span>
+    <span class="hl std">y</span><span class="hl opt">*</span><span class="hl num">2</span>
+  <span class="hl std">}</span>
+
+<span class="hl kwd">losing_a_y</span><span class="hl std">(</span><span class="hl num">3</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">y</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error in eval(expr, envir, enclos): object 'y' not found
+</pre></div>
+</div></div>
+        <br> 
+        <p>Thus, a function has its own internal environment, but it works within its parent environment (in this case the global environment).</p>
+       <p>Use <code>return</code> to view values at various points in the <b>body</b>:</p><br>
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">losing_a_y</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">) {</span>
+    <span class="hl std">y</span> <span class="hl kwb">&lt;-</span> <span class="hl std">x</span>
+    <span class="hl kwd">return</span><span class="hl std">(y)</span>
+    <span class="hl std">y</span><span class="hl opt">*</span><span class="hl num">2</span>
+  <span class="hl std">}</span>
+
+<span class="hl kwd">losing_a_y</span><span class="hl std">(</span><span class="hl num">3</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 3
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">y</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error in eval(expr, envir, enclos): object 'y' not found
+</pre></div>
+</div></div>
+        <br>
+        
+        <p>You can bind an object inside a function to the parent environment <code><<-</code>:</p><br>
+<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">losing_a_y</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">) {</span>
+    <span class="hl std">y</span> <span class="hl kwb">&lt;&lt;-</span> <span class="hl std">x</span>
+    <span class="hl std">y</span><span class="hl opt">*</span><span class="hl num">2</span>
+  <span class="hl std">}</span>
+
+<span class="hl kwd">losing_a_y</span><span class="hl std">(</span><span class="hl num">3</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">y</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 3
+</pre></div>
+</div></div>
+        <br>
+        <h3><i>Nested functions</i></h3>
+        <br>
+        <p>Functions can be <b>nested</b> within the other. To illustrate nested and non-nested code-writing, we will conduct the following analysis:</p>
+        
+        $$Z_{1} = [1,2,3,4,5]$$
+        $$Z_{2} = 2(Z_{1})$$
+        $$Z_{3} = Z_{2}+1$$
+        
+        <p>The steps in this analysis are <b>chained</b> -- each step is dependent on output from the previous step. In R:</p><br>
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Initial values:</span>
+
+<span class="hl std">my_vector</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>Functions for the second and third steps of this process:</p><br>
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">multiply_by_two</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">) {</span>
+    <span class="hl std">x</span><span class="hl opt">*</span><span class="hl num">2</span>
+  <span class="hl std">}</span>
+
+<span class="hl std">add_one</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">) {</span>
+    <span class="hl std">x</span><span class="hl opt">+</span><span class="hl num">1</span>
+  <span class="hl std">}</span>
+</pre></div>
+</div></div>
+        
+        <br>
+        <p>Non-nested analysis by renaming:</p><br>
+<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Non-nested, new object for each step:</span>
+
+<span class="hl std">my_vector</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span>
+
+<span class="hl std">my_vector2</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">multiply_by_two</span><span class="hl std">(my_vector)</span>
+
+<span class="hl kwd">add_one</span><span class="hl std">(my_vector2)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  3  5  7  9 11
+</pre></div>
+</div></div>
+        
+        <br>
+        <p>Non-nested analysis, overwriting the name (is this good? why or why not?)</p><br>
+<div class="chunk" id="unnamed-chunk-16"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Non-nested, overwrite object for each step:</span>
+
+<span class="hl std">my_vector</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span>
+
+<span class="hl std">my_vector</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">multiply_by_two</span><span class="hl std">(my_vector)</span>
+
+<span class="hl kwd">add_one</span><span class="hl std">(my_vector)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  3  5  7  9 11
+</pre></div>
+</div></div>
+        
+        <br>
+        <p>Nested analysis</p><br>
+<div class="chunk" id="unnamed-chunk-17"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Nested:</span>
+
+<span class="hl kwd">add_one</span><span class="hl std">(</span>
+  <span class="hl kwd">multiply_by_two</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  3  5  7  9 11
+</pre></div>
+</div></div>
+        <br>
+        <br>
+        <p>Strengths and weaknesses of nested and non-nested approaches:</p>
+        <ul>
+        <li><b>Non-nested with new object</b>:
+        <ul>
+        <li>Strength: Easy to read.</li>
+        <li>Weaknesses: Takes up a lot of script space. Includes an intermediate object assignment (`my_vector`) that may be hard to remember.</li>
+        </ul>
+        </li>
+        <li><b>Non-nested with overwritten object</b>:
+        <ul>
+        <li>Strengths: Easy to read. No new names.</li>
+        <li>Weaknesses: Takes up a lot of script space. Loss of the initial value of `z` (<i>never, never, never overwrite assigned objects!</i>).</li>
+        </ul>
+        </li>
+        <li><b>Nested</b>:
+        <ul>
+        <li>Strengths: Concise. No new names.</li>
+        <li>Weaknesses: It can be difficult to read even at modest levels of complexity.</li>
+        </ul>
+        </li>
+        </ul>
+      </div>
+
+      <!--- the pipe --->
+      <div id = "pipe" class = "row">
+        <hr>
+        <h2>The pipe!</h2>
+        <br>
+        <div class = "row">
+          <div class = "col-sm-6">
+          <a title = "Ben Bolker">
+            <img  src = "https://avatars.githubusercontent.com/u/78918?s=460&v=4"
+                  alt="Ben Bolker"
+                  style = "display: block;
+                      margin-left: auto;
+                      margin-right: auto;
+                      padding-left: 0; 
+                      padding-bottom: 2em; 
+                      height:500px; 
+                      width: auto;"></img></a>
+          </div>
+          <div class = "col-sm-6">
+                  <a title = "Pipe operator">
+            <img  src = "https://github.com/rstudio/hex-stickers/blob/master/thumbs/pipe.png?raw=true"
+                  alt="pipe hex"
+                  style = "display: block;
+                      margin-left: auto;
+                      margin-right: auto; 
+                      padding-left: 1; 
+                      padding-bottom: 2em; 
+                      width: auto; 
+                      height: 500px;"></img></a>
+          </div>
+          <br>
+          </div>
+          <p>A <b>pipe operator</b> allows you to set the output of one process as the input of another.</p>
+      </div>
+      <div class = "row">
+        <p>To illustrate what pipe is, let's start return to our simple math problem above.</p>
+        
+        <p>We solved this problem using the chained analysis method:</p><br>
+<div class="chunk" id="unnamed-chunk-18"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">my_vector</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span>
+
+<span class="hl std">my_vector2</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">multiply_by_two</span><span class="hl std">(my_vector)</span>
+
+<span class="hl kwd">add_one</span><span class="hl std">(my_vector2)</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>And the nested analysis method (i.e., a function inside a function):</p><br>
+<div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">add_one</span><span class="hl std">(</span>
+  <span class="hl kwd">multiply_by_two</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span><span class="hl std">))</span>
+</pre></div>
+</div></div>
+        <br>
+        <p>The piped method:</p><br>
+<div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">5</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">multiply_by_two</span><span class="hl std">()</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">add_one</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  3  5  7  9 11
+</pre></div>
+</div></div>
+      <br>
+      <p>Pipes are easy to read! Consider how you would read the piped vs. nested version of the above:</p>
+      <ul>
+        <li><b>Pipe</b>: I created a vector of values, then multiplied each value by two and added one to the result.</li>
+        <li><b>Nested</b>: I applied a function that adds one to the result of the multiplication of a set of values by two.</li>
+      </ul>
+      
+      <p>Soon, our days of confusing, illegibly nested code will be well behind us!</p>
+      <br>
+      <div class = "row">
+      <img  id="gif" 
+            src="https://media1.giphy.com/media/Ys9SXSEczO5nW/200w.webp?cid=790b7611f5ed7acc81331d95a52d2cc6898370c68c1f3422&amp;rid=200w.webp&amp;ct=g" 
+            srcset="https://media1.giphy.com/media/Ys9SXSEczO5nW/200w.webp?cid=790b7611f5ed7acc81331d95a52d2cc6898370c68c1f3422&amp;rid=200w.webp&amp;ct=g 200w,https://media1.giphy.com/media/Ys9SXSEczO5nW/giphy.webp?cid=790b7611f5ed7acc81331d95a52d2cc6898370c68c1f3422&amp;rid=giphy.webp&amp;ct=g 480w," 
+            width="30%" 
+            alt=""
+            style =   "display: block;
+                      margin-left: auto;
+                      margin-right: auto;">
+      </div>
+      <br>
+      <br>
+      <p>Keep our global environment clean:</p><br>
+<div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># See the bindings in your global environment:</span>
+
+<span class="hl kwd">objects</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;add_one&quot;         &quot;losing_a_y&quot;      &quot;messy_weather&quot;   &quot;multiply_by_two&quot;
+## [5] &quot;my_vector&quot;       &quot;my_vector2&quot;      &quot;y&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># Remove objects we won't use again:</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(multiply_by_two)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(losing_a_y)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(y)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(my_vector)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(add_one)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(my_vector2)</span>
+</pre></div>
+</div></div>
+      <br>
+      <hr>
+      <!--- homework review with and without pipe --->
+      <h3>Exercise: The pipe in action!</h3>
+      <br>
+      <p>The NOAA weather data from last week's problem set:</p><br>
+<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 165 x 40
+##    station longitude latitude elevation state name   year month variable march_1
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;  
+##  1 USC000…    -122.      37.9      94.5 CA    BERK…  2010     3 precip   0      
+##  2 USC000…    -122.      37.9      94.5 CA    BERK…  2010     3 snow     0      
+##  3 USC000…    -122.      37.9      94.5 CA    BERK…  2010     3 tempera… 8.9:18…
+##  4 USC003…     -76.4     42.4     293.  NY    ITHA…  2010     3 precip   1.3    
+##  5 USC003…     -76.4     42.4     293.  NY    ITHA…  2010     3 snow     5      
+##  6 USC003…     -76.4     42.4     293.  NY    ITHA…  2010     3 tempera… -0.6:0 
+##  7 USC003…     -79.1     35.9     152.  NC    CHAP…  2010     3 precip   0      
+##  8 USC003…     -79.1     35.9     152.  NC    CHAP…  2010     3 snow     0      
+##  9 USC003…     -79.1     35.9     152.  NC    CHAP…  2010     3 tempera… -3.3:10
+## 10 USC004…     -89.4     43.0     265.  WI    UW A…  2010     3 precip   0      
+## # … with 155 more rows, and 30 more variables: march_2 &lt;chr&gt;, march_3 &lt;chr&gt;,
+## #   march_4 &lt;chr&gt;, march_5 &lt;chr&gt;, march_6 &lt;chr&gt;, march_7 &lt;chr&gt;, march_8 &lt;chr&gt;,
+## #   march_9 &lt;chr&gt;, march_10 &lt;chr&gt;, march_11 &lt;chr&gt;, march_12 &lt;chr&gt;,
+## #   march_13 &lt;chr&gt;, march_14 &lt;chr&gt;, march_15 &lt;chr&gt;, march_16 &lt;chr&gt;,
+## #   march_17 &lt;chr&gt;, march_18 &lt;chr&gt;, march_19 &lt;chr&gt;, march_20 &lt;chr&gt;,
+## #   march_21 &lt;chr&gt;, march_22 &lt;chr&gt;, march_23 &lt;chr&gt;, march_24 &lt;chr&gt;,
+## #   march_25 &lt;chr&gt;, march_26 &lt;chr&gt;, march_27 &lt;chr&gt;, march_28 &lt;chr&gt;,
+## #   march_29 &lt;chr&gt;, march_30 &lt;chr&gt;, march_31 &lt;chr&gt;
+</pre></div>
+</div></div>
+      <br>
+      <p>Normalize the day columns:</p><br>
+<div class="chunk" id="unnamed-chunk-23"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_long_days</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">pivot_longer</span><span class="hl std">(</span>
+    <span class="hl kwc">data</span> <span class="hl std">= messy_weather,</span>
+    <span class="hl kwc">cols</span> <span class="hl std">= march_1</span><span class="hl opt">:</span><span class="hl std">march_31,</span>
+    <span class="hl kwc">names_to</span> <span class="hl std">=</span> <span class="hl str">'day'</span><span class="hl std">,</span>
+    <span class="hl kwc">values_to</span> <span class="hl std">=</span> <span class="hl str">'value'</span><span class="hl std">,</span>
+    <span class="hl kwc">names_prefix</span> <span class="hl std">=</span> <span class="hl str">'march_'</span><span class="hl std">)</span>
+
+<span class="hl std">messy_weather_long_days</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 5,115 x 11
+##    station longitude latitude elevation state name   year month variable day  
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;
+##  1 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   1    
+##  2 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   2    
+##  3 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   3    
+##  4 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   4    
+##  5 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   5    
+##  6 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   6    
+##  7 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   7    
+##  8 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   8    
+##  9 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   9    
+## 10 USC000…     -122.     37.9      94.5 CA    BERK…  2010     3 precip   10   
+## # … with 5,105 more rows, and 1 more variable: value &lt;chr&gt;
+</pre></div>
+</div></div>
+      <br>
+      <p>Normalize the day columns, piped:</p><br>
+<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pivot_longer</span><span class="hl std">(</span>
+    <span class="hl kwc">cols</span> <span class="hl std">= march_1</span><span class="hl opt">:</span><span class="hl std">march_31,</span>
+    <span class="hl kwc">names_to</span> <span class="hl std">=</span> <span class="hl str">'day'</span><span class="hl std">,</span>
+    <span class="hl kwc">values_to</span> <span class="hl std">=</span> <span class="hl str">'value'</span><span class="hl std">,</span>
+    <span class="hl kwc">names_prefix</span> <span class="hl std">=</span> <span class="hl str">'march_'</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+      <br>
+      <p>Normalize the year, month, and day columns:</p><br>
+<div class="chunk" id="unnamed-chunk-25"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_date_fix</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">unite</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_long_days,</span>
+    <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'year'</span><span class="hl std">,</span> <span class="hl str">'month'</span><span class="hl std">,</span> <span class="hl str">'day'</span><span class="hl std">),</span>
+    <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">'date'</span><span class="hl std">,</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">'-'</span><span class="hl std">,</span>
+    <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
+
+<span class="hl std">messy_weather_date_fix</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 5,115 x 9
+##    station    longitude latitude elevation state name     date    variable value
+##    &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;
+##  1 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0    
+##  2 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   10.2 
+##  3 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   22.4 
+##  4 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0    
+##  5 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0    
+##  6 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0    
+##  7 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0    
+##  8 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0.5  
+##  9 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   2.8  
+## 10 USC000406…     -122.     37.9      94.5 CA    BERKELEY 2010-3… precip   0.8  
+## # … with 5,105 more rows
+</pre></div>
+</div></div>
+      <br>
+      <p>Normalize the year, month, and day columns, piped:</p><br>
+<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_long_days</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">unite</span><span class="hl std">(</span>
+    <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'year'</span><span class="hl std">,</span> <span class="hl str">'month'</span><span class="hl std">,</span> <span class="hl str">'day'</span><span class="hl std">),</span>
+    <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">'date'</span><span class="hl std">,</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">'-'</span><span class="hl std">,</span>
+    <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+      <br>
+      <p>Observations are stored in more than one row. We can address this by:</p><br>
+<div class="chunk" id="unnamed-chunk-27"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_wide_weather</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">pivot_wider</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_date_fix,</span>
+    <span class="hl kwc">names_from</span> <span class="hl std">= variable,</span>
+    <span class="hl kwc">values_from</span> <span class="hl std">= value)</span>
+
+<span class="hl std">messy_weather_wide_weather</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1,705 x 10
+##    station longitude latitude elevation state name  date  precip snow 
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
+##  1 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  2 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 10.2   0    
+##  3 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 22.4   0    
+##  4 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  5 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  6 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  7 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  8 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0.5    0    
+##  9 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 2.8    0    
+## 10 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0.8    0    
+## # … with 1,695 more rows, and 1 more variable: temperature_min_max &lt;chr&gt;
+</pre></div>
+</div></div>
+      <br>
+      <p>Piped version:</p><br>
+<div class="chunk" id="unnamed-chunk-28"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_date_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pivot_wider</span><span class="hl std">(</span>
+    <span class="hl kwc">names_from</span> <span class="hl std">= variable,</span>
+    <span class="hl kwc">values_from</span> <span class="hl std">= value)</span>
+</pre></div>
+</div></div>
+      <br>
+      <p>What's wrong with temperature data? Addressing this:</p><br>
+<div class="chunk" id="unnamed-chunk-29"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_temperature_fix</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">separate</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_wide_weather,</span>
+    <span class="hl kwc">col</span> <span class="hl std">= temperature_min_max,</span>
+    <span class="hl kwc">into</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'temperature_min'</span><span class="hl std">,</span> <span class="hl str">'temperature_max'</span><span class="hl std">),</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">':'</span><span class="hl std">)</span>
+
+<span class="hl std">messy_weather_temperature_fix</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1,705 x 11
+##    station longitude latitude elevation state name  date  precip snow 
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;
+##  1 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  2 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 10.2   0    
+##  3 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 22.4   0    
+##  4 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  5 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  6 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  7 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0      0    
+##  8 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0.5    0    
+##  9 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 2.8    0    
+## 10 USC000…     -122.     37.9      94.5 CA    BERK… 2010… 0.8    0    
+## # … with 1,695 more rows, and 2 more variables: temperature_min &lt;chr&gt;,
+## #   temperature_max &lt;chr&gt;
+</pre></div>
+</div></div>
+      <br>
+      <p>Piped version:</p><br>
+<div class="chunk" id="unnamed-chunk-30"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_wide_weather</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">separate</span><span class="hl std">(</span>
+    <span class="hl kwc">col</span> <span class="hl std">= temperature_min_max,</span>
+    <span class="hl kwc">into</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'temperature_min'</span><span class="hl std">,</span> <span class="hl str">'temperature_max'</span><span class="hl std">),</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">':'</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+      <br>
+      <p>Levels of observation:</p><br>
+<div class="chunk" id="unnamed-chunk-31"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">distinct</span><span class="hl std">(</span>
+    <span class="hl kwd">select</span><span class="hl std">(</span>
+      <span class="hl std">messy_weather_temperature_fix,</span>
+      <span class="hl std">station</span><span class="hl opt">:</span><span class="hl std">name))</span>
+
+<span class="hl std">observations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">select</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_temperature_fix,</span>
+    <span class="hl std">station, date</span><span class="hl opt">:</span><span class="hl std">temperature_max)</span>
+
+<span class="hl std">weather_stations</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 5 x 6
+##   station     longitude latitude elevation state name                  
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                 
+## 1 USC00040693    -122.      37.9      94.5 CA    BERKELEY              
+## 2 USC00304174     -76.4     42.4     293.  NY    ITHACA CORNELL UNIV   
+## 3 USC00311677     -79.1     35.9     152.  NC    CHAPEL HILL 2 W       
+## 4 USC00470273     -89.4     43.0     265.  WI    UW ARBORETUM - MADISON
+## 5 USW00094728     -74.0     40.8      39.6 NY    NEW YORK CNTRL PK TWR
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">observations</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1,705 x 6
+##    station     date      precip snow  temperature_min temperature_max
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;          
+##  1 USC00040693 2010-3-1  0      0     8.9             18.3           
+##  2 USC00040693 2010-3-2  10.2   0     9.4             15             
+##  3 USC00040693 2010-3-3  22.4   0     7.2             15             
+##  4 USC00040693 2010-3-4  0      0     3.3             13.9           
+##  5 USC00040693 2010-3-5  0      0     4.4             15.6           
+##  6 USC00040693 2010-3-6  0      0     10              14.4           
+##  7 USC00040693 2010-3-7  0      0     8.3             18.3           
+##  8 USC00040693 2010-3-8  0.5    0     8.3             18.9           
+##  9 USC00040693 2010-3-9  2.8    0     2.8             13.9           
+## 10 USC00040693 2010-3-10 0.8    0     2.8             15             
+## # … with 1,695 more rows
+</pre></div>
+</div></div>
+      <br>
+      <p>Levels of observation, piped:</p><br>
+<div class="chunk" id="unnamed-chunk-32"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">messy_weather_temperature_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(station</span><span class="hl opt">:</span><span class="hl std">name)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">distinct</span><span class="hl std">()</span>
+
+<span class="hl std">observations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">messy_weather_temperature_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(station, date</span><span class="hl opt">:</span><span class="hl std">temperature_max)</span>
+</pre></div>
+</div></div>
+
+<br>
+<p>The whole process looks like without pipes:</p><br>
+<div class="chunk" id="unnamed-chunk-33"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">'data/messy_weather.csv'</span><span class="hl std">)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error: 'data/messy_weather.csv' does not exist in current working directory ('/Users/brianevans/gits/smbc-nzp.github.io/data_science_workshop/lessons').
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">messy_weather_long_days</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">pivot_longer</span><span class="hl std">(</span>
+    <span class="hl kwc">data</span> <span class="hl std">= messy_weather,</span>
+    <span class="hl kwc">cols</span> <span class="hl std">= march_1</span><span class="hl opt">:</span><span class="hl std">march_31,</span>
+    <span class="hl kwc">names_to</span> <span class="hl std">=</span> <span class="hl str">'day'</span><span class="hl std">,</span>
+    <span class="hl kwc">values_to</span> <span class="hl std">=</span> <span class="hl str">'value'</span><span class="hl std">,</span>
+    <span class="hl kwc">names_prefix</span> <span class="hl std">=</span> <span class="hl str">'march_'</span><span class="hl std">)</span>
+
+<span class="hl std">messy_weather_date_fix</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">unite</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_long_days,</span>
+    <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'year'</span><span class="hl std">,</span> <span class="hl str">'month'</span><span class="hl std">,</span> <span class="hl str">'day'</span><span class="hl std">),</span>
+    <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">'date'</span><span class="hl std">,</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">'-'</span><span class="hl std">,</span>
+    <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
+
+<span class="hl std">messy_weather_wide_weather</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">pivot_wider</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_date_fix,</span>
+    <span class="hl kwc">names_from</span> <span class="hl std">= variable,</span>
+    <span class="hl kwc">values_from</span> <span class="hl std">= value)</span>
+
+<span class="hl std">messy_weather_temperature_fix</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">separate</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_wide_weather,</span>
+    <span class="hl kwc">col</span> <span class="hl std">= temperature_min_max,</span>
+    <span class="hl kwc">into</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'temperature_min'</span><span class="hl std">,</span> <span class="hl str">'temperature_max'</span><span class="hl std">),</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">':'</span><span class="hl std">)</span>
+
+<span class="hl std">weather_stations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">distinct</span><span class="hl std">(</span>
+    <span class="hl kwd">select</span><span class="hl std">(</span>
+      <span class="hl std">messy_weather_temperature_fix,</span>
+      <span class="hl std">station</span><span class="hl opt">:</span><span class="hl std">name))</span>
+
+<span class="hl std">observations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">select</span><span class="hl std">(</span>
+    <span class="hl std">messy_weather_temperature_fix,</span>
+    <span class="hl std">station, date</span><span class="hl opt">:</span><span class="hl std">temperature_max)</span>
+</pre></div>
+</div></div>
+
+<br>
+<p>The whole process, piped:</p><br>
+
+<div class="chunk" id="unnamed-chunk-34"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_temperature_fix</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">'data/messy_weather.csv'</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pivot_longer</span><span class="hl std">(</span>
+    <span class="hl kwc">cols</span> <span class="hl std">= march_1</span><span class="hl opt">:</span><span class="hl std">march_31,</span>
+    <span class="hl kwc">names_to</span> <span class="hl std">=</span> <span class="hl str">'day'</span><span class="hl std">,</span>
+    <span class="hl kwc">values_to</span> <span class="hl std">=</span> <span class="hl str">'value'</span><span class="hl std">,</span>
+    <span class="hl kwc">names_prefix</span> <span class="hl std">=</span> <span class="hl str">'march_'</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">unite</span><span class="hl std">(</span>
+    <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'year'</span><span class="hl std">,</span> <span class="hl str">'month'</span><span class="hl std">,</span> <span class="hl str">'day'</span><span class="hl std">),</span>
+    <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">'date'</span><span class="hl std">,</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">'-'</span><span class="hl std">,</span>
+    <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pivot_wider</span><span class="hl std">(</span>
+    <span class="hl kwc">names_from</span> <span class="hl std">= variable,</span>
+    <span class="hl kwc">values_from</span> <span class="hl std">= value)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">separate</span><span class="hl std">(</span>
+    <span class="hl kwc">col</span> <span class="hl std">= temperature_min_max,</span>
+    <span class="hl kwc">into</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'temperature_min'</span><span class="hl std">,</span> <span class="hl str">'temperature_max'</span><span class="hl std">),</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">':'</span><span class="hl std">)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error: 'data/messy_weather.csv' does not exist in current working directory ('/Users/brianevans/gits/smbc-nzp.github.io/data_science_workshop/lessons').
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">messy_weather_temperature_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(station</span><span class="hl opt">:</span><span class="hl std">name)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">distinct</span><span class="hl std">()</span>
+
+<span class="hl std">observations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">messy_weather_temperature_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(station, date</span><span class="hl opt">:</span><span class="hl std">temperature_max)</span>
+</pre></div>
+</div></div>
+  
+      <br>
+      <p>Clean our global environment:</p><br>
+<div class="chunk" id="unnamed-chunk-35"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">objects</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;messy_weather&quot;                 &quot;messy_weather_date_fix&quot;       
+## [3] &quot;messy_weather_long_days&quot;       &quot;messy_weather_temperature_fix&quot;
+## [5] &quot;messy_weather_wide_weather&quot;    &quot;observations&quot;                 
+## [7] &quot;weather_stations&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">rm</span><span class="hl std">(messy_weather)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(messy_weather_long_days)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(messy_weather_date_fix)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(messy_weather_wide_weather)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(messy_weather_temperature_fix)</span>
+
+<span class="hl kwd">objects</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;observations&quot;     &quot;weather_stations&quot;
+</pre></div>
+</div></div>
+      </div>
+    </div>
+    <!--- mutate --->
+    <div id = "mutate" class = "row">
+    <hr>
+    <h2>Introduction to mutate</h2>
+    <br>
+    <p>Are two tibbles are tidy, but are they well formatted?</p><br>
+<div class="chunk" id="unnamed-chunk-36"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">glimpse</span><span class="hl std">(weather_stations)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 5
+## Columns: 6
+## $ station   &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00304174&quot;, &quot;USC00311677&quot;, &quot;USC00470273&quot;,…
+## $ longitude &lt;dbl&gt; -122.2606, -76.4492, -79.0794, -89.4286, -73.9692
+## $ latitude  &lt;dbl&gt; 37.8744, 42.4492, 35.9086, 43.0411, 40.7789
+## $ elevation &lt;dbl&gt; 94.5, 292.6, 152.4, 265.2, 39.6
+## $ state     &lt;chr&gt; &quot;CA&quot;, &quot;NY&quot;, &quot;NC&quot;, &quot;WI&quot;, &quot;NY&quot;
+## $ name      &lt;chr&gt; &quot;BERKELEY&quot;, &quot;ITHACA CORNELL UNIV&quot;, &quot;CHAPEL HILL 2 W&quot;, &quot;UW A…
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">glimpse</span><span class="hl std">(observations)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;chr&gt; &quot;2010-3-1&quot;, &quot;2010-3-2&quot;, &quot;2010-3-3&quot;, &quot;2010-3-4&quot;, &quot;2010…
+## $ precip          &lt;chr&gt; &quot;0&quot;, &quot;10.2&quot;, &quot;22.4&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0.5&quot;, &quot;2.8&quot;…
+## $ snow            &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;…
+## $ temperature_min &lt;chr&gt; &quot;8.9&quot;, &quot;9.4&quot;, &quot;7.2&quot;, &quot;3.3&quot;, &quot;4.4&quot;, &quot;10&quot;, &quot;8.3&quot;, &quot;8.3&quot;…
+## $ temperature_max &lt;chr&gt; &quot;18.3&quot;, &quot;15&quot;, &quot;15&quot;, &quot;13.9&quot;, &quot;15.6&quot;, &quot;14.4&quot;, &quot;18.3&quot;, &quot;…
+</pre></div>
+</div></div>
+    <br>
+    <p>We can use a function from the package <b>lubridate</b> to easily change the date into a proper date field. I like to specify the name of package in my function call using <code>::</code>.</p>
+<br>
+<p>Old school way of handling this:</p><br>
+<div class="chunk" id="unnamed-chunk-37"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">temp</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">observations</span>
+
+<span class="hl std">temp</span><span class="hl opt">$</span><span class="hl std">date</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">lubridate</span><span class="hl opt">::</span><span class="hl kwd">as_date</span><span class="hl std">(temp</span><span class="hl opt">$</span><span class="hl std">date)</span>
+
+<span class="hl kwd">glimpse</span><span class="hl std">(temp)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;date&gt; 2010-03-01, 2010-03-02, 2010-03-03, 2010-03-04, 2010…
+## $ precip          &lt;chr&gt; &quot;0&quot;, &quot;10.2&quot;, &quot;22.4&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0.5&quot;, &quot;2.8&quot;…
+## $ snow            &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;…
+## $ temperature_min &lt;chr&gt; &quot;8.9&quot;, &quot;9.4&quot;, &quot;7.2&quot;, &quot;3.3&quot;, &quot;4.4&quot;, &quot;10&quot;, &quot;8.3&quot;, &quot;8.3&quot;…
+## $ temperature_max &lt;chr&gt; &quot;18.3&quot;, &quot;15&quot;, &quot;15&quot;, &quot;13.9&quot;, &quot;15.6&quot;, &quot;14.4&quot;, &quot;18.3&quot;, &quot;…
+</pre></div>
+</div></div>
+    <br>
+    <p>Mutate way of handling this:</p><br>
+<div class="chunk" id="unnamed-chunk-38"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Mutate without a pipe:</span>
+
+<span class="hl kwd">mutate</span><span class="hl std">(</span>
+  <span class="hl kwc">.data</span> <span class="hl std">= observations,</span>
+  <span class="hl kwc">date</span> <span class="hl std">= lubridate</span><span class="hl opt">::</span><span class="hl kwd">as_date</span><span class="hl std">(date))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">glimpse</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;date&gt; 2010-03-01, 2010-03-02, 2010-03-03, 2010-03-04, 2010…
+## $ precip          &lt;chr&gt; &quot;0&quot;, &quot;10.2&quot;, &quot;22.4&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0.5&quot;, &quot;2.8&quot;…
+## $ snow            &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;…
+## $ temperature_min &lt;chr&gt; &quot;8.9&quot;, &quot;9.4&quot;, &quot;7.2&quot;, &quot;3.3&quot;, &quot;4.4&quot;, &quot;10&quot;, &quot;8.3&quot;, &quot;8.3&quot;…
+## $ temperature_max &lt;chr&gt; &quot;18.3&quot;, &quot;15&quot;, &quot;15&quot;, &quot;13.9&quot;, &quot;15.6&quot;, &quot;14.4&quot;, &quot;18.3&quot;, &quot;…
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># Mutate with a pipe</span>
+
+<span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">date</span> <span class="hl std">= lubridate</span><span class="hl opt">::</span><span class="hl kwd">as_date</span><span class="hl std">(date))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">glimpse</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;date&gt; 2010-03-01, 2010-03-02, 2010-03-03, 2010-03-04, 2010…
+## $ precip          &lt;chr&gt; &quot;0&quot;, &quot;10.2&quot;, &quot;22.4&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0.5&quot;, &quot;2.8&quot;…
+## $ snow            &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;…
+## $ temperature_min &lt;chr&gt; &quot;8.9&quot;, &quot;9.4&quot;, &quot;7.2&quot;, &quot;3.3&quot;, &quot;4.4&quot;, &quot;10&quot;, &quot;8.3&quot;, &quot;8.3&quot;…
+## $ temperature_max &lt;chr&gt; &quot;18.3&quot;, &quot;15&quot;, &quot;15&quot;, &quot;13.9&quot;, &quot;15.6&quot;, &quot;14.4&quot;, &quot;18.3&quot;, &quot;…
+</pre></div>
+</div></div>
+    <br>
+    <p>The weather variables should be formatted as numeric objects.</p>
+    <p>Here's the old school way of handling this:</p><br>
+<div class="chunk" id="unnamed-chunk-39"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">temp</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">observations</span>
+
+<span class="hl std">temp</span><span class="hl opt">$</span><span class="hl std">precip</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">as.numeric</span><span class="hl std">(temp</span><span class="hl opt">$</span><span class="hl std">precip)</span>
+
+<span class="hl std">temp</span><span class="hl opt">$</span><span class="hl std">snow</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">as.numeric</span><span class="hl std">(temp</span><span class="hl opt">$</span><span class="hl std">snow)</span>
+
+<span class="hl std">temp</span><span class="hl opt">$</span><span class="hl std">temperature_min</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">as.numeric</span><span class="hl std">(temp</span><span class="hl opt">$</span><span class="hl std">temperature_min)</span>
+
+<span class="hl std">temp</span><span class="hl opt">$</span><span class="hl std">temperature_max</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">as.numeric</span><span class="hl std">(temp</span><span class="hl opt">$</span><span class="hl std">temperature_max)</span>
+
+<span class="hl kwd">glimpse</span><span class="hl std">(temp)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;chr&gt; &quot;2010-3-1&quot;, &quot;2010-3-2&quot;, &quot;2010-3-3&quot;, &quot;2010-3-4&quot;, &quot;2010…
+## $ precip          &lt;dbl&gt; 0.0, 10.2, 22.4, 0.0, 0.0, 0.0, 0.0, 0.5, 2.8, 0.8, 0…
+## $ snow            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ temperature_min &lt;dbl&gt; 8.9, 9.4, 7.2, 3.3, 4.4, 10.0, 8.3, 8.3, 2.8, 2.8, 4.…
+## $ temperature_max &lt;dbl&gt; 18.3, 15.0, 15.0, 13.9, 15.6, 14.4, 18.3, 18.9, 13.9,…
+</pre></div>
+</div></div>
+    <br>
+    <p>Modifying the variables using <code>mutate_at</code>:</p><br>
+<div class="chunk" id="unnamed-chunk-40"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Mutate without a pipe:</span>
+
+<span class="hl kwd">mutate_at</span><span class="hl std">(</span>
+  <span class="hl std">observations,</span>
+  <span class="hl kwd">vars</span><span class="hl std">(precip</span><span class="hl opt">:</span><span class="hl std">temperature_max),</span>
+  <span class="hl std">as.numeric)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">glimpse</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;chr&gt; &quot;2010-3-1&quot;, &quot;2010-3-2&quot;, &quot;2010-3-3&quot;, &quot;2010-3-4&quot;, &quot;2010…
+## $ precip          &lt;dbl&gt; 0.0, 10.2, 22.4, 0.0, 0.0, 0.0, 0.0, 0.5, 2.8, 0.8, 0…
+## $ snow            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ temperature_min &lt;dbl&gt; 8.9, 9.4, 7.2, 3.3, 4.4, 10.0, 8.3, 8.3, 2.8, 2.8, 4.…
+## $ temperature_max &lt;dbl&gt; 18.3, 15.0, 15.0, 13.9, 15.6, 14.4, 18.3, 18.9, 13.9,…
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># Mutate with a pipe</span>
+
+<span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate_at</span><span class="hl std">(</span>
+    <span class="hl kwd">vars</span><span class="hl std">(precip</span><span class="hl opt">:</span><span class="hl std">temperature_max),</span>
+    <span class="hl std">as.numeric)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">glimpse</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;chr&gt; &quot;2010-3-1&quot;, &quot;2010-3-2&quot;, &quot;2010-3-3&quot;, &quot;2010-3-4&quot;, &quot;2010…
+## $ precip          &lt;dbl&gt; 0.0, 10.2, 22.4, 0.0, 0.0, 0.0, 0.0, 0.5, 2.8, 0.8, 0…
+## $ snow            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ temperature_min &lt;dbl&gt; 8.9, 9.4, 7.2, 3.3, 4.4, 10.0, 8.3, 8.3, 2.8, 2.8, 4.…
+## $ temperature_max &lt;dbl&gt; 18.3, 15.0, 15.0, 13.9, 15.6, 14.4, 18.3, 18.9, 13.9,…
+</pre></div>
+</div></div>
+    <br>
+    <p>Using pipe to add date into the mix:</p><br>
+<div class="chunk" id="unnamed-chunk-41"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">date</span> <span class="hl std">= lubridate</span><span class="hl opt">::</span><span class="hl kwd">as_date</span><span class="hl std">(date))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate_at</span><span class="hl std">(</span>
+    <span class="hl kwd">vars</span><span class="hl std">(precip</span><span class="hl opt">:</span><span class="hl std">temperature_max),</span>
+    <span class="hl std">as.numeric)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">glimpse</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;date&gt; 2010-03-01, 2010-03-02, 2010-03-03, 2010-03-04, 2010…
+## $ precip          &lt;dbl&gt; 0.0, 10.2, 22.4, 0.0, 0.0, 0.0, 0.0, 0.5, 2.8, 0.8, 0…
+## $ snow            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ temperature_min &lt;dbl&gt; 8.9, 9.4, 7.2, 3.3, 4.4, 10.0, 8.3, 8.3, 2.8, 2.8, 4.…
+## $ temperature_max &lt;dbl&gt; 18.3, 15.0, 15.0, 13.9, 15.6, 14.4, 18.3, 18.9, 13.9,…
+</pre></div>
+</div></div>
+<br>
+<p>Should we assign a name to this dataset? Maybe. Here's another option:</p><br>
+<div class="chunk" id="unnamed-chunk-42"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">messy_weather_temperature_fix</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">'data/messy_weather.csv'</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pivot_longer</span><span class="hl std">(</span>
+    <span class="hl kwc">cols</span> <span class="hl std">= march_1</span><span class="hl opt">:</span><span class="hl std">march_31,</span>
+    <span class="hl kwc">names_to</span> <span class="hl std">=</span> <span class="hl str">'day'</span><span class="hl std">,</span>
+    <span class="hl kwc">values_to</span> <span class="hl std">=</span> <span class="hl str">'value'</span><span class="hl std">,</span>
+    <span class="hl kwc">names_prefix</span> <span class="hl std">=</span> <span class="hl str">'march_'</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">unite</span><span class="hl std">(</span>
+    <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'year'</span><span class="hl std">,</span> <span class="hl str">'month'</span><span class="hl std">,</span> <span class="hl str">'day'</span><span class="hl std">),</span>
+    <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">'date'</span><span class="hl std">,</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">'-'</span><span class="hl std">,</span>
+    <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pivot_wider</span><span class="hl std">(</span>
+    <span class="hl kwc">names_from</span> <span class="hl std">= variable,</span>
+    <span class="hl kwc">values_from</span> <span class="hl std">= value)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">separate</span><span class="hl std">(</span>
+    <span class="hl kwc">col</span> <span class="hl std">= temperature_min_max,</span>
+    <span class="hl kwc">into</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'temperature_min'</span><span class="hl std">,</span> <span class="hl str">'temperature_max'</span><span class="hl std">),</span>
+    <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">':'</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate</span><span class="hl std">(</span><span class="hl kwc">date</span> <span class="hl std">= lubridate</span><span class="hl opt">::</span><span class="hl kwd">as_date</span><span class="hl std">(date))</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">mutate_at</span><span class="hl std">(</span>
+    <span class="hl kwd">vars</span><span class="hl std">(precip</span><span class="hl opt">:</span><span class="hl std">temperature_max),</span>
+    <span class="hl std">as.numeric)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error: 'data/messy_weather.csv' does not exist in current working directory ('/Users/brianevans/gits/smbc-nzp.github.io/data_science_workshop/lessons').
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">messy_weather_temperature_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(station</span><span class="hl opt">:</span><span class="hl std">name)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">distinct</span><span class="hl std">()</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error in select(., station:name): object 'messy_weather_temperature_fix' not found
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl std">messy_weather_temperature_fix</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(station, date</span><span class="hl opt">:</span><span class="hl std">temperature_max)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">## Error in select(., station, date:temperature_max): object 'messy_weather_temperature_fix' not found
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">glimpse</span><span class="hl std">(weather_stations)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 5
+## Columns: 6
+## $ station   &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00304174&quot;, &quot;USC00311677&quot;, &quot;USC00470273&quot;,…
+## $ longitude &lt;dbl&gt; -122.2606, -76.4492, -79.0794, -89.4286, -73.9692
+## $ latitude  &lt;dbl&gt; 37.8744, 42.4492, 35.9086, 43.0411, 40.7789
+## $ elevation &lt;dbl&gt; 94.5, 292.6, 152.4, 265.2, 39.6
+## $ state     &lt;chr&gt; &quot;CA&quot;, &quot;NY&quot;, &quot;NC&quot;, &quot;WI&quot;, &quot;NY&quot;
+## $ name      &lt;chr&gt; &quot;BERKELEY&quot;, &quot;ITHACA CORNELL UNIV&quot;, &quot;CHAPEL HILL 2 W&quot;, &quot;UW A…
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">glimpse</span><span class="hl std">(observations)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Rows: 1,705
+## Columns: 6
+## $ station         &lt;chr&gt; &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC00040693&quot;, &quot;USC0004…
+## $ date            &lt;chr&gt; &quot;2010-3-1&quot;, &quot;2010-3-2&quot;, &quot;2010-3-3&quot;, &quot;2010-3-4&quot;, &quot;2010…
+## $ precip          &lt;chr&gt; &quot;0&quot;, &quot;10.2&quot;, &quot;22.4&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0.5&quot;, &quot;2.8&quot;…
+## $ snow            &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;…
+## $ temperature_min &lt;chr&gt; &quot;8.9&quot;, &quot;9.4&quot;, &quot;7.2&quot;, &quot;3.3&quot;, &quot;4.4&quot;, &quot;10&quot;, &quot;8.3&quot;, &quot;8.3&quot;…
+## $ temperature_max &lt;chr&gt; &quot;18.3&quot;, &quot;15&quot;, &quot;15&quot;, &quot;13.9&quot;, &quot;15.6&quot;, &quot;14.4&quot;, &quot;18.3&quot;, &quot;…
+</pre></div>
+</div></div>
+      <br>
+      <p>Time to clean the environment:</p><br>
+<div class="chunk" id="unnamed-chunk-43"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">objects</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;observations&quot;     &quot;temp&quot;             &quot;weather_stations&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">rm</span><span class="hl std">(temp)</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(messy_weather_temperature_fix)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning in rm(messy_weather_temperature_fix): object
+## 'messy_weather_temperature_fix' not found
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">objects</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;observations&quot;     &quot;weather_stations&quot;
+</pre></div>
+</div></div>
+      <br>
+      <p><i>Note: We will cover data mutation much more in-depth in our next lesson!</i></p>
+       
+    </div>
+     <!--- filtering --->
+    <div id = "filtering" class = "row">
+      <hr>
+      <h2>Introduction to filtering</h2>
+      <br>
+      <p>Base R filtering:</p>
+<div class="chunk" id="unnamed-chunk-44"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations[weather_stations</span><span class="hl opt">$</span><span class="hl std">state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">,]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 2 x 6
+##   station     longitude latitude elevation state name                 
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                
+## 1 USC00304174     -76.4     42.4     293.  NY    ITHACA CORNELL UNIV  
+## 2 USW00094728     -74.0     40.8      39.6 NY    NEW YORK CNTRL PK TWR
+</pre></div>
+</div></div>
+      <br>
+      <p>The tidyverse <code>filter</code> function is much easier to write (and read):</p><br>
+<div class="chunk" id="unnamed-chunk-45"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Filter without a pipe:</span>
+
+<span class="hl kwd">filter</span><span class="hl std">(weather_stations, state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 2 x 6
+##   station     longitude latitude elevation state name                 
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                
+## 1 USC00304174     -76.4     42.4     293.  NY    ITHACA CORNELL UNIV  
+## 2 USW00094728     -74.0     40.8      39.6 NY    NEW YORK CNTRL PK TWR
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># Filter with a pipe:</span>
+
+<span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 2 x 6
+##   station     longitude latitude elevation state name                 
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                
+## 1 USC00304174     -76.4     42.4     293.  NY    ITHACA CORNELL UNIV  
+## 2 USW00094728     -74.0     40.8      39.6 NY    NEW YORK CNTRL PK TWR
+</pre></div>
+</div></div>
+        <br>
+        <p>Filtering multiple fields with base R:</p><br>
+<div class="chunk" id="unnamed-chunk-46"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations[weather_stations</span><span class="hl opt">$</span><span class="hl std">state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span> <span class="hl opt">&amp;</span> <span class="hl std">weather_stations</span><span class="hl opt">$</span><span class="hl std">elevation</span> <span class="hl opt">&gt;</span> <span class="hl num">100</span><span class="hl std">,]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1 x 6
+##   station     longitude latitude elevation state name               
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
+## 1 USC00304174     -76.4     42.4      293. NY    ITHACA CORNELL UNIV
+</pre></div>
+</div></div>
+        <br>
+        <p>Filtering multiple fields using <code>filter</code>:</p><br>
+<div class="chunk" id="unnamed-chunk-47"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span> <span class="hl opt">&amp;</span> <span class="hl std">elevation</span> <span class="hl opt">&gt;</span> <span class="hl num">100</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1 x 6
+##   station     longitude latitude elevation state name               
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
+## 1 USC00304174     -76.4     42.4      293. NY    ITHACA CORNELL UNIV
+</pre></div>
+</div></div>
+        <br>
+        <p>You can also separate query arguments with a <code>,</code>:</p><br>
+<div class="chunk" id="unnamed-chunk-48"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span>
+    <span class="hl std">state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">,</span>
+    <span class="hl std">elevation</span> <span class="hl opt">&gt;</span> <span class="hl num">100</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1 x 6
+##   station     longitude latitude elevation state name               
+##   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
+## 1 USC00304174     -76.4     42.4      293. NY    ITHACA CORNELL UNIV
+</pre></div>
+</div></div>
+        <br>
+        <p>You can extract just a variable of interest using the tidyverse function <code>pull</code>:</p><br>
+<div class="chunk" id="unnamed-chunk-49"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span>
+    <span class="hl std">state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">,</span>
+    <span class="hl std">elevation</span> <span class="hl opt">&gt;</span> <span class="hl num">100</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">pull</span><span class="hl std">()</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;ITHACA CORNELL UNIV&quot;
+</pre></div>
+</div></div>
+        <br>
+        <p>And even use the results to query another dataset:</p><br>
+      
+<div class="chunk" id="unnamed-chunk-50"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span>
+    <span class="hl std">station</span> <span class="hl opt">%in%</span> <span class="hl std">{</span>
+      <span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+        <span class="hl kwd">filter</span><span class="hl std">(</span>
+          <span class="hl std">state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">,</span>
+          <span class="hl std">elevation</span> <span class="hl opt">&gt;</span> <span class="hl num">100</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+        <span class="hl kwd">pull</span><span class="hl std">(station)</span>
+    <span class="hl std">})</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 341 x 6
+##    station     date      precip snow  temperature_min temperature_max
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;          
+##  1 USC00304174 2010-3-1  1.3    5     -0.6            0              
+##  2 USC00304174 2010-3-2  0.8    0     -1.1            1.7            
+##  3 USC00304174 2010-3-3  2      25    -1.7            2.2            
+##  4 USC00304174 2010-3-4  1.3    0     -5.6            1.1            
+##  5 USC00304174 2010-3-5  0      0     -10.6           1.7            
+##  6 USC00304174 2010-3-6  0      0     -14.4           2.2            
+##  7 USC00304174 2010-3-7  0      0     -10.6           4.4            
+##  8 USC00304174 2010-3-8  0      0     -6.1            9.4            
+##  9 USC00304174 2010-3-9  0      0     -5.6            9.4            
+## 10 USC00304174 2010-3-10 0      0     -5              11.1           
+## # … with 331 more rows
+</pre></div>
+</div></div>
+      
+        <br>
+        <p>We can also use functions within our query argument. For example, lubridate has a function <code>year</code> that extracts years from date objects:</p>
+<br>
+<div class="chunk" id="unnamed-chunk-51"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(lubridate</span><span class="hl opt">::</span><span class="hl kwd">year</span><span class="hl std">(date)</span> <span class="hl opt">==</span> <span class="hl num">2015</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 155 x 6
+##    station     date      precip snow  temperature_min temperature_max
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;          
+##  1 USC00040693 2015-3-1  0      &lt;NA&gt;  7.2             15.6           
+##  2 USC00040693 2015-3-2  0      &lt;NA&gt;  7.8             20.6           
+##  3 USC00040693 2015-3-3  0      &lt;NA&gt;  6.1             17.2           
+##  4 USC00040693 2015-3-4  0      &lt;NA&gt;  6.7             20             
+##  5 USC00040693 2015-3-5  0      &lt;NA&gt;  7.2             20.6           
+##  6 USC00040693 2015-3-6  0      &lt;NA&gt;  7.8             22.8           
+##  7 USC00040693 2015-3-7  0      &lt;NA&gt;  8.3             23.9           
+##  8 USC00040693 2015-3-8  0      &lt;NA&gt;  7.2             25             
+##  9 USC00040693 2015-3-9  0      &lt;NA&gt;  8.9             21.1           
+## 10 USC00040693 2015-3-10 0      &lt;NA&gt;  8.9             19.4           
+## # … with 145 more rows
+</pre></div>
+</div></div>
+     <br>
+     <p>And, include multiple filter statements:</p><br>
+<div class="chunk" id="unnamed-chunk-52"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span>
+    <span class="hl std">lubridate</span><span class="hl opt">::</span><span class="hl kwd">year</span><span class="hl std">(date)</span> <span class="hl opt">==</span> <span class="hl num">2015</span><span class="hl std">,</span>
+    <span class="hl std">lubridate</span><span class="hl opt">::</span><span class="hl kwd">day</span><span class="hl std">(date)</span> <span class="hl opt">==</span> <span class="hl num">15</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 5 x 6
+##   station     date      precip snow  temperature_min temperature_max
+##   &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;          
+## 1 USC00040693 2015-3-15 0      &lt;NA&gt;  13.3            27.8           
+## 2 USC00304174 2015-3-15 0.3    0     0               5.6            
+## 3 USC00311677 2015-3-15 3.8    &lt;NA&gt;  6.1             15             
+## 4 USC00470273 2015-3-15 0      0     -4.4            16.1           
+## 5 USW00094728 2015-3-15 0      0     2.2             6.7
+</pre></div>
+</div></div>
+      <br>
+      <p><i>We will look at more advanced filtering operations in the next lesson</i>!</p>
+      <br>
+    </div>
+    <!--- joins --->
+    <div id = "joins" class = "row">
+      <hr>
+      <h2>Joining data</h2>
+      <br>
+      <p>Joining gives the tidy data data-based-like functionality.</p>
+      <p>The most fundamental of joins is a <code>left_join</code> between tables that contain <b>primary</b> and <b>foreign</b> keys.</p>
+      <ul>
+      <li><b>Primary key</b>: Column that identifies the table row. Primary keys must be unique to the row!</li>
+      <li><b>Foreign key</b>: Column with values that correspond to a primary key in a different table.</li>
+      </ul>
+      <p>Use <code>left_join</code> to bring our station information and our observation frame:</p><br>
+<div class="chunk" id="unnamed-chunk-53"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">left_join</span><span class="hl std">(</span>
+    <span class="hl std">weather_stations,</span>
+    <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl str">'station'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1,705 x 11
+##    station date  precip snow  temperature_min temperature_max longitude latitude
+##    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;               &lt;dbl&gt;    &lt;dbl&gt;
+##  1 USC000… 2010… 0      0     8.9             18.3                -122.     37.9
+##  2 USC000… 2010… 10.2   0     9.4             15                  -122.     37.9
+##  3 USC000… 2010… 22.4   0     7.2             15                  -122.     37.9
+##  4 USC000… 2010… 0      0     3.3             13.9                -122.     37.9
+##  5 USC000… 2010… 0      0     4.4             15.6                -122.     37.9
+##  6 USC000… 2010… 0      0     10              14.4                -122.     37.9
+##  7 USC000… 2010… 0      0     8.3             18.3                -122.     37.9
+##  8 USC000… 2010… 0.5    0     8.3             18.9                -122.     37.9
+##  9 USC000… 2010… 2.8    0     2.8             13.9                -122.     37.9
+## 10 USC000… 2010… 0.8    0     2.8             15                  -122.     37.9
+## # … with 1,695 more rows, and 3 more variables: elevation &lt;dbl&gt;, state &lt;chr&gt;,
+## #   name &lt;chr&gt;
+</pre></div>
+</div></div>
+      <br>
+      <p>Left join, returning a subset of columns:</p><br>
+<div class="chunk" id="unnamed-chunk-54"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">left_join</span><span class="hl std">(</span>
+    <span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+      <span class="hl kwd">select</span><span class="hl std">(station, state),</span>
+    <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl str">'station'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1,705 x 7
+##    station     date      precip snow  temperature_min temperature_max state
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;           &lt;chr&gt;
+##  1 USC00040693 2010-3-1  0      0     8.9             18.3            CA   
+##  2 USC00040693 2010-3-2  10.2   0     9.4             15              CA   
+##  3 USC00040693 2010-3-3  22.4   0     7.2             15              CA   
+##  4 USC00040693 2010-3-4  0      0     3.3             13.9            CA   
+##  5 USC00040693 2010-3-5  0      0     4.4             15.6            CA   
+##  6 USC00040693 2010-3-6  0      0     10              14.4            CA   
+##  7 USC00040693 2010-3-7  0      0     8.3             18.3            CA   
+##  8 USC00040693 2010-3-8  0.5    0     8.3             18.9            CA   
+##  9 USC00040693 2010-3-9  2.8    0     2.8             13.9            CA   
+## 10 USC00040693 2010-3-10 0.8    0     2.8             15              CA   
+## # … with 1,695 more rows
+</pre></div>
+</div></div>
+      <br>
+      <p>Joins become very powerful in combination with filtering. Use an <code>inner_join</code> to join matching records across tables:</p><br>
+<div class="chunk" id="unnamed-chunk-55"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">observations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">inner_join</span><span class="hl std">(</span>
+    <span class="hl std">weather_stations</span> <span class="hl opt">%&gt;%</span>
+      <span class="hl kwd">filter</span><span class="hl std">(state</span> <span class="hl opt">==</span> <span class="hl str">'NY'</span><span class="hl std">)</span> <span class="hl opt">%&gt;%</span>
+      <span class="hl kwd">select</span><span class="hl std">(station),</span>
+    <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl str">'station'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 682 x 6
+##    station     date      precip snow  temperature_min temperature_max
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;          
+##  1 USC00304174 2010-3-1  1.3    5     -0.6            0              
+##  2 USC00304174 2010-3-2  0.8    0     -1.1            1.7            
+##  3 USC00304174 2010-3-3  2      25    -1.7            2.2            
+##  4 USC00304174 2010-3-4  1.3    0     -5.6            1.1            
+##  5 USC00304174 2010-3-5  0      0     -10.6           1.7            
+##  6 USC00304174 2010-3-6  0      0     -14.4           2.2            
+##  7 USC00304174 2010-3-7  0      0     -10.6           4.4            
+##  8 USC00304174 2010-3-8  0      0     -6.1            9.4            
+##  9 USC00304174 2010-3-9  0      0     -5.6            9.4            
+## 10 USC00304174 2010-3-10 0      0     -5              11.1           
+## # … with 672 more rows
+</pre></div>
+</div></div>
+      
+      <br>
+      <p><b>An important aside!</b> In most instances, it's really important to ensure that your data are normalized before joining -- most especially that your <b>primary key</b> is unique:</p><br>
+<div class="chunk" id="unnamed-chunk-56"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">temp1</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">tibble</span><span class="hl std">(</span>
+    <span class="hl kwc">key</span> <span class="hl std">= fruit[</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">)],</span>
+    <span class="hl kwc">b</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl opt">:</span><span class="hl num">5</span><span class="hl std">)</span>
+
+<span class="hl std">temp2</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">tibble</span><span class="hl std">(</span>
+    <span class="hl kwc">id</span> <span class="hl std">= letters[</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">],</span>
+    <span class="hl kwc">key</span> <span class="hl std">= fruit[</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">2</span><span class="hl std">)])</span>
+
+<span class="hl std">temp1</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 3 x 2
+##   key         b
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 apple       3
+## 2 apple       4
+## 3 apricot     5
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">temp2</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 3 x 2
+##   id    key    
+##   &lt;chr&gt; &lt;chr&gt;  
+## 1 a     apple  
+## 2 b     apricot
+## 3 c     apricot
+</pre></div>
+</div></div>
+      <br>
+      <p>Notice that the key for temp1 is not unique. What happens when we join them? Why?</p><br>
+<div class="chunk" id="unnamed-chunk-57"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">temp1</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">left_join</span><span class="hl std">(temp2,</span> <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl str">'key'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 4 x 3
+##   key         b id   
+##   &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;
+## 1 apple       3 a    
+## 2 apple       4 a    
+## 3 apricot     5 b    
+## 4 apricot     5 c
+</pre></div>
+</div></div>
+    </div>
+    <br>
+    <p><i>We will continue to explore and use joins throughout the course of this workshop.</i></p>
+    <br>
+    <hr>
+    </main>
+        
+    <footer>
+        <a 
+          href="mailto:evansbr@si.edu" 
+          class="fa fa-envelope fa-2x" 
+          target="_blank" 
+          style = "padding: 1vh 2vw 1vh 15vw; width = 15vw;"></a>
+        <a 
+          href="https://twitter.com/bsevans_unc" 
+          class="fa fa-twitter fa-2x" 
+          target="_blank" 
+          style = "padding: 1vh 2vw 1vh 1vw; ; width = 15vw;"></a>
+        <img
+          src="https://americanindian.si.edu/nationtonation/img/smithsonian-logo-nav.png"
+          style = "float: right; height: 5vh; width: auto; padding-right: 15vw; margin-left: auto;"/>
+    </footer>
+    
+  </body>
+    
+</div>

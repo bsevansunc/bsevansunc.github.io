@@ -1,0 +1,12 @@
+name: filter_and_join
+title: filter_and_join
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3966896
+bundleId: 4472335
+url: https://smbc.shinyapps.io/filter_and_join/
+when: 1618438580.41699
+asMultiple: FALSE
+asStatic: FALSE

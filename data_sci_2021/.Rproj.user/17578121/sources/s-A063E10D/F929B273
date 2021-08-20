@@ -1,0 +1,24 @@
+{
+    "id": "F929B273",
+    "path": "~/gits/smbc-nzp.github.io/data_sci_2021/css/styles.css",
+    "project_path": "css/styles.css",
+    "type": "css",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1615046721488.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "cursorPosition": "172,18",
+        "scrollLine": "0"
+    },
+    "folds": "22|9|26|0|\n30|11|37|0|\n41|11|44|0|\n48|20|57|0|\n61|43|63|0|\n67|19|74|0|\n78|21|85|0|\n89|27|91|0|\n94|35|96|0|\n98|14|106|0|\n108|12|116|0|\n118|19|125|0|\n127|21|133|0|\n135|16|142|0|\n175|5|183|0|\n186|13|199|0|\n201|37|203|0|\n206|19|208|0|\n212|7|214|0|\n216|15|222|0|\n225|9|229|0|\n232|12|236|0|\n240|11|246|0|\n248|5|250|0|\n254|5|257|0|\n260|6|266|0|\n",
+    "lastKnownWriteTime": 1615393452,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1615393452932,
+    "read_only": false,
+    "read_only_alternatives": []
+}

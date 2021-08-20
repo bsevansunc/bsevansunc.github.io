@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>dataSci</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar" style = 'border-radius: 0px;'>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="home.html" style = "font-size: 1.5em">Data Science Workshop</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"> <a href="#">Preliminary exercises</a></li>
+      <li><a href="workshop_lessons.html">Workshop lessons</a></li>
+      <li><a href="additional_resources.html">Additional resources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class = "container">
+  <div class = "row">
+    <div class = "col-sm-1"></div>
+    <div class="col-sm-10">
+
+<br>
+
+<div>
+<h3>Preliminary exercises</h3>
+<hr>
+<p>We ask that, regardless of your current level of R knowledge, you please complete the following preliminary exercises prior to attending the workshop. Please feel free to email Brian Evans with any questions at <a href="mailto:evansbr@si.edu">evansbr@si.edu</a></p>
+<br>
+<ul>
+<li><b><a href = "https://smbc.shinyapps.io/L0-intro_RStudio" target="_blank">Introduction to R Studio</a></b>. This lesson will provide new R users with the baseline knowledge necessary to use R and R Studio and align experienced R users with some of the terminology and best management practices used throughout this workshop.
+</li>
+<br>
+<li><b><a href = "https://smbc.shinyapps.io/L1-rValues" target="_blank">Lesson 1: Values</a></b>. Learn the primary classes of values you will use in this workshop</li>
+<br>
+<li><b><a href = "https://smbc.shinyapps.io/L2-rObjects" target="_blank">Lesson 2: Objects</a></b>. Learn the primary types of objects that are used to store values</li>
+<br>
+<li><b><a href = "https://smbc.shinyapps.io/L3-indexing" target="_blank">Lesson 3: Indexing</a></b>. Learn how to query objects using indexing in base R</li>
+<br>
+<li><b><a href = "https://smbc.shinyapps.io/L4-functions" target="_blank">Lesson 4: Functions</a></b>. Learn how to write custom functions</li>
+</ul>
+<br>
+
+<p>Do you want to do more workshop preparation or practice your R skills? If so, we strongly recommend completing these <a href = "https://smbc-nzp.github.io/dataSci/swirl.html" target = "_blank"><b>SWIRL workshops</b></a> prior to the workshop.</p>
+</div>
+
+<div id="footer" class = "row">
+  <hr>
+<img 
+  src="images/nzpLogo.png"
+  style= "display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;"/>
+</div>
+    
+</div>
+ <div class = "col-sm-1"></div>
+  </div>
+</div>
+</body>

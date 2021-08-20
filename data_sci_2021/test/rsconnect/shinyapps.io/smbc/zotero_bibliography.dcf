@@ -1,0 +1,12 @@
+name: zotero_bibliography
+title: zotero_bibliography
+username:
+account: smbc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3755922
+bundleId: 4322010
+url: https://smbc.shinyapps.io/zotero_bibliography/
+when: 1615310414.51341
+asMultiple: FALSE
+asStatic: FALSE

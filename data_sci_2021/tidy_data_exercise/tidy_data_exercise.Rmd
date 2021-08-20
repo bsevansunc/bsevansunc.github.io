@@ -1,0 +1,813 @@
+---
+title: "Normalizing data"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(RCurl)
+library(lubridate)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+# gradethis::gradethis_setup()
+
+fractured_fruit <-
+  tibble(
+    fruit_prefix = fruit[1:3] %>%
+      str_sub(1,3), 
+    fruit_suffix = fruit[1:3] %>%
+      str_sub(start =  4),
+    fruit_type = c('pome', 'drupe', 'berry'),
+    consumption_class = c('clean', 'sloppy', 'sloppy'))
+
+long_trees <-
+  tibble(
+    tree_id = 1:5,
+    species = c('Carya glabra', 'Quercus rubra', 'Carya glabra', 'Acer saccharum', 'Acer saccharum'),
+    dbh = c(8, 32, 27, 24, 42),
+    height = c(9, 23, 24, 18, 26)) %>% 
+  pivot_longer(dbh:height, names_to = 'measure', values_to = 'value')
+
+addresses <-
+  tibble(
+    name_last = c('Bonacci', 'Wickham', 'MacArthur', 'Euler'),
+    name_first = c('Leonardo', 'Hadley', 'Robert', 'Leonhard'),
+    address = 
+      c('2358 Rabbit Lane,Pisa,Italy',
+        '2014 Tidy Cat Boulevard,Aukland,New Zealand',
+        '1958 Warbler Court,Princeton,New Jersey',
+        '7 Bridges Path,Konigsberg,Russia')) %>% 
+  arrange(name_last)
+
+my_covid_garden_sites <-
+  tibble(
+    bed = 1:5,
+    light_access = c('full sun', 'full sun' , 'partial shade', 'full sun', 'shade'),
+    plants = c('jalepenos', 'tomatoes', 'kale', 'summer squash', 'mesclun'))
+
+my_covid_garden_events <-
+  tribble(
+    ~bed, ~date, ~event,
+    1, '2020-04-12', 'planted',
+    1, '2020-05-17', 'weeded',
+    1, '2020-07-16', 'fenced',
+    1, '2020-09-23', 'harvested',
+    2, '2020-04-14', 'planted',
+    2, '2020-05-12', 'weeded',
+    2, '2020-07-14', 'eaten by deer',
+    3, '2020-04-16', 'planted',
+    3, '2020-05-26', 'weeded',
+    3, '2020-06-23', 'eaten by slugs',
+    3, '2020-07-12', 'applied diatomaceous earth',
+    3, '2020-08-07', 'harvested',
+    4, '2020-04-17', 'planted',
+    4, '2020-05-12', 'weeded',
+    4, '2020-07-14', 'trampled by deer',
+    5, '2020-04-03', 'planted',
+    5, '2020-05-19', 'weeded',
+    5, '2020-05-20', 'eaten by squirrels') %>% 
+  arrange(date) %>% 
+  mutate(date = as_date(date))
+
+my_covid_garden <-
+  left_join(
+    my_covid_garden_sites,
+    my_covid_garden_events,
+    by = 'bed')
+
+messy_weather <-
+  read_csv('data/messy_weather.csv')
+
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day",
+    values_to = "value",
+    names_prefix = "march_")
+
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days,
+    col = 'date',
+    c('year', 'month', 'day'),
+    sep = '-')
+
+messy_weather_wide_weather <-
+  messy_weather_date_fix %>% 
+  pivot_wider(
+    names_from = variable,
+    values_from = value)
+
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather,
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':')
+
+weather_stations <-
+  distinct(
+    select(
+      messy_weather_temperature_fix,
+      station:name))
+
+observations <-
+  select(
+    messy_weather_temperature_fix,
+    station, date:temperature_max)
+
+inat_monarch <-
+  read_csv('data/monarch_inat.csv')
+
+```
+
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+<style>
+td tr th {
+  text-align: center;
+}
+</style>
+</head>
+
+## The rules of tidy data
+
+Data normalization refers to the process of structuring data so that redundancies are eliminated and that data are easy to safely store, modify, query, and apply.
+
+#### Codd's rules for normalizing data:
+
+The three normalization rules of database design (Codd) form the backbone of much of the field of data science and define a tidy dataset. These rules are:
+
+1. **First normal**
+    - All rows represent a unique record (primary key)
+    - All values are atomic
+    - Columns do not contain repeated grouping
+1. **Second normal**: All columns are functionally dependent the primary key (observation)
+1. **Third normal**: All columns are non-transitively dependent. This means that column values are <b>only</b> directly a function of the primary key.
+
+#### Tidy data rules
+
+1. Each variable forms a column
+1. Each observation forms a row
+1. Each level of observation forms a table
+
+<hr>
+
+## Initial exploration
+
+### Load and explore the data
+
+Our task is to normalize (i.e., tidy) a very messy data set. The table `messy_weather` has been loaded into this environment using the following lines of code:
+
+<pre>
+  <code>
+    messy_weather <-
+      read_csv('data/messy_weather.csv')
+  </code>
+</pre>
+
+<div class = "row">
+<a href = "https://ropensci.org/" target = "_blank">
+  <img src = "https://contributing.ropensci.org//logo.png" style = "float: left; width: 15%; padding: 1em 1em 1em 0;"></img>
+</a>
+
+The data contains weather records for a few US cities from 2010 to 2020. The data are a part of the <a href = "https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn" target = "_blank">Global Historical Climatology Network</a> and were obtained from National Climatic Data Center application programming interface (API) using the rOpenSci package <a href = "https://github.com/ropensci/rnoaa" target = "_blank">rnoaa</a>. *Note: The data set was not as untidy as the version you are seeing here - I made it as messy as possible for the sake of illustration*.
+</div>
+
+View the table by typing the name `messy_weather` below. You can run this code using the CTRL+Enter (Windows) or CMD+Enter (Mac).
+
+```{r view_messy_weather, exercise=TRUE}
+
+```
+
+This table has a lot of columns. Use the right and left arrows adjacent to the column names to explore the table.
+
+When exploring a data set, I often find that the function `glimpse` is more informative than viewing the whole table. Type `glimpse()` in the space below. Notice that the function's arguments (<b>formals</b>) of the function appear on the write after you type the parentheses. As a part of the tidyverse package, the first argument <code>x = </code> is the data source. Provide `messy_weather` as the data source for this function.
+
+```{r initial_glimpse, exercise=TRUE}
+```
+
+<hr>
+
+## Pivot longer
+
+Here's another look at our `messy_weather` table:
+
+```{r initial_glimpse3, eval=TRUE, echo = FALSE}
+messy_weather
+```
+
+<br>
+The first thing that pops out to me with this table is that each day in March is given its own column. This is a really telling (and common) problem. 
+
+<div class = "reviewDiv" style = "margin-top: 2em;">
+<h4><i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 100%"></i> Recognizing tidy principles in data</h4> 
+```{r question_march_days, echo=FALSE}
+question("Which tidy data rule or rules does this violate (choose one or more)?",
+  answer("Each variable forms a column", correct = TRUE),
+  answer("Each observation forms a row", correct = TRUE, message = "The data are formatted such that observations are located in columns rather rows and the variable day is split across multiple columns."),
+  answer("Each level of observation forms a table"),
+  type = 'multiple',
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+</div>
+
+<br>
+We can use the function `pivot_longer` to solve this problem. This function reshapes the data, re-organizing columns into rows. The arguments for this function include:
+
+- data: The data frame to pivot
+- cols: A selection of columns that you would like to change from wide to long format
+- names_to: A string specifying the name of the column to create from the data stored in the column names of data
+- values_to: The name of the values column (in this case associated with each day)
+- names_prefix: A regular expression used to remove matching text from the start of each variable name.
+
+<hr>
+
+### Example
+<img src="https://static.inaturalist.org/sites/1-favicon.png?1573071870" style = "height: 1.2em;"></img>
+The example table below, `inat_monarch`, contains the number of observations of monarch butterflies submitted to <a href = "https://www.inaturalist.org/" target = "_blank">iNaturalist</a> from 2018 to 2020 in Boston, Chicago, New York, and Washington DC:
+
+```{r wide_example_init, eval = TRUE, echo = FALSE}
+inat_monarch
+```
+<br>
+We can apply `pivot_longer` to turn this into a tidy(er) frame:
+
+```{r wide_example, eval = TRUE, echo = TRUE}
+pivot_longer(
+  data = inat_monarch,
+  cols = year_2018:year_2020,
+  names_to = "year",
+  values_to = "observations",
+  names_prefix = "year_")
+```
+<br>
+<div class = "row">
+<a href = "https://ropensci.org/" target = "_blank">
+  <img src = "https://contributing.ropensci.org//logo.png" style = "float: left; height: 5em; padding: 0em 1em 1em 0;"></img>
+</a>
+*Note: The data from this example were obtained from the iNaturalist application programming interface (API) using the rOpenSci package <a href = "https://github.com/ropensci/rinat" target = "_blank">rinat</a>*.
+</div>
+<hr>
+
+### Back to the weather data!
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Modify `messy_weather` by placing each day in its own row. In doing so:
+
+- Assign the name "messy_weather_long_days" to the result
+- Name the days column "day"
+- Name the values column "value"
+- Remove the prefix "march_" from the day values
+
+```{r pivot_longer, exercise=TRUE}
+
+```
+
+```{r pivot_longer-hint-1}
+messy_weather_long_days <-
+```
+
+```{r pivot_longer-hint-2}
+messy_weather_long_days <-
+  pivot_longer()
+```
+
+```{r pivot_longer-hint-3}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather)
+```
+
+```{r pivot_longer-hint-4}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31)
+```
+
+```{r pivot_longer-hint-5}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day")
+```
+
+```{r pivot_longer-hint-6}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day",
+    values_to = "value")
+```
+
+```{r pivot_longer-solution}
+messy_weather_long_days <-
+  pivot_longer(
+    data = messy_weather,
+    cols = march_1:march_31,
+    names_to = "day",
+    values_to = "value",
+    names_prefix = "march_")
+```
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Use `glimpse` to explore the resultant object:
+
+```{r pivot_longer_glimpse, exercise=TRUE}
+
+```
+
+
+```{r pivot_longer_glimpse-hint-1}
+glimpse(messy_weather_long_days)
+```
+
+<hr>
+
+## Unite
+
+Here's another look at `messy_weather_long_days`:
+
+```{r initial_messy_weather_long_days, eval=TRUE, echo = FALSE}
+messy_weather_long_days
+```
+<br>
+The next big issue that I see is that year, month, and day are in separate columns.
+
+<div class = "reviewDiv" style = "margin-top: 2em;">
+<h4><i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 100%"></i> Recognizing tidy principles in data</h4> 
+```{r question_ymd, echo=FALSE}
+question("Which tidy data rule or rules does this violate (choose one or more)?",
+  answer("Each variable forms a column", correct = TRUE, message = "Year, month, and day are representative of the same variable (the date of the observations) and should be combined into a single column."),
+  answer("Each observation forms a row"),
+  answer("Each level of observation forms a table"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+</div>
+<br>
+We can use the function `unite` to solve this problem. This function combines multiple columns into a single column. The arguments for this function include:
+
+- data: The data frame
+- col: The name of the new column, as a string or symbol
+- ... (no name): A selection of columns to unite
+- sep : Separator to use between values
+- na.rm: TRUE/FALSE, if TRUE, missing values are removed prior to joining
+
+### Example
+
+Consider the example table, `factured_fruit`, below. The names of the fruit are split into two separate columns:
+
+```{r fractured_fruit_init, eval = TRUE, echo = FALSE}
+fractured_fruit
+```
+<br>
+We can apply `unite` to turn this into a tidy frame:
+
+```{r fractured_fruit_unite, echo = TRUE}
+unite(
+  data = fractured_fruit,
+  col = 'fruit',
+  fruit_prefix:fruit_suffix,
+  sep = '')
+```
+
+### Back to the weather data!
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Modify `messy_weather_long_days` by combining the year, month, and day columns into a single date column using the `unite` function. The format of the column will be YYYY-MM-DD. This is this international date standard (<a href = "https://www.iso.org/iso-8601-date-and-time-format.html" target = "_blank">ISO 8601</a>). In doing so:
+
+- Assign the name "messy_weather_date_fix" to the result
+- Name the new date column "date"
+- Name the values column "value"
+- Remove the prefix "march_" from the day values
+
+```{r unite, exercise=TRUE}
+
+```
+
+```{r unite-hint-1}
+messy_weather_date_fix <-
+```
+
+```{r unite-hint-2}
+messy_weather_date_fix <-
+  unite()
+```
+
+```{r unite-hint-3}
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days)
+```
+
+```{r unite-hint-4}
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days,
+    col = 'date')
+```
+
+```{r unite-hint-5}
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days,
+    col = 'date',
+    c('year', 'month', 'day'))
+```
+
+```{r unite-hint-6}
+messy_weather_date_fix <-
+  unite(
+    messy_weather_long_days,
+    col = 'date',
+    c('year', 'month', 'day'),
+    sep = '-')
+```
+
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Use `glimpse` to explore the resultant object:
+
+```{r unite_glimpse, exercise=TRUE}
+
+```
+
+
+```{r unite_glimpse-hint-1}
+glimpse(messy_weather_date_fix)
+```
+
+<hr>
+
+## Pivot wider
+
+Here's another look at `messy_weather_date_fix`:
+
+```{r initial_messy_weather_date_fix, eval=TRUE, echo = FALSE}
+messy_weather_date_fix
+```
+<br>
+Things are getting a lot nicer, but now I'm noticing that there are several variables in the variable column. We can see this more clearly by using the `unique` function on the variable column:
+
+```{r unique_messy_weather_date_fix, echo = TRUE}
+unique(messy_weather_date_fix$variable)
+```
+<br>
+Sometimes I like to use the `table` function for this:
+
+```{r table_messy_weather_date_fix, echo = TRUE}
+table(messy_weather_date_fix$variable)
+```
+<br>
+
+<div class = "reviewDiv" style = "margin-top: 2em;">
+<h4><i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 100%"></i> Recognizing tidy principles in data</h4> 
+```{r question_pivot_wider, echo=FALSE}
+question("Which tidy data rule or rules does this violate (choose one or more)?",
+  answer("Each variable forms a column", correct = TRUE, message = "Multiple weather variables are stored in the same column. Each observation forms a row is also violated, because storing multiple variables in the same column forced each observation to occupy multiple rows."),
+  answer("Each observation forms a row", correct = TRUE, message = ""),
+  answer("Each level of observation forms a table"),
+  type = 'multiple',
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+</div>
+<br>
+We can use the function `pivot_wider` to solve this problem. This function reshapes the data such that a single column is spread into multiple columns. The arguments for this function include:
+
+- data: The data frame
+- cols: Column to pivot into wider format
+- names_from: The name of the column that contains the new variable names 
+- values_from: The name of the column where the values are stored
+
+### Example
+
+Consider the example table, `long_trees`, below. The different measurements are stored in one column:
+
+```{r long_trees_init, eval = TRUE, echo = FALSE}
+long_trees
+```
+<br>
+We can apply `pivot_wider` to turn this into a tidy frame:
+
+```{r pivot_wider_long_trees, echo = TRUE}
+pivot_wider(
+  data = long_trees, 
+  names_from = measure, 
+  values_from = value)
+```
+
+### Back to the weather data!
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Modify `messy_weather_long_days` by spreading the weather variables and measurements into multiple columns using the `pivot_wider` function. In doing so:
+
+- Assign the name "messy_weather_wide_weather" to the result
+
+
+```{r pivot_wider, exercise=TRUE}
+
+```
+
+```{r pivot_wider-hint-1}
+messy_weather_wide_weather <-
+```
+
+```{r pivot_wider-hint-2}
+messy_weather_wide_weather <-
+  pivot_wider()
+```
+
+```{r pivot_wider-hint-3}
+messy_weather_wide_weather <-
+  pivot_wider(
+    data = messy_weather_date_fix)
+```
+
+```{r pivot_wider-hint-4}
+messy_weather_wide_weather <-
+  pivot_wider(
+    data = messy_weather_date_fix,
+    names_from = variable)
+```
+
+```{r pivot_wider-hint-5}
+messy_weather_wide_weather <-
+  pivot_wider(
+    data = messy_weather_date_fix,
+    names_from = variable,
+    values_from = value)
+```
+
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Use `glimpse` to explore the resultant object:
+
+```{r pivot_wider_glimpse, exercise=TRUE}
+
+```
+
+
+```{r pivot_wider_glimpse-hint-1}
+glimpse(messy_weather_wide_weather)
+```
+
+<hr>
+
+## Separate
+
+Here's another look at `messy_weather_wide_weather`:
+
+```{r initial_messy_weather_wide_weather, eval=TRUE, echo = FALSE}
+messy_weather_wide_weather
+```
+<br>
+Things continue to improve! There is something askew, however, with our temperature records. Let's use `glimpse` to see how that column is formatted:
+
+```{r glimpse_temp_min_max, echo = TRUE}
+glimpse(messy_weather_wide_weather$temperature_min_max)
+```
+<br>
+
+<div class = "reviewDiv" style = "margin-top: 2em;">
+<h4><i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 100%"></i> Recognizing tidy principles in data</h4> 
+```{r question_separate, echo=FALSE}
+question("Which tidy data rule or rules does this violate (choose one or more)?",
+  answer("Each variable forms a column", correct = TRUE, message = "Multiple temperature variables are stored in the same column."),
+  answer("Each observation forms a row"),
+  answer("Each level of observation forms a table"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+</div>
+<br>
+
+We can use the function `separate` to solve this problem. This function splits a single column into multiple columns, based on some delimiter. The arguments for this function include:
+
+- data: The data frame
+- col: The name of the column to separate
+- into: The names of the new columns as a character vector
+- sep: The character used to separate columns (*note: you can also separate by character position*)
+
+### Example
+
+Consider the example table, `addresses`, below. The addresses are stored in a single column:
+
+```{r addresses_init, eval = TRUE, echo = FALSE}
+addresses
+```
+<br>
+We can apply `separate` to split the column into street address, city, and region:
+
+```{r separate_addresses, echo = TRUE}
+separate(
+  data = addresses,
+  col = address, 
+  into = c('street', 'city', 'region'),
+  sep = ',')
+```
+
+### Back to the weather data!
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Modify `messy_weather_temperature_fix` by splitting the temperature_min_max variable into multiple columns using the `separate` function. In doing so:
+
+- Assign the name "messy_weather_temperature_fix" to the result
+- Use the names "temperature_min" and "temperature_max" for the resultant columns
+
+
+```{r separate, exercise=TRUE}
+
+```
+
+```{r separate-hint-1, eval = FALSE}
+messy_weather_temperature_fix <-
+```
+
+```{r separate-hint-2, eval = FALSE}
+messy_weather_temperature_fix <-
+  separate()
+```
+
+```{r separate-hint-3, eval = FALSE}
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather)
+```
+
+```{r separate-hint-4, eval = FALSE}
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather,
+    col = temperature_min_max)
+```
+
+```{r separate-hint-5, eval = FALSE}
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather,
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'))
+```
+
+```{r separate-hint-6, eval = FALSE}
+messy_weather_temperature_fix <-
+  separate(
+    messy_weather_wide_weather,
+    col = temperature_min_max,
+    into = c('temperature_min', 'temperature_max'),
+    sep = ':')
+```
+
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Use `glimpse` to explore the resultant object:
+
+```{r separate_glimpse, exercise=TRUE}
+
+```
+
+
+```{r separate_glimpse-hint-1}
+glimpse(messy_weather_temperature_fix)
+```
+
+<hr>
+
+## Select and distinct
+
+
+Here's another look at `messy_weather_temperature_fix`:
+
+```{r initial_messy_weather_temperature_fix, eval=TRUE, echo = FALSE}
+messy_weather_temperature_fix
+```
+<br>
+This is looking great! Is it tidy yet? Alas, no.
+
+<div class = "reviewDiv" style = "margin-top: 2em;">
+<h4><i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 100%"></i> Recognizing tidy principles in data</h4> 
+```{r question_select_distinct, echo=FALSE}
+question("Which tidy data rule or rules does this violate (choose one or more)?",
+  answer("Each variable forms a column"),
+  answer("Each observation forms a row"),
+  answer("Each level of observation forms a table", correct = TRUE, message = "There are two levels of observation here -- data associated with weather station and data associated with daily weather records."),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+</div>
+<br>
+
+We can use the functions `select` and `distinct` to solve this problem. 
+
+- select: reduces a data frame to a subset of specified columns and takes `.data` (the name of the data frame) and column names as arguments. 
+- distinct: reduces a data frame to unique records (across all columns) and takes `.data` (the name of the data frame) as its argument.
+
+### Example
+
+Consider the example table, `my_covid_garden`, below. I (hypothetically ... maybe) planted several raised bed gardens during the pandemic. I planted 5 beds total. Each bed hosted a different type of plant and had different access to sunlight. I recorded the events that occurred throughout the season. Here's what the data look like:
+
+```{r my_covid_garden_init, eval = TRUE, echo = FALSE}
+my_covid_garden
+```
+<br>
+There are two levels of observations, bed and event. We can use `select` to create two tables, one for each level:
+
+```{r select_my_covid_garden, echo = TRUE}
+select(
+  .data = my_covid_garden, 
+  bed:plants)
+
+select(
+  .data = my_covid_garden,
+  bed, date, event)
+```
+<br>
+There are duplicate rows in the events file. We can remove them with `distinct`:
+
+```{r distinct_my_covid_garden, echo = TRUE}
+distinct(
+  select(
+    .data = my_covid_garden, 
+    bed:plants))
+
+select(
+  .data = my_covid_garden,
+  bed, date, event)
+```
+<br>
+If we want, we can wrap this all into a single, tidy, `list` file:
+
+```{r list_my_covid_garden, echo = TRUE}
+list(
+  sites =
+    distinct(
+      select(
+        .data = my_covid_garden, 
+        bed:plants)),
+  events = 
+    select(
+      .data = my_covid_garden, 
+      bed, date, event))
+```
+
+
+### Back to the weather data!
+<br>
+<i class="fa fa-user-circle" aria-hidden="true" style = "font-size: 125%"></i> Modify `messy_weather_temperature_fix` into a tidy list containing two data frames, "weather_stations" and "observations".
+
+
+```{r sd, exercise=TRUE}
+
+```
+
+```{r select_distinct-hint-1}
+list()
+```
+
+```{r select_distinct-hint-2, eval = FALSE}
+list(
+  weather_stations = )
+```
+
+```{r select_distinct-hint-3, eval = FALSE}
+list(
+  weather_stations =
+      select(
+        .data = messy_weather_temperature_fix,
+        station:name),
+  observations = )
+```
+
+```{r select_distinct-hint-4, eval = FALSE}
+list(
+  weather_stations =
+    distinct(
+      select(
+        .data = messy_weather_temperature_fix,
+        station:name)),
+  observations = )
+```
+
+```{r select_distinct-hint-5, eval = FALSE}
+list(
+  weather_stations =
+    distinct(
+      select(
+        .data = messy_weather_temperature_fix,
+        station:name)),
+  observations =
+    select(
+      .data = messy_weather_temperature_fix,
+      station, date:temperature_max))
+```
+<br>
+
+**fin!**

@@ -1,0 +1,36 @@
+---
+output:
+  html_document:
+    theme: null
+    highlight: null
+    css: styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<img style="float:right;padding-right:25px;border:none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/George_Mason_University_logo.svg/1024px-George_Mason_University_logo.svg.png" height = "50px"/>
+    
+  <img align = "right" src="https://upload.wikimedia.org/wikipedia/en/6/6a/Smithsonian_Conservation_Biology_Institute_logo.png" height = "50px" style="padding-right: 10px"/>
+
+<h3>Version control: Getting started with GitHub</h3>
+
+_Brian S. Evans  
+Smithsonian Conservation Biology Institute  
+Migratory Bird Center_
+
+<hr>
+
+<p>In this lesson, we will explore how to get started GitHub on your computer. This is meant to be almost entirely applied. Please see the <a href = "https://smbc-nzp.github.io/data_science_workshop/additional_resources.html" target = "_blank"> additional resources<a> page for more in-depth content on version control and GitHub.</p>
+
+<h4>Why do I need version control?</h4>
+<p>Version control is an indispensable tool for working with data. When you collaborate with others, it allows for a (somewhat) seamless workflow for sharing code and data. For solo projects, it allows you to:</p>
+<ul>
+<li>Have the same version of your project across all computers you work on</li>
+<li>Have backups to your projects all in one place</li>
+<li>View (and transport yourself to various points in) the history of your files</li>
+</ul>
+<p>These are just a few of the early benefits of using version control. There are a lot more that are worth exploring (e.g., forking) once you get a little experience under your belt!
+</p>
+

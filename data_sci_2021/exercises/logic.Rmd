@@ -1,0 +1,178 @@
+---
+output: html_document
+---
+
+<img style="float:right;padding-right:25px;border:none" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/George_Mason_University_logo.svg/1024px-George_Mason_University_logo.svg.png" height = "75px"/>
+    
+  <img align = "right" src="https://upload.wikimedia.org/wikipedia/en/6/6a/Smithsonian_Conservation_Biology_Institute_logo.png" height = "75px" style="padding-right: 10px"/>
+  
+# Querying data with indexing and logic
+_Brian S. Evans  
+Smithsonian Conservation Biology Institute  
+Migratory Bird Center_
+
+----
+
+## Using logic to subsetting data by value
+
+### Background
+
+For this section we will use point count data of birds in Washington, D.C. Download the data using <a href="data/birdCounts.csv" download>this link</a> and save it to your project folder.
+
+Recall that we used addresses [row, column] to extract columns and rows above, for example:
+
+```{r, eval = FALSE}
+birdCounts[,c('foraging', 'count')]
+```
+
+In plain English, the code above tells R that you would like to return a subset of birdCounts that includes all of the rows, but only the columns foraging and count. 
+
+You can also specify logical conditions to subset a data frame the values associated with a given field. The logical operators include:
+
+<br>
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(kableExtra)
+df <-
+  data.frame(
+  `Operator` = c('==', '!=','!', '|', '&','%in%', '<', '<=', '>', '>='),
+  `Usage` = c('x == y', 'x != y', '!(x)','x | y', 'x & y','x %in% yz', 'x < y', 'x <= y', 'x > y', 'x >= y'),
+  `Meaning` = c(
+    'x is equal to y',
+    'x is NOT equal to y',
+    'not x',
+    'x OR y',
+    'x AND y',
+    'x is in the vector c(y,z)',
+    'x is less than y',
+    'x is less than or equal to y',
+    'x is greater than y',
+    'x is greater than or equal to y')
+  )
+
+kable(df, "html") %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = 'left', font_size = 14)
+```
+</br>
+
+
+Before we use logic to subset data frames, let's take a look at what happens when we test a vector with a logical operator. In the following code, we subset the foraging vector to the first 20 entries, and then test which entries matches the term "ground".
+
+```{r eval = F}
+foraging2 <- birdCounts$foraging[1:20]
+
+foraging2 == 'ground'
+```
+
+We can see that most, but not all, of the foraging2 vector satisfies this condition. If we want to know how many values satisfy this condition, we can use the sum function (TRUE = 1, FALSE = 0):
+
+```{r eval = F}
+sum(foraging2 == 'ground')
+```
+
+We can also subset the vector foraging2 to only values that satisfy this condition:
+
+```{r eval = F}
+foraging2[foraging2 == 'ground']
+```
+
+Not a very meaningful result, however, we can use the same principle to subset our birdCounts data frame to include only ground foraging species. In the script below, we are telling R to return all of the columns of the birdCounts frame for which the row values of foraging are equal to ground (_Note: we are returning all columns in which our row condition is TRUE_):
+
+```{r eval = F}
+birdCounts[birdCounts$foraging == 'ground',]
+```
+
+We can also return a column and row subset using logic. For example, perhaps we are interested in counts of ground foragers. We could return all columns in which the row condition "ground" is true and just the column "count" as:
+
+```{r eval = F}
+birdCounts[birdCounts$foraging == 'ground','count']
+```
+
+We can use mathematical logical operators, such as our less than or greater than symbols, on our numeric columns. For example, we may be interested only in species counts that are greater than or equal to three:
+
+```{r eval = F}
+birdCounts[birdCounts$count >= 3,]
+```
+
+Mathematical logical operators can be combined with statistical summary functions. For example, to subset records to only sites that are greater than or equal to the median value of counts:
+
+```{r eval = F}
+birdCounts[birdCounts$count >= median(birdCounts$count),]
+```
+
+Operators can also be combined. Let's use the "&" symbol to extract rows of birdCounts in which the count is greater than the median and species are ground foragers:
+
+```{r eval = F}
+birdCounts[birdCounts$count >= median(birdCounts$count)&birdCounts$foraging == 'ground',]
+```
+
+The "or" logical operator can be a bit dangerous. Let's see what happens when we use "|" with the operation above:
+
+```{r eval = F}
+birdCounts[birdCounts$count >= median(birdCounts$count)|birdCounts$foraging == 'ground',]
+```
+
+The above returned all records for which the count was greater than the median OR the foraging strategy was equal to ground! "Or"" _can_ be quite useful though. For example, we could pull out all records for which foraging stategies are aerial or foliage:
+
+```{r eval = F}
+birdCounts[birdCounts$foraging == 'aerial'|birdCounts$foraging == 'foliage',]
+```
+
+Note that the above returns a reduced data frame that satisfies our conditions. We can use this to extract a single column of the data frame as well. Let's look at just the counts vector that satisfies the above condition:
+
+```{r eval = F}
+birdCounts[birdCounts$foraging == 'aerial'|birdCounts$foraging == 'foliage','count']
+```
+
+We can then obtain the average count of aerial and foliage foragers observed (note that this does not include zero observations!):
+
+```{r eval = F}
+mean(birdCounts[birdCounts$foraging == 'aerial'|birdCounts$foraging == 'foliage','count'])
+```
+
+<hr>
+
+### Exercise 1. Counting birds:
+
+<p>For the birdCount dataset, address the following using the methods above:</p>
+<ol>
+<li>Subset the birdCounts data frame to just insectivore species. Call the data frame "insectivoreCounts".</li><br>
+<li>How many species are insectivores?</li><br>
+<li>Do steps one and two in this exercise in a single line of code.</li><br>
+<li>How many sites are contained in the birdCount frame?</li><br>
+<li>In how many sites were insectivores observed?</li><br>
+<li>In what proportion of sites were insectivores observed?</li>
+</ol>
+<hr>
+
+### Exercise 2. The World Health Organization's population dataset:
+<br><br>
+<p>For this exercise, you will use a data frame object named "population". This dataset is located in tidyverse, so please make sure that the tidyverse library is loaded.</p>
+<br>
+
+```{r eval = FALSE}
+library(tidyverse)
+
+population
+```
+<br>
+
+<p>Use the population data frame to answer the following questions (use indexing to filter the data):</p>
+ 
+<br>
+<ol>
+<li>What was the population of the United States in 2004?</li>
+<br>
+<li>In what years was the population of the United States greater than 300 million?</li>
+<br>
+<li>What was the population of Palau in 2005?</li>
+<br>
+<li>Which countries had a population of less than 10,000 in 2013?</li>
+<br>
+<li>Which country had the smallest population in 2005?</li>
+<br>
+</ol>
+<br>
+<hr>
+<img align = "center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Git-logo.svg/512px-Git-logo.svg.png" width = "150px"/>
+

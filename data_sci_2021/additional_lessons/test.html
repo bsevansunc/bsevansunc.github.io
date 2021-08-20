@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+<head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+  <title>dataSci</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    
+    pre {
+      font-size: 1.5em;
+    }
+    
+    code {
+      font-size: inherit;
+    }
+    
+    p, li {
+      font-size: 1.5em;
+      padding-bottom: 1em;
+    }
+    
+    h1{
+      font-size: 2.4em;
+    }
+    
+    h2{
+      font-size: 2.25em;
+    }
+    
+    h3{
+      font-size: 2em;
+    }
+    
+    pre {
+      padding-bottom: 1em;
+    }
+    
+    .warning {
+      background-color: #ffffff;
+    }
+    
+    .output {
+      background-color: #ffffff;
+    }
+    
+    .knitr r {
+      background-color: #ffffff;
+    }
+    
+    .rcode {
+      background-color: #ffffff;
+    }
+    
+    .source {
+      background-color: #ffffff;
+    }
+    
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    
+    .header {
+        background-color: #FFFFFF;
+        margin-bottom: 1vw;
+    }
+      
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .banner-content {
+      margin-top: 1vw;
+      margin-left: 15vw;
+      margin-right: 15vw;
+    }
+    
+    .content {
+      padding-bottom: 80px;
+      margin-left: 15vw;
+      margin-right: 15vw;
+      flex-grow: 1;
+      background-color: #FFFFFF;
+    }
+  
+    .footer {
+        background-color: #101820;
+    }
+      
+    .fa-twitter {
+      color: white;
+    }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+
+<div class = "flex-container">
+  <div id = "banner" class = "header">
+    <div class = "banner-content">
+      <div class = "row">
+        <h1>In pursuit of normal data (Codd’s rules & tidyr)</h1>
+      </div>
+        <hr>
+    </div>
+  </div>
+  <div class = "content">
+
+
+
+
+
+
+<img style="display: block;
+        float: right;
+	      padding: 9px;
+	      border-style: solid;
+	      border-width: 10px;
+	      border-color: white;" 
+	      src="https://i.pinimg.com/originals/7c/36/05/7c3605f31c371e7ff2021bf55aeb09fa.jpg"
+	      width="50%" />
+<p>It is estimated that the process of summarizing and preparing data for statistical analysis, <b>data wrangling</b>, consumes roughly 80 percent of total analysis time (Dasu and Johnson 2003). Despite this, researchers are rarely given much, if any, training on properly managing their data. 
+As a result, researchers in fields outside of data science rarely follow formal data management conventions and tend to format their data for a given analyis, ease of data entry, or for some now-potentially-defunct computer program. This leads to messy, inflexible datasets that are difficult to work with for anything but their initial intention.</p>
+
+<p>The goal of this lesson is to introduce you to how to store your field data in a tidy way. Tidy data are datasets that follow the convention of database design. This is the preferable format for data in that:</p>
+<ul>
+<li><b>Tidy data are not platform-specific</b>: This is not just the preferred data formatting for working in R or using <i>tidyverse</i> packages, this is the preferred format for data as a whole. Considerable research, and really an entire field of study, has gone into the rules that determine what consitutes tidy data.</li>
+<li><b>Tidy data are durable and avoid data entry and modification errors</b>: Tidy data avoids generating and working with duplicate values in data tables and databases. This streamlines the data entry and management processes.</li>
+<li><b>All tidy datasets are structured in the same way</b>: Tidy datasets lead to fast and flexible analysis because they are all structured in the same way. Messy datasets can be messy in a multitude of ways and therefore may require considerable wrangling to prepare them for statistical analysis.</li>
+</ul>
+
+<hr>
+
+<h2>Before we begin</h2>
+
+<p>Please run the code below. It's okay if you don't understand each of the steps yet - you will by the end of this workshop though!</p>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Load packages:</span>
+
+<span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
+
+<span class="hl com"># Names of files we will use for this lesson:</span>
+
+<span class="hl std">file_names</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'badDate'</span><span class="hl std">,</span>
+    <span class="hl str">'badYear'</span><span class="hl std">,</span>
+    <span class="hl str">'bird_rawCounts'</span><span class="hl std">,</span>
+    <span class="hl str">'birdHabits'</span><span class="hl std">,</span>
+    <span class="hl str">'dfTooLong'</span><span class="hl std">,</span>
+    <span class="hl str">'wideFrame'</span><span class="hl std">,</span>
+    <span class="hl str">'untidyFrame'</span><span class="hl std">,</span>
+    <span class="hl str">'badBandingRecord'</span><span class="hl std">)</span>
+
+<span class="hl com"># Read the files from my GitHub account (a necessary evil, currently):</span>
+
+<span class="hl std">file_names</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl std">purrr</span><span class="hl opt">::</span><span class="hl kwd">map</span><span class="hl std">(</span>
+    <span class="hl opt">~</span> <span class="hl kwd">file.path</span><span class="hl std">(</span>
+      <span class="hl str">'https://raw.githubusercontent.com/bsevansunc'</span><span class="hl std">,</span>
+      <span class="hl str">'smsc_data_science/master/data'</span><span class="hl std">,</span>
+      <span class="hl kwd">str_c</span><span class="hl std">(.,</span> <span class="hl str">'.csv'</span><span class="hl std">))</span> <span class="hl opt">%&gt;%</span>
+      <span class="hl kwd">read_csv</span><span class="hl std">())</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">set_names</span><span class="hl std">(file_names)</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">list2env</span><span class="hl std">(</span><span class="hl kwc">envir</span> <span class="hl std">= .GlobalEnv)</span>
+
+<span class="hl com"># Remove file_names for a clean global environment:</span>
+
+<span class="hl kwd">rm</span><span class="hl std">(file_names)</span>
+
+<span class="hl com"># I've got one more frame I would like to add:</span>
+
+<span class="hl std">really_bad_date</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">tibble</span><span class="hl std">(</span>
+    <span class="hl kwc">month</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">,</span>
+    <span class="hl kwc">day</span> <span class="hl std">=</span> <span class="hl num">10</span><span class="hl std">,</span>
+    <span class="hl kwc">year</span> <span class="hl std">=</span> <span class="hl num">2021</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+
+<hr>
+
+<h2>The rules of tidy data in the language of data science</h2>
+
+<p>At the core of the <b>Tidyverse</b> is the notion of tidy data. Tidy data are easy to modify, summarize, model, and communicate to others. At each step in our data science process, we should be thinking about the structure of our data and taking every step we can to ensure that they are tidy.</p>
+
+<p>The three normalization rules of database design (Codd) form the backbone of much of the field of data science and define a tidy dataset. These rules are:</p>
+
+<ol>
+  <li><b>First normal</b>:</li>
+    <ul>
+    <li>All rows represent a unique record (primary key)</li>
+    <li>All values are atomic</li>
+    <li>Columns do not contain repeated grouping</li>
+    </ul>
+  <li><b>Second normal</b>: All columns are functionally dependent the primary key (observation)</li>
+  <li><b>Third normal</b>: All columns are non-transitively dependent. This means that column values are <b>only</b> directly a function of the primary key.</li>
+</ol>
+<p>Before proceeding to working with Tidy data, let's look at the normalization rules more in depth.</p>
+
+<hr>
+
+<h3>The first normal rule</h3>
+<br>
+<ul>
+<li>All rows represent a unique record (<b>primary key</b>):
+  <br>
+  <p style = "font-size: inherit">The <b>primary key</b> is a data base field that defines a unique record in the database. Note that primary keys are rarely used in R tables, but I will use it in many of the tables of this section to illustrate the rules of database normalization.</p>
+  
+  <p style = "font-size: inherit">The table below illustrates the measurement data for a bird that was captured on a given date. We can see that the level of observation, as shown by the primary key, defined by the bird observed (<code>birdID</code>) and date (<code>observationDate</code>). Because there are multiple records associated with this observation level, this is a violation of the first normal rule.</p>
+
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:left;"> measurement </th>
+   <th style="text-align:right;"> value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> mass </td>
+   <td style="text-align:right;"> 34.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> wing </td>
+   <td style="text-align:right;"> 96.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> tail </td>
+   <td style="text-align:right;"> 107.0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+
+
+<p style = "font-size: inherit">Why? Mass, wing, and tail are attributes (variables) associated with the observation of the bird and thus deserve their own columns of the table, as below.</p>
+
+<br>
+
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:right;"> mass </th>
+   <th style="text-align:right;"> tail </th>
+   <th style="text-align:right;"> wing </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 34.5 </td>
+   <td style="text-align:right;"> 107 </td>
+   <td style="text-align:right;"> 96.7 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+</li>
+<br>
+
+<li>All values are atomic:</li>
+<br>
+<p>An <b>atomic value</b> is a value that cannot be divided. In the table below, multiple dates are provided in a single column, a clear violation of this rule of the first normal.</p>
+<br>
+
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16, 2017-07-12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-26 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02, 2017-05-12 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+
+<br>
+<p>To fix this, we separate date into multiple columns, as below (<i>Note: The table below is still not tidy!</i>).</p>
+<br>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> date1 </th>
+   <th style="text-align:left;"> date2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-26 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+<br>
+
+<li>Columns do not contain repeated grouping:</li>
+<br>
+<p>The table below contains mass measurements taken of birds on a given date. While mass is an attribute of a bird, we can see that the mass measurement varies by date.</p>
+<br>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate1 </th>
+   <th style="text-align:left;"> observationDate2 </th>
+   <th style="text-align:right;"> mass1 </th>
+   <th style="text-align:right;"> mass2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+   <td style="text-align:right;"> 34.5 </td>
+   <td style="text-align:right;"> 36.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-26 </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 35.7 </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+   <td style="text-align:right;"> 38.0 </td>
+   <td style="text-align:right;"> 37.6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+<br>
+<p>Because the mass measurement varies by date, it is an attribute of the observation of the bird on that date. Therefore, the primary key of this table should relate to both the date of the observation and the identity of the bird observed. Each measurement, and each bird measured on a given date, is given its own row, as below.</p>
+<br>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:right;"> mass </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 34.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> y108-5974c </td>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 35.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g911-3357l </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:right;"> 38.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f343-2579c </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+   <td style="text-align:right;"> 36.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> p435-5545u </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+   <td style="text-align:right;"> 37.6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+</li>
+</ul>
+<br>
+<h3>The second normal rule</h3>
+<br>
+<p>The second normal rule, that all columns are functionally dependent on the observation, is a rule that can be used to test whether the values in a single table should be split into multiple tables (or, conversely, that multiple tables can be merged into a single table). This rule can be restated as "every column must be an attribute of the observation that defines the row". When working with the second normal rule, we need to ask ourselves what the level of observation is for the record. The table below contains measurements of birds taken at a given site on a given date and the proportional canopy cover (leaf cover) at the site.</p>
+
+<br>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:left;"> site </th>
+   <th style="text-align:right;"> canopyCover </th>
+   <th style="text-align:right;"> mass </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> apple </td>
+   <td style="text-align:right;"> 32.5 </td>
+   <td style="text-align:right;"> 34.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> y108-5974c </td>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:left;"> apple </td>
+   <td style="text-align:right;"> 32.5 </td>
+   <td style="text-align:right;"> 35.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g911-3357l </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:left;"> avocado </td>
+   <td style="text-align:right;"> 78.4 </td>
+   <td style="text-align:right;"> 38.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f343-2579c </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+   <td style="text-align:left;"> apple </td>
+   <td style="text-align:right;"> 32.5 </td>
+   <td style="text-align:right;"> 36.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> p435-5545u </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+   <td style="text-align:left;"> avocado </td>
+   <td style="text-align:right;"> 78.4 </td>
+   <td style="text-align:right;"> 37.6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+
+<p>Mass is an attribute of the measurement of the bird on a given date. Site is an attribute of this record, because it describes the observation. Canopy cover, however, is an attribute of site. The repeated canopy cover values is a big clue that something is awry. To deal with this, the data are split into two tables, one describing the observation and the other a table describing the site, as below.</p>
+<br>
+<div class = "row">
+<p>Bird observation table:</p>
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> siteId </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:right;"> mass </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 34.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> y108-5974c </td>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 35.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g911-3357l </td>
+   <td style="text-align:left;"> l775-7712x </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:right;"> 38.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f343-2579c </td>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+   <td style="text-align:right;"> 36.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> p435-5545u </td>
+   <td style="text-align:left;"> l775-7712x </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+   <td style="text-align:right;"> 37.6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+
+</div>
+<br>
+<div class = "row">
+<p>Site table:</p>
+<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> siteId </th>
+   <th style="text-align:left;"> site </th>
+   <th style="text-align:right;"> canopyCover </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> apple </td>
+   <td style="text-align:right;"> 32.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> l775-7712x </td>
+   <td style="text-align:left;"> avocado </td>
+   <td style="text-align:right;"> 78.4 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+<br>
+<p>In the above table the site field in the observation table has been replaced by `siteId`. This is what is called a <b>foreign key</b>. A foreign key is a field that links to the primary key in a different table. The foreign key is a way to link the two tables so that they can share information with one another. This is described as a one-to-many relationship (a row from one table can have multiple matching rows in another -- for example, there are multiple observations associated with each site).</p>
+
+<p>There is a bit of a gray area here remaining in the observation table -- should it remain one table or split into two? Mass is certainly an attribute of the observation of a bird but, considering that multiple birds were observed at a given site, is site really an attribute of the observation? You could make a case (and I would agree) that this table should be divided even further, as below:</p>
+<br>
+<div class = "row">
+<p>Bird observation table:</p>
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> visitId </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:right;"> mass </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> o852-9186s </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:right;"> 34.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> y108-5974c </td>
+   <td style="text-align:left;"> o852-9186s </td>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:right;"> 35.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g911-3357l </td>
+   <td style="text-align:left;"> b610-5526p </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:right;"> 38.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f343-2579c </td>
+   <td style="text-align:left;"> j503-4481g </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:right;"> 36.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> p435-5545u </td>
+   <td style="text-align:left;"> f603-6764x </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:right;"> 37.6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+<br>
+<div class = "row">
+<p>Visit table:</p>
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> visitId </th>
+   <th style="text-align:left;"> siteId </th>
+   <th style="text-align:left;"> observationDate </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> o852-9186s </td>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b610-5526p </td>
+   <td style="text-align:left;"> l775-7712x </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> j503-4481g </td>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f603-6764x </td>
+   <td style="text-align:left;"> l775-7712x </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+
+<br>
+<div class = "row">
+<p>Site table:</p>
+<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> siteId </th>
+   <th style="text-align:left;"> site </th>
+   <th style="text-align:right;"> canopyCover </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> z791-1207p </td>
+   <td style="text-align:left;"> apple </td>
+   <td style="text-align:right;"> 32.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> l775-7712x </td>
+   <td style="text-align:left;"> avocado </td>
+   <td style="text-align:right;"> 78.4 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+<br>
+<h3>The third normal rule</h3>
+<br>
+<div class = "row">
+<img src="images/transitive.png" 
+	title="transitive objects"
+	alt = "objects of different sizes display transitive properties"
+	style= "float: left; width: 30%; padding-left: 0px; padding-right: 10px"/>
+<p>Kent: Every non-key attribute must provide a fact about the key, the whole key, and nothing but the key. So help me Codd.</p>
+
+<p>The third normal rule states that, in addition to first and second normal rules being met, columns cannot be <b>transitively dependent</b>. The figure on the right displays transitive dependence -- if object A is greater in size than object C and object C is larger than object B, then object A must be larger than object B. Because of the first two comparisons between objects A and C and object C and B, directly comparing objects A and B is not necessary. In the realm of data tables, if the value of some column can be directly derived from the value of any non-key column, then this column should not be included in a data table because it provides no new information.</p> 
+
+<p>The easiest example of violations of the third normal rule, and one of the most common, is the inclusion of both a year and date field in a data table, as illustrated below.</p>
+</div>
+<br>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-16"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:right;"> mass </th>
+   <th style="text-align:right;"> observationYear </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 34.5 </td>
+   <td style="text-align:right;"> 2016 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> y108-5974c </td>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 35.7 </td>
+   <td style="text-align:right;"> 2016 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g911-3357l </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:right;"> 38.0 </td>
+   <td style="text-align:right;"> 2016 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f343-2579c </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+   <td style="text-align:right;"> 36.2 </td>
+   <td style="text-align:right;"> 2017 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> p435-5545u </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+   <td style="text-align:right;"> 37.6 </td>
+   <td style="text-align:right;"> 2017 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+</div>
+<p>Because year can directly be derived from date, this column should not be included. Instead the dataset should be:
+<br>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-17"><div class="rcode"><table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; float: left; margin-right: 10px;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> id </th>
+   <th style="text-align:left;"> birdID </th>
+   <th style="text-align:left;"> observationDate </th>
+   <th style="text-align:right;"> mass </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> s849-3408b </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 34.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> y108-5974c </td>
+   <td style="text-align:left;"> 1123-58133 </td>
+   <td style="text-align:left;"> 2016-05-16 </td>
+   <td style="text-align:right;"> 35.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g911-3357l </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2016-06-02 </td>
+   <td style="text-align:right;"> 38.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> f343-2579c </td>
+   <td style="text-align:left;"> 1123-58132 </td>
+   <td style="text-align:left;"> 2017-07-12 </td>
+   <td style="text-align:right;"> 36.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> p435-5545u </td>
+   <td style="text-align:left;"> 1123-58134 </td>
+   <td style="text-align:left;"> 2017-05-12 </td>
+   <td style="text-align:right;"> 37.6 </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+
+</div>
+<br>
+<br>
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise One:</h3>
+<br>
+<p>Consider how to structure the following dataset using the three rules of normalizing data:</p>
+<div class="chunk" id="unnamed-chunk-18"><div class="rcode"><table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;background-color: white !important;"> id </th>
+   <th style="text-align:left;background-color: white !important;"> birdID </th>
+   <th style="text-align:left;background-color: white !important;"> date </th>
+   <th style="text-align:left;background-color: white !important;"> site </th>
+   <th style="text-align:right;background-color: white !important;"> canopy </th>
+   <th style="text-align:right;background-color: white !important;"> mass </th>
+   <th style="text-align:right;background-color: white !important;"> hTemp </th>
+   <th style="text-align:left;background-color: white !important;"> siteXY </th>
+   <th style="text-align:left;background-color: white !important;"> spp </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;background-color: gray80 !important;"> s849-3408b </td>
+   <td style="text-align:left;background-color: gray80 !important;"> 1123-58132 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> 2016-05-16 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> apple </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 32.5 </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 34.5 </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 22.2 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> -77.048, 38.925 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> NOCA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;background-color: white !important;"> y108-5974c </td>
+   <td style="text-align:left;background-color: white !important;"> 1123-58133 </td>
+   <td style="text-align:left;background-color: white !important;"> 2016-05-16 </td>
+   <td style="text-align:left;background-color: white !important;"> apple </td>
+   <td style="text-align:right;background-color: white !important;"> 32.5 </td>
+   <td style="text-align:right;background-color: white !important;"> 35.7 </td>
+   <td style="text-align:right;background-color: white !important;"> 22.2 </td>
+   <td style="text-align:left;background-color: white !important;"> -77.048, 38.925 </td>
+   <td style="text-align:left;background-color: white !important;"> NOCA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;background-color: gray80 !important;"> g911-3357l </td>
+   <td style="text-align:left;background-color: gray80 !important;"> 1123-58134 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> 2016-06-02 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> avocado </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 78.4 </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 38.0 </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 26.8 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> -77.053, 38.929 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> GRCA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;background-color: white !important;"> f343-2579c </td>
+   <td style="text-align:left;background-color: white !important;"> 1123-58132 </td>
+   <td style="text-align:left;background-color: white !important;"> 2017-07-12 </td>
+   <td style="text-align:left;background-color: white !important;"> apple </td>
+   <td style="text-align:right;background-color: white !important;"> 32.5 </td>
+   <td style="text-align:right;background-color: white !important;"> 36.2 </td>
+   <td style="text-align:right;background-color: white !important;"> 31.0 </td>
+   <td style="text-align:left;background-color: white !important;"> -77.048, 38.925 </td>
+   <td style="text-align:left;background-color: white !important;"> NOCA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;background-color: gray80 !important;"> p435-5545u </td>
+   <td style="text-align:left;background-color: gray80 !important;"> 1123-58134 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> 2017-05-12 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> avocado </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 78.4 </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 37.6 </td>
+   <td style="text-align:right;background-color: gray80 !important;"> 18.7 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> -77.053, 38.929 </td>
+   <td style="text-align:left;background-color: gray80 !important;"> GRCA </td>
+  </tr>
+</tbody>
+</table>
+
+</div></div>
+<br>
+<p>Note:The variable "hTemp" refers to the daily high temperature.</p>
+</blockquote>
+
+<br>
+<hr>
+<br>
+<h2>The rules of tidy data in statistical language</h2>
+<br>
+<p>For the creation of the tidyverse, Hadley Wickham re-framed the three normalization rules into statistical language -- the language of most R users. In the statistical language, a tidy dataset has three qualities:</p>
+<ol>
+<li>Each variable forms a column</li>
+<li>Each observation forms a row</li>
+<li>Each level of observation forms a table</li>
+</ol>
+<p>To illustrate these rules, we will explore the process of making untidy data tidy.</p>
+<br>
+<h3><b>Tidy rule: Each variable forms a column</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple variables in a single column</h4>
+<p>This problem relates to the first normal rule "all values are atomic". We illustrated this previously using a dataset in which there where multiple dates stored in a single date column, repeated below, with the dataset `badDate`.</p>
+
+<div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">badDate</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##       birdID        observationDate
+## 1 1123-58132 2016-05-16, 2017-07-12
+## 2 1123-58133             2016-05-26
+## 3 1123-58134 2016-06-02, 2017-05-12
+</pre></div>
+</div></div>
+
+
+<p>This type of rule violation can easily be dealt with using the `tidyverse` <b>separate</b> function. Arguments of `separate` include:</p>
+<ul>
+<li><b>data</b>: The data frame that contains the columns you wish to separate</li>
+<li><b>col</b>: The name of the column you wish to separate</li>
+<li><b>into</b>: A vector providing the names of the new columns</li>
+<li><b>sep</b>: The character that defines where to split the columns</li>
+</ul>
+<p>To separate the above into a tidier (but still not tidy) dataset, code the following:</p>
+<div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">separate</span><span class="hl std">(</span>
+  <span class="hl kwc">data</span> <span class="hl std">= badDate,</span>
+  <span class="hl kwc">col</span> <span class="hl std">= observationDate,</span>
+  <span class="hl kwc">into</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'date1'</span><span class="hl std">,</span> <span class="hl str">'date2'</span><span class="hl std">),</span>
+  <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">&quot;, &quot;</span>
+  <span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 1 rows [2].
+</pre></div>
+<div class="output"><pre class="knitr r">##       birdID      date1      date2
+## 1 1123-58132 2016-05-16 2017-07-12
+## 2 1123-58133 2016-05-26       &lt;NA&gt;
+## 3 1123-58134 2016-06-02 2017-05-12
+</pre></div>
+</div></div>
+<br>
+<h4><b>Untidy problem</b>: Variable split into multiple columns</h4>
+
+<p>This rule can also be violated in the other direction, when a single variable is split into multiple columns. A common example of this is with dates (really_bad_date):</p>
+
+<div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">really_bad_date</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1 x 3
+##   month   day  year
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     3    10  2021
+</pre></div>
+</div></div>
+<br>
+<p>We can use the `unite` function to address this:</p>
+
+<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">unite</span><span class="hl std">(</span>
+  <span class="hl kwc">data</span> <span class="hl std">= really_bad_date,</span>
+  <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">'date'</span><span class="hl std">,</span>
+  <span class="hl kwd">c</span><span class="hl std">(year, month, day),</span>
+  <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">'-'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1 x 1
+##   date     
+##   &lt;chr&gt;    
+## 1 2021-3-10
+</pre></div>
+</div></div>
+<br>
+
+<h4><b>Untidy problem</b>: Transitive columns</h4>
+
+<p>A common mistake is to derive the value in one column using information from another column. This is a violation of the third normal rule. Above, we used the example of a dataset that included a year and date column. These columns are called <b>transitive</b> because year can be derived from date. A <b>transitive</b> variable contains no further information, so is untidy. Let's take a look at the data again, with the dataset `badYear`, before addressing the problem:</p>
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-23"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">badYear</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass observationYear
+## 1 s849-3408b 1123-58132      2016-05-16 34.5            2016
+## 2 y108-5974c 1123-58133      2016-05-16 35.7            2016
+## 3 g911-3357l 1123-58134      2016-06-02 38.0            2016
+## 4 f343-2579c 1123-58132      2017-07-12 36.2            2017
+## 5 p435-5545u 1123-58134      2017-05-12 37.6            2017
+</pre></div>
+</div></div>
+
+</div>
+<br>
+<p>To address this, we must <b>subset data by columns</b>. In our previous lessons we learned how to select columns from a data frame using indexing. Indexing allows us select columns based on their position within the data frame or by name:</p>
+
+<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># By position: </span>
+
+<span class="hl std">badYear[,</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl std">]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">badYear[,</span><span class="hl opt">-</span><span class="hl num">5</span><span class="hl std">]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># By name:</span>
+
+<span class="hl std">badYear[,</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'id'</span><span class="hl std">,</span> <span class="hl str">'birdID'</span><span class="hl std">,</span> <span class="hl str">'observationDate'</span><span class="hl std">,</span> <span class="hl str">'mass'</span><span class="hl std">)]</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+</div></div>
+
+<br>
+<p>We can use the `tidyverse` <b>select</b> function to subset a data frame by column much more easily. Arguments of `select` include the data frame that contains the columns you wish to select and the names (unquoted) or positions of the columns.</p>
+
+<div class="chunk" id="unnamed-chunk-25"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># By position: </span>
+
+<span class="hl kwd">select</span><span class="hl std">(badYear,</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">select</span><span class="hl std">(badYear,</span> <span class="hl opt">-</span><span class="hl num">5</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># By name:</span>
+
+<span class="hl kwd">select</span><span class="hl std">(badYear, id</span><span class="hl opt">:</span><span class="hl std">mass)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">select</span><span class="hl std">(badYear,</span> <span class="hl opt">-</span><span class="hl std">observationYear)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate mass
+## 1 s849-3408b 1123-58132      2016-05-16 34.5
+## 2 y108-5974c 1123-58133      2016-05-16 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 38.0
+## 4 f343-2579c 1123-58132      2017-07-12 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 37.6
+</pre></div>
+</div></div>
+
+<br>
+<h3><b>Tidy rule: Each observation forms a row</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple observations in a row (i.e., more than one observation per row)</h4>
+<br>
+<p>This type of problem is usually related to a violation of the first normalization rule (columns do not contain repeated groupings). For this problem, we will use the dataset `untidyFrame`. In this typical example a researcher is assessing the influence of a treatment measured on three test subjects:</p>
+<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">untidyFrame</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##   subject treatmentA treatmentB
+## 1       A        1.3        2.9
+## 2       B        2.3        3.2
+## 3       C        3.1        4.6
+</pre></div>
+</div></div>
+
+<p>It's easy to look at -- it's very easy to visually compare treatment A with treatment B -- but is it tidy? Nope, not at all. We would have to do some awkward wrangling in base R to get this into a tidy format. Luckily, Hadley Wickham and his team created the `tidyverse` with the aim of reshaping messy datasets like these into tidy ones.</p>
+
+<p>We can address this using the tidyverse function pivot_longer:</p>
+
+<div class="chunk" id="unnamed-chunk-27"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">pivot_longer</span><span class="hl std">(</span>
+  <span class="hl kwc">data</span> <span class="hl std">= untidyFrame,</span>
+  <span class="hl kwc">cols</span> <span class="hl std">= treatmentA</span><span class="hl opt">:</span><span class="hl std">treatmentB,</span>
+  <span class="hl kwc">names_to</span> <span class="hl std">=</span> <span class="hl str">'treatment'</span><span class="hl std">,</span>
+  <span class="hl kwc">names_prefix</span> <span class="hl std">=</span> <span class="hl str">'treatment'</span><span class="hl std">,</span>
+  <span class="hl kwc">values_to</span> <span class="hl std">=</span> <span class="hl str">'value'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 6 x 3
+##   subject treatment value
+##   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+## 1 A       A           1.3
+## 2 A       B           2.9
+## 3 B       A           2.3
+## 4 B       B           3.2
+## 5 C       A           3.1
+## 6 C       B           4.6
+</pre></div>
+</div></div>
+<br>
+
+<p>This generated what is often called a "<b>long</b>" data frame. Are all tidy data frames long? Not necessarily! It depends on the observational unit of your study.</p>
+<br>
+<h4><b>Untidy problem</b>: Multiple rows per observation</h4>
+
+<p>Take a moment to consider the following data frame of bird measurement data that we used in the first section (`dfTooLong`):</p>
+
+<div class = "row">
+<div class="chunk" id="unnamed-chunk-28"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">dfTooLong</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate measurement value
+## 1 s849-3408b 1123-58132      2016-05-16        mass  34.5
+## 2 s849-3408b 1123-58132      2016-05-16        wing  96.7
+## 3 s849-3408b 1123-58132      2016-05-16        tail 107.0
+</pre></div>
+</div></div>
+</div>
+<br>
+
+<p>In this instance the measurements (mass, tail, and wing) are all attributes associated with the level of observation, the bird on a given date, but the observation has been split into one row for each value. This is a violation of the first normal rule (all rows represent a unique record). To fix this, we must convert from long to wide form. To do so, we use the `pivot_wider` function in `tidyr`.</p>
+
+
+<div class="chunk" id="unnamed-chunk-29"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">pivot_wider</span><span class="hl std">(</span>
+  <span class="hl kwc">data</span> <span class="hl std">= dfTooLong,</span>
+  <span class="hl kwc">names_from</span> <span class="hl std">= measurement,</span>
+  <span class="hl kwc">values_from</span> <span class="hl std">= value)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## # A tibble: 1 x 6
+##   id         birdID     observationDate  mass  wing  tail
+##   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 s849-3408b 1123-58132 2016-05-16       34.5  96.7   107
+</pre></div>
+</div></div>
+
+<br>
+<h3><b>Tidy rule: Each level of observation forms a table</b></h3>
+<br>
+<h4><b>Untidy problem</b>: Multiple levels of observation in a table</h4>
+
+<p>This problem, which is a violation of the second normal rule, occurs when a single table is created to store data collected across multiple observational levels. It is probably the most common issue in data management. Let's look once again at the data table that violated the second normal rule above (`badBandingRecord`):</p>
+
+<div class="chunk" id="unnamed-chunk-30"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">badBandingRecord</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##           id     birdID observationDate    site canopyCover mass
+## 1 s849-3408b 1123-58132      2016-05-16   apple        32.5 34.5
+## 2 y108-5974c 1123-58133      2016-05-16   apple        32.5 35.7
+## 3 g911-3357l 1123-58134      2016-06-02 avocado        78.4 38.0
+## 4 f343-2579c 1123-58132      2017-07-12   apple        32.5 36.2
+## 5 p435-5545u 1123-58134      2017-05-12 avocado        78.4 37.6
+</pre></div>
+</div></div>
+<br>
+
+<p>The table above contains:</p>
+<ul>
+<li>Site-level observations: Canopy cover is an attribute of the site</li>
+<li>Bird-level observations: birdID, observationDate, site, and mass are all attributes of a bird's capture event</li>
+</ul>
+
+<p>Above we used the function `select` to remove columns from tables. We can use this function to restructure the banding record into a list containing two normalized tibbles. Each list item represents a level of observations:</p>
+
+<div class="chunk" id="unnamed-chunk-31"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">list</span><span class="hl std">(</span>
+  <span class="hl kwc">birds</span> <span class="hl std">=</span>
+    <span class="hl kwd">select</span><span class="hl std">(</span>
+      <span class="hl std">badBandingRecord,</span>
+      <span class="hl std">birdID,</span>
+      <span class="hl std">observationDate,</span>
+      <span class="hl std">site,</span>
+      <span class="hl std">mass),</span>
+  <span class="hl kwc">sites</span> <span class="hl std">=</span>
+    <span class="hl kwd">select</span><span class="hl std">(</span>
+      <span class="hl std">badBandingRecord,</span>
+      <span class="hl std">site,</span>
+    <span class="hl std">canopyCover))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## $birds
+##       birdID observationDate    site mass
+## 1 1123-58132      2016-05-16   apple 34.5
+## 2 1123-58133      2016-05-16   apple 35.7
+## 3 1123-58134      2016-06-02 avocado 38.0
+## 4 1123-58132      2017-07-12   apple 36.2
+## 5 1123-58134      2017-05-12 avocado 37.6
+## 
+## $sites
+##      site canopyCover
+## 1   apple        32.5
+## 2   apple        32.5
+## 3 avocado        78.4
+## 4   apple        32.5
+## 5 avocado        78.4
+</pre></div>
+</div></div>
+<br>
+
+<p>The above is a great start, but notice that the `siteRecord` table has duplicate rows. This is a violation of the first normal rule. You can use the tidyverse function <b>distinct</b> to remove any rows that are exact duplicates of one another:</p>
+
+<div class="chunk" id="unnamed-chunk-32"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">bird_list</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">list</span><span class="hl std">(</span>
+    <span class="hl kwc">birds</span> <span class="hl std">=</span>
+      <span class="hl kwd">select</span><span class="hl std">(</span>
+        <span class="hl std">badBandingRecord,</span>
+        <span class="hl std">birdID,</span>
+        <span class="hl std">observationDate,</span>
+        <span class="hl std">site,</span>
+        <span class="hl std">mass),</span>
+    <span class="hl kwc">sites</span> <span class="hl std">=</span>
+      <span class="hl kwd">select</span><span class="hl std">(</span>
+        <span class="hl std">badBandingRecord,</span>
+        <span class="hl std">site,</span>
+        <span class="hl std">canopyCover))</span>
+
+<span class="hl std">bird_list[[</span><span class="hl num">2</span><span class="hl std">]]</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">distinct</span><span class="hl std">(bird_list[[</span><span class="hl num">2</span><span class="hl std">]])</span>
+
+<span class="hl std">bird_list</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## $birds
+##       birdID observationDate    site mass
+## 1 1123-58132      2016-05-16   apple 34.5
+## 2 1123-58133      2016-05-16   apple 35.7
+## 3 1123-58134      2016-06-02 avocado 38.0
+## 4 1123-58132      2017-07-12   apple 36.2
+## 5 1123-58134      2017-05-12 avocado 37.6
+## 
+## $sites
+##      site canopyCover
+## 1   apple        32.5
+## 2 avocado        78.4
+</pre></div>
+</div></div>
+<br>
+
+<blockquote>
+<h3><i class= "fa fa-user-circle-o" style = "font-size: 150%;"></i> Exercise Two:</h3>
+<br>
+<p>The dataset `birdCounts` is located in your global environment. Following the rules outlined above, convert this dataset to tidy-formatted data.</p>
+<br>
+</blockquote>
+<br>
+      
+  </div>
+  </div>
+  <div class = "footer">
+    <div class= "container" style = "height: 10vh;">
+      <p style = "color: white; float: left; padding-top: 3vh;">Contact me:</p>
+        <a href="mailto:evansbr@si.edu" class="fa fa-envelope fa-2x" target="_blank" style = "float: left; height: 7vh; padding-top: 3vh;  padding-left: 2vw;"></a>
+        <a href="https://twitter.com/bsevans_unc" class="fa fa-twitter fa-2x" target="_blank" style = "float: left; height: 7vh; padding-top: 3vh; padding-left: 2vw; "></a>
+      <img style = "float: right; height: 7vh; padding-top: 3vh;" src="https://americanindian.si.edu/nationtonation/img/smithsonian-logo-nav.png"/>
+    </div>
+  </div>
+</div>

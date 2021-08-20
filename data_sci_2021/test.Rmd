@@ -1,0 +1,83 @@
+---
+title: 'In pursuit of normal data (Codd’s rules & tidyr)'
+author: 'Brian S Evans'
+output: slidy_presentation
+theme: yeti
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+<!-- img style= "display: block; margin-left: auto; margin-right: auto;" src="https://i.pinimg.com/originals/7c/36/05/7c3605f31c371e7ff2021bf55aeb09fa.jpg" width = "90%" title=" Hideta Nagai, National Geographic"/--->
+
+## In pursuit of normal data (Codd’s rules & tidyr)
+
+<div class = "row">
+<div class = "col-sm-4">
+<img style="padding-right:40px; padding-top: 10px; display: block;" align = "left" src="images/upside_down_birds.jpg" width="45%"  title=" Hideta Nagai, National Geographic"/>
+</div>
+<div class = "col-sm-1"></div>
+<div class = "col-sm-7">
+<ul style = "padding-left: 10px">
+<li><b>Tolstoy</b>: All happy families are alike; each unhappy family is unhappy in its own way (Tolstoy 1877).</li>
+
+<li><b>Wickham</b>:  Tidy datasets are all alike but every messy dataset is messy in its own  (Wickham 2014).</li>
+</ul>
+</div>
+</div>
+
+## In pursuit of normal data (Codd’s rules & tidyr)
+
+<div class = "row">
+<div class = "col-sm-4">
+<img style="padding-right:40px; padding-top: 10px; display: block;" align = "left" src="images/upside_down_birds.jpg" width="45%"  title=" Hideta Nagai, National Geographic"/>
+</div>
+
+<div class = "col-sm-8">
+<ul>
+<li>Tidy data are not platform-specific</li>
+<li>Tidy data are durable and avoid data entry and modification errors</li>
+<li>All tidy datasets are structured in the same way</li>
+</ul>
+</div>
+</div>
+
+
+
+
+
+## R Markdown
+
+<p>This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.</p>
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+<ol class = "incremental">
+<li>Bullet 1</li>
+<li>Bullet 2</li>
+<li>Bullet 3</li>
+</ol>
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+

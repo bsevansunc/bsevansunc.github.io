@@ -1,0 +1,840 @@
+---
+title: "Working with R Studio projects"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(lubridate)
+library(RCurl)
+library(lubridate)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# 
+# fractured_fruit <-
+#   tibble(
+#     fruit_prefix = fruit[1:3] %>%
+#       str_sub(1,3), 
+#     fruit_suffix = fruit[1:3] %>%
+#       str_sub(start =  4),
+#     fruit_type = c('pome', 'drupe', 'berry'),
+#     consumption_class = c('clean', 'sloppy', 'sloppy'))
+# 
+# long_trees <-
+#   tibble(
+#     tree_id = 1:5,
+#     species = c('Carya glabra', 'Quercus rubra', 'Carya glabra', 'Acer saccharum', 'Acer saccharum'),
+#     dbh = c(8, 32, 27, 24, 42),
+#     height = c(9, 23, 24, 18, 26)) %>% 
+#   pivot_longer(dbh:height, names_to = 'measure', values_to = 'value')
+# 
+# addresses <-
+#   tibble(
+#     name_last = c('Bonacci', 'Wickham', 'MacArthur', 'Euler'),
+#     name_first = c('Leonardo', 'Hadley', 'Robert', 'Leonhard'),
+#     address = 
+#       c('2358 Rabbit Lane ,Pisa,Italy',
+#         '2014 Tidy Cat Boulevard,Aukland, New Zealand',
+#         '1958 Warbler Court, Princeton,New Jersey',
+#         '7 Bridges Path,Konigsberg,Russia')) %>% 
+#   arrange(name_last)
+# 
+# my_covid_garden_sites <-
+#   tibble(
+#     bed = 1:5,
+#     light_access = c('full sun', 'full sun' , 'partial shade', 'full sun', 'shade'),
+#     plants = c('jalepenos', 'tomatoes', 'kale', 'summer squash', 'mesclun'))
+# 
+# my_covid_garden_events <-
+#   tribble(
+#     ~bed, ~date, ~event,
+#     1, '2020-04-12', 'planted',
+#     1, '2020-05-17', 'weeded',
+#     1, '2020-07-16', 'fenced',
+#     1, '2020-09-23', 'harvested',
+#     2, '2020-04-14', 'planted',
+#     2, '2020-05-12', 'weeded',
+#     2, '2020-07-14', 'eaten by deer',
+#     3, '2020-04-16', 'planted',
+#     3, '2020-05-26', 'weeded',
+#     3, '2020-06-23', 'eaten by slugs',
+#     3, '2020-07-12', 'applied diatomaceous earth',
+#     3, '2020-08-07', 'harvested',
+#     4, '2020-04-17', 'planted',
+#     4, '2020-05-12', 'weeded',
+#     4, '2020-07-14', 'trampled by deer',
+#     5, '2020-04-03', 'planted',
+#     5, '2020-05-19', 'weeded',
+#     5, '2020-05-20', 'eaten by squirrels') %>% 
+#   arrange(date) %>% 
+#   mutate(date = as_date(date))
+# 
+# my_covid_garden <-
+#   left_join(
+#     my_covid_garden_sites,
+#     my_covid_garden_events,
+#     by = 'bed')
+# 
+# rm(my_covid_garden_sites)
+# 
+# rm(my_covid_garden_events)
+
+# 
+# urban_sites <-
+#   read_csv('data/sites.csv')
+# 
+# messy_weather <-
+#   read_csv('data/messy_weather.csv')
+# 
+# messy_weather_long_days <-
+#   pivot_longer(
+#     data = messy_weather,
+#     cols = march_1:march_31,
+#     names_to = "day",
+#     values_to = "value",
+#     names_prefix = "march_")
+# 
+# messy_weather_date_fix <-
+#   unite(
+#     messy_weather_long_days,
+#     col = 'date',
+#     c('year', 'month', 'day'),
+#     sep = '-')
+# 
+# messy_weather_wide_weather <-
+#   messy_weather_date_fix %>% 
+#   pivot_wider(
+#     names_from = variable,
+#     values_from = value)
+# 
+# messy_weather_temperature_fix <-
+#   separate(
+#     messy_weather_wide_weather,
+#     col = temperature_min_max,
+#     into = c('temperature_min', 'temperature_max'),
+#     sep = ':')
+# 
+# weather_stations <-
+#   distinct(
+#     select(
+#       messy_weather_temperature_fix,
+#       station:name))
+# 
+# observations <-
+#   select(
+#     messy_weather_temperature_fix,
+#     station, date:temperature_max)
+# 
+# monarch_inat <-
+#   read_csv('data/monarch_inat.csv')
+# 
+# multiply_by_two <- 
+#   function(x) {
+#     x*2
+#   }
+# 
+# add_one <- 
+#   function(x) {
+#     x+1
+#   }
+# 
+# messy_weather_temperature_fix <-
+#   messy_weather %>% 
+#   pivot_longer(
+#     cols = march_1:march_31, 
+#     names_to = 'day', 
+#     values_to = 'value', 
+#     names_prefix = 'march_') %>% 
+#   unite(
+#     c('year', 'month', 'day'), 
+#     col = 'date', 
+#     sep = '-',
+#     na.rm = TRUE) %>% 
+#   pivot_wider(
+#     names_from = variable, 
+#     values_from = value) %>% 
+#   separate(
+#     col = temperature_min_max,
+#     into = c('temperature_min', 'temperature_max'),
+#     sep = ':')
+# 
+# 
+# weather_stations <-
+#   messy_weather_temperature_fix %>% 
+#   select(station:name) %>% 
+#   distinct()
+# 
+# observations <-
+#   messy_weather_temperature_fix %>% 
+#   select(station, date:temperature_max)
+```
+
+
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<link rel="icon" 
+      type="image/png" 
+      href = "www/hex_icon.png" />
+<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+<style>
+
+body {
+  font-size: 18px;
+}
+
+.topic {
+  font-size: 19px !important;
+}
+
+code {
+  font-size: 16px !important;
+  background-color: #efefef;
+}
+
+h1 {
+  font-size: 2.25em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.75em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+pre {
+  font-size: 16px !important;
+  background-color: #efefef;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+
+ul{
+margin-left: 2em;
+}
+
+/* Accordian style */
+.accordion {
+  background-color: #e6f0ff;
+  color: #000000;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #80b3ff; 
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+</style>
+</head>
+
+## Overview
+
+<div class = "row">
+
+<a title = "Data Science hex">
+  <img  src = "www/hex_complex.png"
+        alt="Hex sticker for data science class"
+        style = "float: right; padding-left: 2em; padding-bottom: 2em; padding-right: 3em; width: 40%; height: auto;">
+  </img>
+</a>
+
+<div style = "margin-left: 1em;">
+Using **projects** in R Studio really enhances your workflow and increase the ease with which you can communicate code with others (and yourself!).
+
+In this lesson we will create a project in R Studio. While this document will cover much of the same material as *Lecture 2, Project and script organization with R Studio*, be sure to watch that video as well. The material covered here will not include many of the tips and tricks that you will learn in that video. Also, please be sure to complete *Lecture 1, Review of R programming basics* and *Lecture 3, Reading and writing data* prior to starting this lesson, as some of the material covered there may build on that information.
+
+</div>
+
+Material covered in this lesson will include:
+
+* Setting your global options
+* Creating a project
+* Structuring your project
+* Reading and writing project data
+* Using packrat
+* Working with source files
+
+</div>
+
+### Why work in a project?
+
+Before going through the steps of how to work with R Studio projects, we should probably cover why you would want to in the first place.
+
+Working in a project means that you never have to include `setwd()` in your code and can use **relative paths** to files in your system. 
+
+For example, the absolute path to `my_file.csv` in the code below is the exact location of that file in my operating system.
+
+```
+/Users/brianevans/gits/my_project/data/my_file.csv
+```
+
+If my working directory is set to `my_project` (either using `set_wd()` or working in a project), the relative path is:
+
+```
+data/my_file.csv
+```
+
+#### What so wrong with using `setwd()` though?
+
+Using `setwd()` in your code is dangerous because your code will never work out-of-the-box. You will have to communicate to others (and your future self) to modify their working directory to match the location on their file systems. Conversely, if you share a project with your collaborators, everything will already be in place for them to execute the code.
+
+Even more importantly, you might change your mind about where you want to put your code or files. If you move your files to a new location, your code will no longer run until you modify the path in `setwd()`. Your code will be "broken". When you use projects, you can move your project anywhere you want in your file system and R will still be able to find your files.
+
+<i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%; padding-right: 5px;"></i> Never use `setwd()`!
+
+<hr>
+
+## Reference material
+
+Below is some handy reference material that you can refer to throughout this lesson. Please click on the menu item to expand it.
+
+<div>
+<button class="accordion">R Studio panes</button>
+<div class="panel">
+<br>
+Throughout this class, I will refer to the panes (sections) of the R Studio window. This graphic should help you remember them:
+<br>
+<img src = 'www/rstudio_panes.png' style = "max-width: 100%; height: auto;"></img>
+<br>
+</div>
+</div>
+
+<div>
+<button class="accordion">Keyboard shortcuts</button>
+<div class="panel">
+<br>
+The Keyboard shortcuts we will use in this lesson are listed below for Windows and Mac operating systems.
+
+<hr>
+<div>
+<button class="accordion">Windows</button>
+<div class="panel">
+<br>
+
+* View all keyboard shortcuts: Ctrl + Alt + K
+* Execute code: Ctrl + Enter
+* Add assignment operator: Alt + dash
+* Add a new code section: Ctrl + shift + R
+* Save file: Ctrl + S
+* Copy: Ctrl + C
+* Paste: Ctrl + V
+
+<br>
+</div>
+</div>
+
+<div>
+<button class="accordion">Mac</button>
+<div class="panel">
+<br>
+
+* View all keyboard shortcuts: Command + option + K
+* Execute code: Command + Enter
+* Add assignment operator: Option + dash
+* Add a new code section: Command + shift + R
+* Save file: Command + S
+* Copy: Command + C
+* Paste: Command + V
+
+<br>
+</div>
+</div>
+
+<hr>
+<div style = "margin-bottom: 5px;">
+<i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%; padding-right: 5px;"></i>I strongly suggest using a keyboard shortcut whenever possible. It can be hard to do at first, using your mouse to click a button or typing a few characters is initially **way** easier than remembering the keyboard shortcut. If you force yourself to do it though, you won't regret it -- it saves a lot of time in the end.
+</div>
+</div>
+</div>
+
+<div>
+<button class="accordion">Glossary of terms</button>
+<div class="panel">
+<br>
+Throughout this lesson, I will use terminology (i.e., jargon) that may be new to you. This menu item can be clicked at any point if you an encounter a term that you do not know or understand. Be sure to visit this menu for each lesson, because new items will be added (Never removed) as the course content expands.
+
+* **Session**: Everything you do in RStudio in a single sitting.
+* **Menu bar**: The bar at the top of the RStudio window
+* **Pane**: The RStudio window is divided into four sections, called panes.
+* **Tab**: Each pane has a tab on the top of it. For example, I will often refer to the Environment or History tabs of the workspace pane.
+* <i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 125%; padding-right: 5px;"></i>: Any time you see this icon (which is the *font-awesome* icon user secret), it mean that there is a tip that you should pay attention to that will improve your data science workflow.
+<br>
+</div>
+</div>
+
+<div style =  "margin-bottom: 2em;">
+<button class="accordion">Cheat sheets</button>
+<div class="panel">
+<br>
+<div class="row pt-5">
+<div class="col-md-7">
+<h4 id="rstudio-idecheatsheet">RStudio IDE&nbsp;Cheatsheet</h4>
+<p>The <a href="https://www.rstudio.com/products/rstudio/">RStudio IDE</a> is the most popular integrated development environment for R. Do you want to write, run, and debug your own R code? Work collaboratively on R projects with version control? Build packages or create documents and apps?&nbsp;No matter what you do with R, the RStudio IDE can help you do it faster. This cheatsheet will guide you through the most useful features of the IDE, as well as the long list of keyboard shortcuts built into the RStudio IDE. Updated January 16.</p>
+<p><a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf" class="btn btn-primary">Download</a></p>
+</div>
+<div class="col-md-5">
+<a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf"> <img class="cheatsheet-img" style="width:100%" src="https://d33wubrfki0l68.cloudfront.net/0dc0efccfaf638de8be4ce43e2bab8a91541d3d2/c4fdc/wp-content/uploads/2018/08/rstudio-ide.png"></a>
+</div>
+</div>
+<br><br>
+</div>
+</div>
+
+<hr>
+
+## Getting started
+
+#### Install git
+
+If you have not yet installed git on your on your computer, please do so at <a href = "https://git-scm.com/downloads" target = "_blank">this link</a> and follow the provided instructions for installing it on your computer.
+
+<img src = 'www/git_download.png' style = "width:70%; height: auto"></img>
+
+<hr>
+
+#### Housekeeping
+
+I like to do any necessary housekeeping at the beginning of each session. This means that everything I do in my current session is dedicated, in its entirety, to the task at hand. That really helps organize your workflow during a given session.
+
+Please do the following before continuing:
+
+1. If there are any script files open in your source pane. Close them. If any of the file titles are blue, save them prior to closing.
+
+1. In the *Environment* tab of your **workspace pane**, ensure that your **Global Environment** is empty. If it is not, click the *broom* to remove all objects.
+
+1. In the *History* tab of your **workspace pane**, ensure that your history is empty. If it is not, click the *broom* to remove your history.
+
+<hr>
+
+#### Set your global options
+
+Before we create a project, we want to ensure that our global options meet our needs. 
+
+On the **menu bar** go to Tools/Global Options...
+
+1. In the General tab (see menu on left), ensure that there is not a checkmark next to "Restore .RData into workspace at startup". This ensures that your environment will be empty every time you open RStudio.
+
+1. In the dropdown menu next to "Save workspace to.RData on exit:" ensure that the menu is set to "Never".
+
+1. In the Terminal tab, ensure that the dropdown menu next to "New terminals open with:" is set to "bash" (Mac) or "Git Bash" (Windows). Bash is the default terminal for Mac, so it will be included in your available options. If you are on a Windows computer and you do not see "Git Bash" as one of your available options, ensure that you have properly installed Git onto your computer.
+
+<hr>
+
+## Create a project
+
+On the bar on top of your RStudio window, click the "Create a project" button (<img src = 'www/icon_create_project.png' style = "height: 26px; width: auto;"></img>). This will open the "New Project Wizard".
+
+Select "New Directory" to create a new folder in your operating system for the project:
+
+<img src = 'www/create_proj_1.png' style = "width:70%; height: auto"></img>
+
+In the Project Type window, select "New Project":
+
+<img src = 'www/create_proj2.png' style = "width:70%; height: auto"></img>
+
+You are now prompted to give your new directory a name and identify its location in your operating system. 
+
+* If you already created a project called **data_sci** (you should have during the lecture), let's call this project "example_project".
+* <i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%; padding-right: 5px;"></i> Always save your project somewhere you can easily find on your operating system. When you download files, you will need to save them inside the project folder.
+
+<img src = 'www/create_proj4.png' style = "width:70%; height: auto"></img>
+
+Hit enter to create the project.
+
+<hr>
+
+## Project structure
+
+We will explore how to structure a project using bash scripting inside the terminal. 
+
+It's important to note that bash commands are not the same as R commands -- when you're working in terminal, you're working in bash, not Program R.
+
+With your mouse, click on the Terminal tab in your Console pane.
+
+Type the command `pwd` to print your working directory.
+
+Let's make our top level file structure. We will use the make directory command `mkdir` command. Type the following in terminal:
+
+```
+mkdir data output scripts
+```
+
+Type the command `ls` to list the files in your working directory. You should be able to see files that you created.
+
+You can use the change directory command, `cd`, to move directories. Move to your data folder, then type `pwd` to ensure that you're in the right place.
+
+```
+cd data
+
+pwd
+```
+
+We can use `mkdir` to create our subfolders. We'll add the subfolders "raw" and "processed".
+
+```
+mkdir raw processed
+```
+
+Type `ls` to list the files. 
+
+The argument `..` refers to one folder level up from the current folder. Run the following and then use `pwd` to ensure that you are in the top level of your folder.
+
+```
+cd ..
+```
+
+From this level, the `ls` command will show that data folder, but not it's contents. Give it a try.
+
+You can add data as one of the arguments of the `ls` command. For example, you run the following to see the contents of the data folder:
+
+```
+ls data
+```
+
+In the same way, we can use the `mkdir` command from inside our top level folder to create subfolders in our script file.
+
+```
+mkdir scripts/wrangling scripts/analysis
+```
+
+Now run `ls` and `ls scripts` to view the results.
+
+#### Making and running a bash script
+
+Now we're going to make a shell script that we can use to generate our entire project folder structure at once. This is incredibly useful, because we typically have the same general folder structure for every project that we create. 
+
+On your top menu bar, go to File/New File/Shell Script. This opens a window where you can create a shell script.
+
+Enter the following into the script in the Source pane:
+
+```
+mkdir scripts data output
+
+mkdir scripts/wrangling scripts/analysis
+
+mkdir data/raw data/processed
+
+mkdir output/plots
+```
+
+Save the file as "make_project_folders". R will automatically add the extension ".sh" to the file. This extension means that the script is a bash program. 
+
+Please close the file *make_project_folders.sh* in your Source pane.
+
+Now, to create our entire project folder structure, in our bash terminal we simply run the following:
+
+```
+bash make_project_folders.sh
+```
+
+Use `ls` and `cd` to explore the folder structure that you created.
+
+
+
+<hr>
+
+## Packrat
+
+#### A "quick" note on packages
+
+Packages (also called libraries) includes sets of functions (and often data) that simplify the process of coding in R. They can be created by just about anyone — the data gurus at R, the incredible team at RStudio, scientists who created a set of R functions to run a specific analysis, and your run-of-the-mill data nerd. This is a **huge** advantage to R -- we don't have to rebuild the wheel every time we do a wrangling task or analysis. What might take hundreds of lines of code to create can be done in just a few lines once a package has been installed and loaded.
+
+It's important to note that, for the most part, *anything* that can be done in a package can also be done in Base R. Because of this, I always recommend being conservative about the packages you add.  I'll talk about this a lot over the course of the workshop, but I've seen way too many beginning and intermediate R users engage in what I call package hunting. The narrative goes something like this:
+
+1. I'm working in R and can't figure out how to do *x*
+1. I go to Stack Overflow
+1. The most highly rated response to a similar problem requires installing and loading two additional packages into my system
+1. I do the same thing for problem *y* and *z*
+1. My final script has a dozen or more packages
+
+When you're first starting out, learning new packages and functions is a big part of the process of getting accustomed to R. At some point, however, progressing in your R skillset means you're going to have to abandon the mentality of "there's got to be a function for that" or "what package can I use to do *x*?". You'll find that, as your experience grows, you'll actually use less functions and less packages rather than more.
+
+There's another reason to avoid being a package hunter —- packages may include errors! During my PhD, I used a function in a community ecology package for a common analyis. When I saw the results, they didn't make much sense. I dug into the function itself and it took me at least a couple of days to figure out what each step did. I then searched the literature and found that a widely cited paper contained a typo in the formula. That typo made its way to the R package. The whole process took me over a week to solve. If I accepted the analysis in the package, my results would have been wrong. If I went to the original publication that contained the correct formula (which we should always do), I could have built the analysis from the ground up in less than a day.
+
+<i class="fa fa-user-secret" aria-hidden="true" style = "font-size: 150%; padding-right: 5px;"></i> Don't be a package hunter!
+
+#### Packrat
+
+One of the challenges to adding a lot of packages to your code is that it makes your code less portable. When you communicate with code, your recipients (which may be the future you) have to ensure that they have installed all of the packages that you used in your analysis. What's more, packages change over time -- if one of the functions in a package has changed (e.g., tidyverse packages often change considerably), your code may be irrevocably broken. That's super dangerous.
+
+The package packrat addresses these problems. With packrat initiated in your R Studio project, only packages loaded into the project itself will run. In other words, even if *tidyverse* has been installed in your computer, you will not have access to the functions unless you also install it in your package.
+
+What's cool about this is that, when you share your folder, you share the packages themselves. The package you share will be the same version as the one that you used to run your analysis, so there will be no concern over which version of the package was used.
+
+To use packrat, you simply run the following in the **Console tab** of your **Console pane**:
+
+```{r eval = FALSE}
+packrat::init()
+```
+
+Packages are installed into your project in the same way you install packages in other instances. Run the following line of code in the **Console tab** of your **Console pane**:
+
+```{r eval = FALSE}
+install.packages('tidyverse')
+```
+
+You now have saved the tidyverse package into Packrat into your library. When you share your project, you share your packages in their current state (i.e., version).
+
+<hr>
+
+## Reading and writing
+
+Reading and writing data is a breeze if you're working in a package. As I stated in the introduction to this lesson, you only have to supply the **relative path** to your files.
+
+Before we begin, save the file "portal.csv" from your class folder into *data/raw* folder of your project.
+
+Now open up a new script file in our **Source pane**. 
+
+Let's set up this script file before we begin. Save the file and give it the name "read_write".
+
+Create a new code section (see Reference, Keyboard shortcuts) and give that section the name "setup". In the setup section, load your tidyverse library:
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+On a new line, add a comment that says read in data.
+
+To read in the file, you would simply type (*Note: Please see the lecture "Reading and writing data"*): 
+
+```{r, eval = FALSE}
+# read in data
+
+portal <-
+  read_csv('data/raw/portal.csv)
+```
+
+You can also simplify this using the `file.path()` function. I use this when a file is embedded deeply inside my file structure (sort of a silly example here):
+
+```{r, eval = FALSE}
+# read in data
+
+portal <-
+  read_csv(
+    file.path(
+      'data/raw',
+      'portal.csv'))
+```
+
+Sometimes, when things get really messy (e.g., deeply embedded files), I assign a key to my file paths. Here's how the top section of my code would look:
+
+```{r, eval = FALSE}
+# setup -------------------------------- ...
+
+library(tidyverse)
+
+# file paths
+
+read_dir <-
+  'data/raw'
+
+write_dir <-
+  'data/processed'
+
+# read in data
+
+portal <-
+  read_csv(
+    file.path(
+      read_dir,
+      'portal.csv'))
+```
+
+Let's create a really simple file to write. 
+
+Let's first add a comment that says we are going to write a file. 
+
+```{r, eval = FALSE}
+# write file
+```
+
+Then use the `tibble` function, which is a function used to generate a tibble data frame (**Note: "letters" is a built in constant -- a vector of lowercase letters from a to z**).
+
+```{r, eval = FALSE}
+# write file
+
+silly_tibble <-
+  tibble(
+    x = 1:5,
+    y = letters[1:5])
+```
+
+And write this file to the processed data folder:
+
+```{r, eval = FALSE}
+# write file
+
+silly_tibble <-
+  tibble(
+    x = 1:5,
+    y = letters[1:5])
+
+write_csv(
+  silly_tibble,
+  file.path(
+      write_dir,
+      'silly_tibble.csv'))
+```
+
+Please note that it's important to manage objects in your **Global Environment**. If I had no intention of doing anything with the R object `silly_tibble` (and I don't in this case), I would instead have written the following:
+
+```{r, eval = FALSE}
+# write file
+
+write_csv(
+  tibble(
+    x = 1:5,
+    y = letters[1:5]),
+  file.path(
+      write_dir,
+      'silly_tibble.csv'))
+```
+
+Here's what your whole script should look like:
+
+```{r, eval = FALSE}
+# setup -------------------------------- ...
+
+library(tidyverse)
+
+# file paths
+
+read_dir <-
+  'data/raw'
+
+write_dir <-
+  'data/processed'
+
+# read in data
+
+portal <-
+  read_csv(
+    file.path(
+      read_dir,
+      'portal.csv'))
+
+# write file
+
+write_csv(
+  tibble(
+    x = 1:5,
+    y = letters[1:5]),
+  file.path(
+      write_dir,
+      'silly_tibble.csv'))
+```
+
+We actually aren't going to use the objects `portal` or `silly_tibble`. We can remove them using the `rm` function in our **Console pane**.
+
+We can do so individually, like this:
+
+```{r, eval = FALSE}
+rm(portal)
+
+rm(silly_tibble)
+```
+
+Or all at once:
+
+```{r, eval = FALSE}
+rm(portal, silly_tibble)
+```
+
+We also want to manage the objects that we store in our project. Do we really want to keep the file "silly_tibble" in our processed data folder? Probably not. See if you can use the bash command `rm` in Terminal tab of the **Console pane** to remove the file from your project folder.
+<hr>
+
+## Working with source files
+
+Our last step in our package creation process is write a **source file**. A source file is a location where you can store functions and other R objects that you will use across scripts. 
+
+We're going to create a file that we'll designate as a source file and then refer to that file directly in our code.
+
+Start by opening up a new script.
+
+Save the file in your "scripts" folder. Let's call the file "my_source_file.R".
+
+In the **Console pane**, type `howdy` and hit enter. You should get an error message:
+
+```{r eval = TRUE, echo = FALSE}
+howdy
+```
+
+That means that the key `a` has not been assigned to any object in you Global Environment (nor in the environments of your packages).
+
+Now in **my_source_file.R**, type the following (but don't run it):
+
+```{r eval = TRUE, echo = FALSE}
+howdy <-
+  1:5
+```
+
+Save and close **my_source_file.R**.
+
+You should still get an error when you type `howdy` in your **Console pane**:
+
+```{r eval = TRUE, echo = TRUE}
+howdy
+```
+
+Now go to your Source pane and the file "read_write".  on the line after you load the package, type the `source` function, followed by the path to the file:
+
+```{r eval = FALSE}
+source(my_source_file.R)
+```
+
+Have a look at the Environmnet tab of your **Workspace** pane. Anything in there?
+
+Type `howdy` in your console pane now. What did you get? Why?
+
+
+<hr>
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>

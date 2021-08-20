@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  
+<head>
+  <title>dataSci</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!--link rel="stylesheet" href="css/styles.css" type="text/css"-->
+  <style>
+  
+    p, li {
+      font-size: 1.5em;
+    }
+    
+    h1{
+      font-size: 2.25em;
+    }
+    
+    h2{
+      font-size: 2em;
+    }
+    
+    pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+    font-family: monospace;
+    }
+    
+    code {
+    font-family: monospace;
+    color: inheret;
+    font-size: inheret;
+    padding: 2px;
+    font-size: .8em;
+    }
+    
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    
+    .header {
+        background-color: #FFFFFF;
+        margin-bottom: 1vw;
+    }
+      
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .banner-content {
+      margin-top: 1vw;
+      margin-left: 15vw;
+      margin-right: 15vw;
+    }
+    
+    .content {
+      padding-bottom: 80px;
+      margin-left: 15vw;
+      margin-right: 15vw;
+      flex-grow: 1;
+      background-color: #FFFFFF;
+    }
+  
+    .footer {
+        background-color: #101820;
+    }
+      
+    .fa-twitter {
+      color: white;
+    }
+  </style>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+<div class = "flex-container">
+  <div id = "banner" class = "header">
+    <div class = "banner-content">
+      <div class = "row">
+        <h1>Version control: Getting started with GitHub</h1>
+      </div>
+        <hr>
+    </div>
+  </div>
+  <div class = "content">
+    <div id = "introduction" class = "row">
+        <p><a href="https://github.com/">
+          <img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" width="150" alt="Octocat" class="cover" style="float: left; padding: 0px 20px 20px 0px;"></a>
+          In this lesson, we will explore how to get started GitHub on your computer. This is meant to be almost entirely applied. Please see the <a href = "https://smbc-nzp.github.io/data_science_workshop/additional_resources.html" target = "_blank">additional resources</a> page for more in-depth content on version control and GitHub.</p>
+          </div>
+    <div id = "why_vc" class = "row">
+      <hr>
+      <h2>Why do I need version control?</h2>
+      <p>Version control is a system that tracks and manages changes to your files. It is an indispensable tool for working with data. When you collaborate with others, it allows for a (somewhat) seamless workflow for sharing code and data. For solo projects, it allows you to:</p>
+      <ul>
+        <li>Have the same version of your project across all computers you work on.</li>
+        <li>Have backups to your project files all in one place.</li>
+        <li>View and transport yourself to various points in the history of your files. <b>Important</b>! Because of this, you do not have to have different versions of the same file on your computer!</li>
+        </ul>
+        <p>These are just a few of the early benefits of using version control. There are a lot more that are worth exploring (e.g., forking) once you get a little experience under your belt!</p>
+        </div>
+    <div id = "getting_gitaccount" class = "row">
+      <hr>
+      <h2>1. Create a GitHub account</h2>
+      <br>
+      <p>It all starts here! <a href="https://github.com/join" target = "_blank">Go to this link</a> and follow the usual steps for creating a new account (but don't download anything if they ask).</p>
+      <img src = "images/join_git.png" style = "width: 70vw">
+      <br>
+    </div>
+    <div id = "getting_git" class = "row">
+      <hr>
+      <h2>2. Download and Install GitHub</h2>
+      <br>
+      <p>I prefer to use GitHub from bash (Bourne Again SHell). It is a free Unix shell that can be used across platforms. Those of you who use a command line terminal in Mac or Linux should find it familiar --  it is the default for Mac and Linux applications. Downloading the command line version of the git will allow you to use either git from bash (which I like) or from RStudio (which I'm amenable to).</p>
+      <p>Use the following links to download the command line version of GitHub:</p>
+      <ul>
+        <li><b>Download and Install for Mac</b>:</li>
+        <ul>
+          <li>To install automatically, use <a href = "https://git-scm.com/download/mac" target = "_blank">this link</a>.</li>
+          <li>To install using homebrew, run the following in terminal:</li>
+          <br>
+          <ul>
+            <li>Install the Command Line Tools, if you don't yet have it:</li>
+            <br>
+            <pre><code style = "float: left;">xcode-select --install</code></pre>
+            <br>
+            <li>Install homebrew if you don't yet have it:</li>
+            <br>
+              <br>
+              <pre><code style = "float: left;">curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/master/install.sh</code></pre>
+            <br>
+            <li>Did it work? Enter this into your terminal to find out (should say "Your system is ready to brew"):</li>
+            <br>
+            <pre><code style = "float: left;">brew doctor</code></pre>
+            <br>
+            <li>Install git:</li>
+            <br>
+            <pre><code style = "float: left;">brew install git</code></pre>
+            </ul>
+        </ul>
+        <br>
+        <li><b>Download and Install for Windows</b>: Use this <a href="https://git-scm.com/download/win" target = "_blank">link</a>. The program will install as an <i>.exe</i> file.</li>
+      </ul>
+    </div>
+    <div id = "configure_git" class = "row">
+      <hr>
+      <h2>3. Configure your GitHub</h2>
+      <br>
+      <p>With git installed, you now need to configure the program to talk to your account. You will do so (like most interactions with git) with bash. Open a bash window.</p>
+      <ul>
+        <li><b>Mac</b>: Use launchpad to open the "terminal" application</li>
+        <li><b>Windows</b>: I usually type "bash" in my windows navigation bar search window, it should pop up as a suggested program</li>
+      </ul>
+       <p> Working in bash, will use the "config" function in "git" to set it up. Start by providind a user name for your GitHub account:</p> 
+      <pre><code style = "float: left;">git config --global user.name "Your Name"</code></pre>
+      <p>You'll next provide the email you used to set up your account:</p>
+      <br>
+      <pre><code style = "float: left;">git config --global user.email "your_email@email.com"</code></pre>
+      <br>
+      <p>Have a look to see if you've configured things correctly (you can change things if they're not correct):</p>
+      <br>
+      <pre><code style = "float: left;">git config --list</code></pre>
+      <br>
+      <p>You are now ready to start using GitHub!</p>
+      <br>
+    </div>
+    <div id = "working_in_commandline" class = "row">
+      <hr>
+      <h2>4. Working in command line</h2>
+      <br>
+      <p>If you've not worked in bash before, it's worth taking a moment to look around. The bash program is basically a command line interface to your computer. When you interact with your computer outside of bash, you are using a program that is a graphical interface to your computer. A good way to get used to working in bash is simply navigating around your file system. Here's some ways to do that.</p>
+      
+      <p>Print (display) working directory (i.e., where am I?):</p>
+      
+      <pre><code style = "float: left;">pwd</code></pre>
+      <p>Move to a child directory:</p>
+      <pre><code style = "float: left;">cd some_child_directory</code></pre>
+      <p>Move to the parent directory:</p>
+      <pre><code style = "float: left;">cd ..</code></pre>
+      <p>List files in working directory</p>
+      <pre><code style = "float: left;">ls</code></pre>
+      <p>List files in child directory:</p>
+      <pre><code style = "float: left;">ls some_child_directory</code></pre>
+      <p>Make a new directory inside of the parent directory:</p>
+      <pre><code style = "float: left;">mkdir hello_world</code></pre>
+      <p>Copy a file from the parent to child directory:</p>
+      <pre><code style = "float: left;">cp some_file_name</code></pre>
+       <p>Move a file from the parent to child directory:</p>
+      <pre><code style = "float: left;">mv some_file_name</code></pre>
+       <p>Delete a file from the parent directory:</p>
+      <pre><code style = "float: left;">rm some_file_name</code></pre>
+    </div>
+    <div id = "cloning_a_repository" class = "row">
+      <hr>
+      <h2>5. Clone the workshop repository</h2>
+      <br>
+      <p>Now that you've connected your computer to GitHub, you can <b>clone</b> a repository to start using version control on the files in the folder. Cloning means that you are going to make a copy of the repository on your computer's hard drive.We'll use the repository for the workshop as an example:</p> 
+      <ol>
+        <li>Start by navigating to <a href = "https://github.com/SMBC-NZP/data_science_workshop" target="_blank">this link</a>, which is the repository where the example R code and data are stored for the workshop.</li>
+        <br>
+        <li>Click the green Code button and copy the HTTPS address to your clipboard.</li>
+        <br>
+        <li>Using the terminal commands above, navigate to the folder (<code>cd</code>) where you want to clone your repository. Personally, I create a folder (<code>mkdir</code>) high in my organizational system to read and write to and I call that folder "gits". That way, I always know where I put a git repository. Whatever you do, put the file in a folder in which the name does not include blanks -- blanks can do unexpected things.</li>
+        <br>
+        <li>Type the following into bash (include a space after clone, but do not hit enter):</li>
+        <br>
+        <pre><code style = "float: left;">git clone </code></pre>
+        <br>
+        <li>Try to paste the repository url from your clipboard (after the space in clone). For Macs, the command will be cmd+ v for Windows it will be ctrl+shift+v. Did it work?</li>
+          <ul>
+            <li><b>Mac</b>: Yes</li>
+            <li><b>Windows</b>: If it didn't work you have to set your "Options" to accept keyboard shortcuts.</li>
+              <ol>
+                <li>Right-click in your bash window</li>
+                <li>Click "Options ..."</li>
+                <li>Select "Keys" from the menu on the left</li>
+                <li>Under shortcuts, put a checkmark at "Ctrl+Shift_letter shortcuts"</li>
+            </ol> 
+        </ul>
+        <br>
+        <li>Hit return (Mac) or Enter (Windows)</li>
+      </ol>
+      <br>
+      </div>
+    <div id = "git_flow" class = "row"><hr>
+      <h2>6. The GitHub workflow</h2>
+      <br>
+      <p>You are now ready to start tracking your files! The diagram below shows the workflow for GitHub. Green arrows are tasks that you will complete every time you use Gihub. Blue arrows are tasks that you will do if you work on multiple computers of collaborate with others.</p>
+      <br>
+      <img src = "images/github_workflow.png" style = "width: 40vw; display: block; margin-left: auto; margin-right: auto;">
+      <br>
+      <p>Here's what it all means:</p>
+      <ul>
+        <li><b>add</b>: Stage a change. You've made some change to your file and you're ready to add that change to version control.</li>
+        <br>
+        <li><b>commit</b>: Saved changes to your file. You will add a message at this point that tells your readers (mostly you) what you did.</li>
+        <br>
+        <li><b>push</b>: Send your changes to GitHub.</li>
+        <br>
+        <li><b>pull</b>: Download the most recent files from GitHub. You would only use this if you are working on multiple computers or collaborating with others. Pull tries to change your files to match those already in Git. This can be challenging if a file that you're working on has diverged from the file in GitHub.</li>
+      </ul>
+      <p>Here's how to do it:</p>
+      <pre><code style = "float: left;">git pull
+
+git add some_file
+
+git commit -m "some message"
+
+git push origin master</code></pre>
+
+
+      
+  </div>
+  </div>
+  <div class = "footer">
+    <div class= "container" style = "height: 10vh;">
+      <p style = "color: white; float: left; padding-top: 3vh;">Contact me:</p>
+        <a href="mailto:evansbr@si.edu" class="fa fa-envelope fa-2x" target="_blank" style = "float: left; height: 7vh; padding-top: 3vh;  padding-left: 2vw;"></a>
+        <a href="https://twitter.com/bsevans_unc" class="fa fa-twitter fa-2x" target="_blank" style = "float: left; height: 7vh; padding-top: 3vh; padding-left: 2vw; "></a>
+      <img style = "float: right; height: 7vh; padding-top: 3vh;" src="https://americanindian.si.edu/nationtonation/img/smithsonian-logo-nav.png"/>
+    </div>
+  </div>
+</div>

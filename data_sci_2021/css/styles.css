@@ -1,0 +1,268 @@
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #101820;
+  color: white;
+  text-align: center;
+  height: 5.25rem;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 5rem;    /* Footer height */
+}
+
+/* Navbar container */
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial;
+}
+
+/* Links inside the navbar */
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Add a red background color to navbar links on hover */
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+/* Dropdown content (hidden by default) */
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.roundBorder {
+  border-radius: 25px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.reviewDiv {
+  border-radius: 0;
+  border: 1px solid #000000;
+  background: #e6f9ff;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlack {
+  border-radius: 25px;
+  border: 10px solid #D3D3D3;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.roundBorderBlackEx {
+  border-radius: 5px;
+  border: 5px solid #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+.roundBorderEx {
+  border-radius: 3px;
+  border: 5px solid #30288C;
+  background: #D6EAF8;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+}
+
+h1 {
+  font-size: 3em;
+  font-family: "Arial";
+}
+
+h2 {
+  font-size: 2.5em;
+  font-family: "Arial";
+}
+
+h3 {
+  font-size: 2em;
+  font-family: "Arial";
+}
+
+h4 {
+  font-size: 1.5em;
+  font-family: "Arial";
+}
+
+h5 {
+  font-size: 1.3em;
+  font-family: "Arial";
+}
+
+p, ol, ul, li {
+  font-size: 2rem;
+  font-family: "Arial";
+  line-height: 2.7rem;
+}
+
+.tt {
+    position: relative;
+    display: inline-block;
+    class: inline; 
+    font-weight: bold;
+    font-family: "Arial";
+    font-size: 18px;
+    border-bottom: 1px black;
+}
+
+/* Tooltip text */
+.tt .ttText {
+    visibility: hidden;
+    font-weight: normal;
+    font-size: 18px;
+    width: 500px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+.popover .tutorial-solution-popover {
+  width: 1000px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tt:hover .ttText {
+    visibility: visible;
+}
+
+/*Table definitions*/
+
+table {
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: right;
+    vertical-align: middle;
+    background-color: #ffffff;
+}
+  
+  /* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Exercises */
+
+blockquote{
+  font-size: 18px;
+  border-left: 8px solid #292093;
+  background-color: #e6ffff;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+ 
+.row{
+  margin: auto;
+}
+
+/*vertical line*/
+
+.vl {
+    border-left: 6px solid #a6a6a6;
+    height: 160px;
+}
+
+/*code*/
+code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #000000;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+ 

@@ -1,0 +1,192 @@
+---
+title: "Working with R Studio projects"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+<head>
+    <title>dataSci</title>
+    <meta charset="utf-8" 
+          name="viewport" 
+          content="width=device-width, initial-scale=1"/>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" 
+          href="css/styles.css" 
+          type="text/css"/>
+    <link rel="icon" 
+          type="image/png" 
+          href = "https://github.com/rstudio/hex-stickers/blob/master/thumbs/pipe.png?raw=true" />
+          link rel="icon" 
+      type="image/png" 
+      href = "www/hex_icon.png" />
+    <style>
+      :root {
+        font-size: 140%;
+        body {
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 2.25em;
+        }
+      }
+      
+      pre {
+        font-size: .8rem;
+      }
+      
+      code {
+        font-size: inherit;
+      }
+      
+      p, li {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
+      
+      h1{
+        font-size: 1.75rem;
+      }
+      
+      h2{
+        font-size: 1.5rem;
+      }
+      
+      h3{
+        font-size: 1.25rem;
+      }
+      
+      pre {
+        padding-bottom: 1em;
+      }
+      
+      .warning {
+        background-color: #ffffff;
+      }
+      
+      .output {
+        background-color: #ffffff;
+      }
+      
+      .knitr r {
+        background-color: #ffffff;
+      }
+      
+      .rcode {
+        background-color: #ffffff;
+      }
+      
+      .source {
+        background-color: #ffffff;
+      }
+      
+      .MathJax_Display {
+        font-size: 1rem;
+        line-height: 1.4rem;
+      }
+      
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      
+      html, body {
+        height: 100vh;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      main {
+        flex: 1 0 auto;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        padding-bottom: 5vh;
+      }
+      
+      header {
+        background-color: #FFFFFF;
+        margin-bottom: 1vw;
+      }
+      
+      /*.flex-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }*/
+      
+      .banner-content {
+        margin-top: 1vw;
+        margin-left: 15vw;
+        margin-right: 15vw;
+      }
+      
+    /*.content {
+        padding-bottom: 80px;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        flex-grow: 1; 
+        background-color: #FFFFFF;
+      }*/
+      
+      content {
+        flex-grow: 1;
+      }
+
+      header, main, footer {
+        flex-shrink: 0;
+      }
+      
+      footer {
+        display: flex;
+        background-color: #101820;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 7vh;
+        font-size: .75rem;
+      }
+      
+      .fa-twitter {
+        color: white;
+      }
+      
+      .flex-container {
+        display: flex;
+        flex-flow: row wrap;
+      }
+      
+      .flex-container > div {
+        margin: 1em;
+      }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Using **projects** in R Studio really enhances your workflow and increase the ease with which you can communicate code with others (and yourself!).
+
+In this lesson we will create a project in R Studio. While this document will cover much of the same material as *Lecture 2, Project and script organization with R Studio*, be sure to watch that video as well. The material covered here will not include many of the tips and tricks that you will learn in that video. Also, please be sure to complete *Lecture 1, Review of R programming basics*, as the material covered in this document will build on the information.
+
+## Some important lingo and tools
+
+I will 
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
